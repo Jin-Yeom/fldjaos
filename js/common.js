@@ -7,5 +7,5 @@ var showPopup = function(pageNm) {
 	var _left = Math.ceil((window.screen.width / 2) - (_width / 2));
 	var _top = Math.ceil((window.screen.height / 2) - (_height / 2));
 
-	window.open("/html/" + pageNm + ".html", "popup", 'width=' + _width + ', height=' + _height + ', left=' + _left + ', top=' + _top);
+	window.open("../html/" + pageNm + ".html", "popup", 'width=' + _width + ', height=' + _height + ', left=' + _left + ', top=' + _top);
 }

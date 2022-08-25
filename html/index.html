@@ -5,38 +5,42 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 			<meta name="description" content="" />
 			<meta name="author" content="" />
+			<!-- 구글 api -->
+			<meta name ="google-signin-client_id" content="54100679153-7qrs1mf1p4s07kj77rkc397vm5n02ilt.apps.googleusercontent.com">
+			<script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+
 			<title>lunch for us</title>
-			<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+			<link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
 			<!-- Font Awesome icons (free version)-->
 			<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 			<!-- Google fonts-->
 			<link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
 			<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
 			<!-- Core theme CSS (includes Bootstrap)-->
-			<link href="/css/styles.css" rel="stylesheet" />
+			<link href="../css/styles.css" rel="stylesheet" />
 			
 		</head>
 		<body>
 			<!-- Navigation-->
 			<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 				<div class="container px-4 px-lg-5">
-					<a class="navbar-brand" href="/html/index.html">Lunch for us</a>
+					<a class="navbar-brand" href="../html/index.html">Lunch for us</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 						Menu
 						<i class="fas fa-bars"></i>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarResponsive">
 						<ul class="navbar-nav ms-auto py-4 py-lg-0">
-							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button" onclick="showPopup('login');">login</a></li>
+							<li id="GgCustomLogin" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>
 							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button" onclick="showPopup('signup');">signup</a></li>
-							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/html/store.html">store</a></li>
-							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/html/roulette.html">roulette</a></li>
+							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../html/store.html">store</a></li>
+							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../html/roulette.html">roulette</a></li>
 						</ul>
 					</div>
 				</div>
 			</nav>
 			<!-- Page Header-->
-			<header class="masthead" style="background-image: url('/img/food_main.jpg')">
+			<header class="masthead" style="background-image: url('../img/food_main.jpg')">
 				<div class="container position-relative px-4 px-lg-5">
 					<div class="row gx-4 gx-lg-5 justify-content-center">
 						<div class="col-md-10 col-lg-8 col-xl-7">
@@ -80,8 +84,8 @@
 			<!-- Bootstrap core JS-->
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 			<!-- Core theme JS-->
-			<script src="/js/scripts.js"></script>
-			<script src="/js/common.js"></script>
+			<script src="../js/scripts.js"></script>
+			<script src="../js/common.js"></script>
 			<!-- Firebase -->
 			<script type="module">
 				// Import the functions you need from the SDKs you need
@@ -105,6 +109,45 @@
 				// Initialize Firebase
 				const app = initializeApp(firebaseConfig);
 				const analytics = getAnalytics(app);
+			</script>
+
+			<!-- 구글 로그인 API -->>
+			<script>
+				//처음 실행하는 함수
+				function init() {
+						gapi.load('auth2', function() {
+								gapi.auth2.init();
+								options = new gapi.auth2.SigninOptionsBuilder();
+								options.setPrompt('select_account');
+								// 추가는 Oauth 승인 권한 추가 후 띄어쓰기 기준으로 추가
+								options.setScope('email profile openid https://www.googleapis.com/auth/user.birthday.read');
+								// 인스턴스의 함수 호출 - element에 로그인 기능 추가
+								// GgCustomLogin은 li태그안에 있는 ID, 위에 설정한 options와 아래 성공,실패시 실행하는 함수들
+								gapi.auth2.getAuthInstance().attachClickHandler('GgCustomLogin', options, onSignIn, onSignInFailure);
+						})
+				}
+				
+				function onSignIn(googleUser) {
+						var access_token = googleUser.getAuthResponse().access_token
+						$.ajax({
+								// people api를 이용하여 프로필 및 생년월일에 대한 선택동의후 가져온다.
+								url: 'https://people.googleapis.com/v1/people/me'
+								// key에 자신의 API 키를 넣습니다.
+								, data: {personFields:'birthdays', key:'AIzaSyB4MfZy5pXuxlN8Trxo066_lOu8V5IueB0', 'access_token': access_token}
+								, method:'GET'
+						})
+						.done(function(e){
+								//프로필을 가져온다.
+								var profile = googleUser.getBasicProfile();
+								console.log(profile)
+						})
+						.fail(function(e){
+								console.log(e);
+						})
+				}
+				function onSignInFailure(t){		
+						console.log(t);
+				}
 			</script>
 		</body>
 	</html>
