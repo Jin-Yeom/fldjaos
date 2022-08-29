@@ -59,7 +59,7 @@ function loginPopup() {
     }
 
     location.reload();
-    
+
   }).catch((error) => {
     debugger;
     // Handle Errors here.
@@ -80,6 +80,9 @@ function loginPopup() {
 function logoutPopup() {
   signOut(auth).then(() => {
     debugger;
+    this.setState({
+      user:null
+    })
     // Sign-out successful.
     sessionStorage.removeItem("displayName");
     sessionStorage.removeItem("email");
