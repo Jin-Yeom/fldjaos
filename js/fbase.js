@@ -42,6 +42,12 @@ function loginPopup() {
     const token = credential.accessToken;
     // The signed-in user info.
     const user = result.user;
+
+    if(result != null && result.user != null) {
+      sessionStorage.setItem("displayName", result.user.displayName);
+      sessionStorage.setItem("uid", result.user.uid);
+    }
+
   }).catch((error) => {
     debugger;
     // Handle Errors here.
