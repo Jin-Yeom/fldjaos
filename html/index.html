@@ -11,6 +11,9 @@
 			<!-- Font Awesome icons (free version)-->
 			<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 
+			<!-- jquery core JS-->
+			<script src="http://code.jquery.com/jquery-latest.js"></script>
+
 			<!-- Google fonts-->
 			<link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
 			<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
@@ -28,8 +31,10 @@
 						<i class="fas fa-bars"></i>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarResponsive">
-						<ul class="navbar-nav ms-auto py-4 py-lg-0">
-							<li id="firebaseui-auth-container" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>
+						<ul class="navbar-nav ms-auto py-4 py-lg-0" id="navbar">
+							<script>
+								$("#navbar").append('<li id="firebaseui-auth-container" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>');
+							</script>
 							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../html/store.html">store</a></li>
 							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../html/roulette.html">roulette</a></li>
 						</ul>
