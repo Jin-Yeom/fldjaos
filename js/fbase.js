@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-analytics.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAq9_eXkpuWq5rDAS5oWi9vyI_MsgwO4pI",
@@ -14,24 +13,34 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
-provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-provider.setCustomParameters({
-  'login_hint': 'wlsdua12@gmail.com'
-});
+//provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+//provider.setCustomParameters({
+//  'login_hint': 'wlsdua12@gmail.com'
+//});
 
-auth.languageCode = 'it';
+//auth.languageCode = 'it';
 
+//Event Controller
 window.addEventListener("DOMContentLoaded", function(){
-  const id = document.getElementById("firebaseui-auth-container");
-  id.addEventListener("click", function(){
+  if(document.getElementById("firebase-login") != null) {
+    document.getElementById("firebase-login").addEventListener("click", function(){
       loginPopup();
-  })
+    })
+  } else {
+    document.getElementById("firebase-logout").addEventListener("click", function(){
+      logoutPopup();
+    })
+  }
 })
 
+/* 
+ * 이름 : loginPopup
+ * 이벤트 종류 : 클릭
+ * 설명 : 로그인 및 로그인 세션스토리지 set
+ */
 function loginPopup() {
   debugger;
   signInWithPopup(auth, provider)
@@ -45,6 +54,7 @@ function loginPopup() {
 
     if(result != null && result.user != null) {
       sessionStorage.setItem("displayName", result.user.displayName);
+      sessionStorage.setItem("email", result.user.email);
       sessionStorage.setItem("uid", result.user.uid);
     }
 
@@ -59,6 +69,23 @@ function loginPopup() {
     const credential = GoogleAuthProvider.credentialFromError(error);
   });
 }
+
+/* 
+ * 이름 : logoutPopup
+ * 이벤트 종류 : 클릭
+ * 설명 : 로그아웃 및 로그인 세션스토리지 remove
+ */
+function logoutPopup() {
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    sessionStorage.removeItem("displayName");
+    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("uid");
+  }).catch((error) => {
+    // An error happened.
+  });
+}
+
 /*******************************************
  * method area
  *******************************************/
@@ -82,9 +109,3 @@ function loginPopup() {
 //     // The AuthCredential type that was used.
 //     const credential = GoogleAuthProvider.credentialFromError(error);
 //   });
-
-// signOut(auth).then(() => {
-// 	// Sign-out successful.
-// }).catch((error) => {
-// 	// An error happened.
-// });

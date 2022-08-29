@@ -36,8 +36,11 @@
 						<ul class="navbar-nav ms-auto py-4 py-lg-0" id="navbar">
 							<script>
 								debugger;
-								
-								$("#navbar").append('<li id="firebaseui-auth-container" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>');
+								if(sessionStorage.getItem("uid") != null) {
+									$("#navbar").append('<li id="firebase-logout" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">logout</a></li>');
+								} else {
+									$("#navbar").append('<li id="firebase-login" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>');
+								}
 							</script>
 							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../html/store.html">store</a></li>
 							<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="../html/roulette.html">roulette</a></li>
