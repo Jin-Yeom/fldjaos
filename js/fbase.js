@@ -58,6 +58,8 @@ function loginPopup() {
       sessionStorage.setItem("uid", result.user.uid);
     }
 
+    location.reload();
+    
   }).catch((error) => {
     debugger;
     // Handle Errors here.
@@ -77,10 +79,12 @@ function loginPopup() {
  */
 function logoutPopup() {
   signOut(auth).then(() => {
+    debugger;
     // Sign-out successful.
     sessionStorage.removeItem("displayName");
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("uid");
+    location.reload();
   }).catch((error) => {
     // An error happened.
   });
