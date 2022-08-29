@@ -16,13 +16,6 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 
-//provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-//provider.setCustomParameters({
-//  'login_hint': 'wlsdua12@gmail.com'
-//});
-
-//auth.languageCode = 'it';
-
 //Event Controller
 window.addEventListener("DOMContentLoaded", function(){
   if(document.getElementById("firebase-login") != null) {
@@ -36,16 +29,18 @@ window.addEventListener("DOMContentLoaded", function(){
   }
 })
 
+/*******************************************
+ * method area
+ *******************************************/
+
 /* 
  * 이름 : loginPopup
  * 이벤트 종류 : 클릭
  * 설명 : 로그인 및 로그인 세션스토리지 set
  */
 function loginPopup() {
-  debugger;
   signInWithPopup(auth, provider)
   .then((result) => {
-    debugger;
     // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential.accessToken;
@@ -61,7 +56,6 @@ function loginPopup() {
     location.reload();
 
   }).catch((error) => {
-    debugger;
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -79,10 +73,6 @@ function loginPopup() {
  */
 function logoutPopup() {
   signOut(auth).then(() => {
-    debugger;
-    this.setState({
-      user:null
-    })
     // Sign-out successful.
     sessionStorage.removeItem("displayName");
     sessionStorage.removeItem("email");
@@ -92,27 +82,3 @@ function logoutPopup() {
     // An error happened.
   });
 }
-
-/*******************************************
- * method area
- *******************************************/
-
-// signInWithRedirect(auth, provider);
-
-// getRedirectResult(auth)
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access Google APIs.
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
-
-//     // The signed-in user info.
-//     const user = result.user;
-//   }).catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // The email of the user's account used.
-//     const email = error.customData.email;
-//     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//   });
