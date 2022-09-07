@@ -88,10 +88,10 @@
 				<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4MfZy5pXuxlN8Trxo066_lOu8V5IueB0&callback=initMap&region=kr"></script>
 			</center> -->
 
-			
-			<div id="map" style="width:50%; height: 50vh;"></div>
-			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=369cbfe9e265030d709d3af757bee96b"></script>
-			
+			<center>
+				<div id="map" style="width:50%; height: 50vh;"></div>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=369cbfe9e265030d709d3af757bee96b"></script>
+			</center>
 
 			<!-- Footer-->
 			<footer class="border-top">
@@ -113,9 +113,21 @@
 
 				var map = new kakao.maps.Map(mapContainer, mapOption);
 
+				var markerPosition  = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+
+				// 마커를 생성합니다
+				var marker = new kakao.maps.Marker({
+						position: markerPosition
+				});
+
 				var infowindow = new kakao.maps.InfoWindow({
 						zIndex: 1
 				});
+
+				// 마커가 지도 위에 표시되도록 설정합니다
+				marker.setMap(map);
+				map.setCenter(markerPosition);
+
 				// 구글 맵~~~~
 				// let map;
 
