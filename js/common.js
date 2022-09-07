@@ -9,3 +9,4 @@ var showPopup = function(pageNm) {
 
 	window.open("../html/" + pageNm + ".html", "popup", 'width=' + _width + ', height=' + _height + ', left=' + _left + ', top=' + _top);
 }
+
