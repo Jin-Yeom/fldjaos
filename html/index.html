@@ -83,10 +83,15 @@
 				</div>
 			</div>
 
-			<center>
+			<!-- <center>
 				<div id="map" style="width:50%; height: 50vh;"></div>
 				<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4MfZy5pXuxlN8Trxo066_lOu8V5IueB0&callback=initMap&region=kr"></script>
-			</center>
+			</center> -->
+
+			
+			<div id="map" style="width:50%; height: 50vh;"></div>
+			<script type="text/javascript" src="https://jin-yeom.github.io/v2/maps/sdk.js?appkey=369cbfe9e265030d709d3af757bee96b"></script>
+			
 
 			<!-- Footer-->
 			<footer class="border-top">
@@ -98,36 +103,49 @@
 					</div>
 				</div>
 			</footer>
-			<button type="button" id="button">ddd</button>
+			
 			<script>
-				let map;
+				var infowindow = new kakao.maps.InfoWindow({
+						zIndex: 1
+				});
 
-				function initMap() {
-					const seoul = { lat: 37.5642135 ,lng: 127.0016985 };
-					map = new google.maps.Map(
-						document.getElementById('map'), {
-							zoom: 12,
-							center: seoul
-						});
+				var mapContainer = document.getElementById('map'),
+						mapOption = {
+								center: new kakao.maps.LatLng(37.5642135, 127.0016985),
+								level: 3
+						};
 
-					window.navigator.geolocation.getCurrentPosition(success, error);
-				}
+				var map =new kakao.maps.Map(mapContainer, mapOption);
+				// 구글 맵~~~~
+				// let map;
 
-				function success(position){
-					const nowLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
-					map.panTo(nowLocation);
-					map.setZoom(16);
+				// function initMap() {
+				// 	const seoul = { lat: 37.5642135 ,lng: 127.0016985 };
+				// 	map = new google.maps.Map(
+				// 		document.getElementById('map'), {
+				// 			zoom: 12,
+				// 			center: seoul
+				// 		});
 
-					new google.maps.Marker({
-						position: nowLocation,
-						map: map,
-						label: "내 위치"
-					});
-				}
+				// 	window.navigator.geolocation.getCurrentPosition(success, error);
+				// }
 
-				function error(err){
-					alert('Sorry, no position available.');
-				}
+				// function success(position){
+				// 	debugger;
+				// 	const nowLocation = { lat: position.coords.latitude, lng: position.coords.longitude };
+				// 	map.panTo(nowLocation);
+				// 	map.setZoom(16);
+
+				// 	new google.maps.Marker({
+				// 		position: nowLocation,
+				// 		map: map,
+				// 		label: "내 위치"
+				// 	});
+				// }
+
+				// function error(err){
+				// 	alert('Sorry, no position available.');
+				// }
 			</script>
 
 			<!-- Bootstrap core JS-->
