@@ -140,6 +140,21 @@
 						content : '<div style="text-align: center;"><h6>내 위치</h6></div>',
 						removable : true
 					});
+
+					//지도에 원 생성
+					var circle = new kakao.maps.Circle({
+							center : markerPosition,  //원의 중심좌표
+							radius: 50, //미터 단위의 원의 반지름
+							strokeWeight: 5, //선의 두께
+							strokeColor: '#75B8FA', //선의 색깔
+							strokeOpacity: 1, //선의 불투명도, 1에서 0 사이의 값이며 0에 가까울수록 투명
+							strokeStyle: 'dashed', //선의 스타일
+							fillColor: '#CFE7FF', //채우기 색깔
+							fillOpacity: 0.7  //채우기 불투명도
+					});
+
+					//지도에 원을 표시
+					circle.setMap(map); 
 				});
 
 				
