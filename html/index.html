@@ -125,7 +125,7 @@
 					//중심지 이동
 					map.panTo(markerPosition);
 
-					//마커 생성
+					//내 위치 마커 생성
 					var marker = new kakao.maps.Marker({
 							position: markerPosition
 					});
@@ -150,7 +150,8 @@
 							//마커를 생성하고 지도에 표시
 							var marker = new kakao.maps.Marker({
 									map: map,
-									position: new kakao.maps.LatLng(place.y, place.x) 
+									position: new kakao.maps.LatLng(place.y, place.x),
+									image: new kakao.maps.MarkerImage("../img/food_main.jpg")
 							});
 
 							//마커에 클릭 이벤트를 등록
