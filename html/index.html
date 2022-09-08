@@ -105,6 +105,8 @@
 			</footer>
 			
 			<script>
+				var markerPosition;	//위치 변수
+
 				//중심지 설정
 				var mapContainer = document.getElementById('map'),
 						mapOption = {
@@ -113,11 +115,11 @@
 						};
 				//지도 생성
 				var map = new kakao.maps.Map(mapContainer, mapOption);
-				debugger;
-				//위치 재설정
+				
+				//position 사용
 				navigator.geolocation.getCurrentPosition(function(position) {
-					debugger;
-					var markerPosition  = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+					//위치 재설정	
+					markerPosition  = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude); 
 					
 					//중심지 이동
 					map.panTo(markerPosition);
