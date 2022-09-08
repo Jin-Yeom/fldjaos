@@ -113,6 +113,7 @@
 								center: new kakao.maps.LatLng(37.5642135, 127.0016985),
 								level: 3
 						};
+						
 				//지도 생성
 				var map = new kakao.maps.Map(mapContainer, mapOption);
 				
@@ -130,13 +131,17 @@
 						position: markerPosition
 				});
 
-				//말풍선 생성
-				var infowindow = new kakao.maps.InfoWindow({
-						zIndex: 1
-				});
-
 				//지도에 마커 적용
 				marker.setMap(map);
+
+				//말풍선 생성
+				var infowindow = new kakao.maps.InfoWindow({
+					map: map, // 인포윈도우가 표시될 지도
+					position : markerPosition, 
+					content : '<div style="padding:5px;">내 위치</div>',
+					removable : true
+				});
+
 
 				// 구글 맵~~~~
 				// let map;
