@@ -105,28 +105,36 @@
 			</footer>
 			
 			<script>
+				//중심지 설정
 				var mapContainer = document.getElementById('map'),
 						mapOption = {
 								center: new kakao.maps.LatLng(37.5642135, 127.0016985),
 								level: 3
 						};
-
+				//지도 생성
 				var map = new kakao.maps.Map(mapContainer, mapOption);
+				debugger;
+				//위치 재설정
+				navigator.geolocation.getCurrentPosition(function(position) {
+					debugger;
+					var markerPosition  = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude); 
+					
+					//중심지 이동
+					map.panTo(markerPosition);
+				});
 
-				var markerPosition  = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude); 
-
-				// 마커를 생성합니다
+				//마커 생성
 				var marker = new kakao.maps.Marker({
 						position: markerPosition
 				});
 
+				//말풍선 생성
 				var infowindow = new kakao.maps.InfoWindow({
 						zIndex: 1
 				});
 
-				// 마커가 지도 위에 표시되도록 설정합니다
+				//지도에 마커 적용
 				marker.setMap(map);
-				map.setCenter(markerPosition);
 
 				// 구글 맵~~~~
 				// let map;
