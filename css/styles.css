@@ -11247,46 +11247,149 @@ header.masthead .site-heading .h1 {
   }
 }
 
-/* signup radio css */
 
-#gender {
-  white-space: nowrap;
-  font-size: 0;
+/* slot */
+.slot_container {
+  width: 100px;
+  height: 50px;
+  overflow: hidden;
 }
 
-#gender input {
-  display: none;
+.menu_slot {
+  position: absolute;
+  top: 44%;
 }
 
-#gender label {
-  display: inline-block;
-  margin: -2px 0 0;
-  font-size: 14px;
-  line-height: 30px;
-  color: #999;
+@keyframes slide {
+  0% {
+    margin-top: 0;
+  }
+  10% {
+    margin-top: -50px;
+  }
+  20% {
+    margin-top: -100px;
+  }
+  30% {
+    margin-top: -150px;
+  }
+  40% {
+    margin-top: -200px;
+  }
+  50% {
+    margin-top: -250px;
+  }
+  60% {
+    margin-top: -300px;
+  }
+  70% {
+    margin-top: -350px;
+  }
+  80% {
+    margin-top: -400px;
+  }
+  90% {
+    margin-top: -450px;
+  }
+  100% {
+    margin-top: -500px;
+  }
+}
+
+.slide_box {
+  animation: slide 1.5s infinite;
+  color: black;
+}
+
+.slide_box li {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.receipt {
+  width: 100%;
+  height: 80%;
+  background-image: url("../img/slot_back.jpg");
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  position: relative;
+}
+
+.receipt .title_text {
+  width: 500%;
   text-align: center;
-  text-shadow: 0 1px 0px rgba(255, 255, 255, 0.75);
-  vertical-align: middle;
+}
+
+.receipt .title_text h1 {
+  font-family: "Orelega One", cursive;
+  font-size: 50px;
+  margin-bottom: 0;
+}
+
+.menu_print {
+  position: absolute;
+  top: 40%;
+  font-size: 40px;
+  color: black;
+  transition: 0.5s;
+}
+
+
+.receipt .main_text p > em {
+  font-style: normal;
+}
+
+.btn_area {
+  position: absolute;
+  bottom: -60px;
+  margin-top: 20px;
+}
+
+.btn_area button {
+  background: black;
+  color: #fff;
+  border: none;
+  position: relative;
+  height: 40px;
+  font-size: 1.4em;
+  padding: 0 1em;
   cursor: pointer;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  width: 60px;
-  height: 30px;
+  transition: 800ms ease all;
+  outline: none;
+  font-family: "Orelega One", cursive;
 }
 
-#gender label:nth-child(2) {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+.btn_area button:hover {
+  background: #fff;
+  color: black;
 }
-
-#gender label:last-child {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+.btn_area button:before,
+.btn_area button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: black;
+  transition: 400ms ease all;
 }
-
-#gender input:checked+label {
-  outline: 0;
-  color: #333;
-  box-shadow: inset 0 3px 3px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
-  background-color: #ccc;
+.btn_area button:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+.btn_area button:hover:before,
+.btn_area button:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
 }
