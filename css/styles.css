@@ -11255,11 +11255,6 @@ header.masthead .site-heading .h1 {
   overflow: hidden;
 }
 
-.menu_slot {
-  position: absolute;
-  top: 44%;
-}
-
 @keyframes slide {
   0% {
     margin-top: 0;
