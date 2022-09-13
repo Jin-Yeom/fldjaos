@@ -88,7 +88,7 @@
 							<!-- slot-->
 							<div class="receipt">
 								<div class="title_text">
-									<h1>Lunch</h1>
+									<h1>Lunch Slot</h1>
 								</div>
 								<div class="menu_print">
 									<h2></h2>
@@ -132,17 +132,22 @@
 			<!-- slot script -->
 			<script>
 				//런치리스트 배열생성
-				let lunchList = ["떡볶이", "우동", "햄버거", "냉면", "마라탕"]
+				const lunchList = [];
 
 				//배열복사
 				let firstLunchList = [];
+
+				// kakao map food search info list
+				for(var i = 0; i < $('.slide_box li').length; i++) {
+					lunchList.push(('.slide_box li')[i].innerHTML);
+				}
 
 				lunchList.forEach(function(item) {
 					firstLunchList.push(item);
 				});
 
-				let distanceList = ["10m", "8m", "7m", "7m", "9m"];
-				let costList = ["7000won", "5000won", "4500won", "8000won", "9000won"];
+				//let distanceList = ["10m", "8m", "7m", "7m", "9m"];
+				//let costList = ["7000won", "5000won", "4500won", "8000won", "9000won"];
 
 
 				//제어할 요소선택 후 변수에 담기
@@ -182,8 +187,6 @@
 						elem.innerHTML = lunckPick;
 
 						//선택된 메뉴의 indexOf를 이용하여 distanceTxt, costTxt 노출
-						
-						
 						let i = firstLunchList.indexOf(lunckPick);
 						//distanceTxt.innerHTML = distanceList[i];
 						//costTxt.innerHTML = costList[i];
