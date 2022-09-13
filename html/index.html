@@ -99,7 +99,7 @@
 										</ul>
 									</div>
 								</div>
-								<div class="main_text">
+								<div class="main_text" style="height: 200px;">
 									<!-- <p>DISTANCE<span>:??m</span></p>
 									<p>COST&<em>:?000won</em></p>
 									<p>LIKE<span>:♥♥♥♥♥</span></p>
@@ -129,6 +129,7 @@
 				</div>
 			</footer>
 			
+			<!-- slot script -->
 			<script>
 				//런치리스트 배열생성
 				let lunchList = ["떡볶이", "우동", "햄버거", "냉면", "마라탕"]
@@ -147,8 +148,8 @@
 				//제어할 요소선택 후 변수에 담기
 				let displaySlot = document.querySelector(".menu_slot"); //menu slot
 				let elem = document.querySelector(".menu_print > h2"); //menu print
-				let distanceTxt = document.querySelector(".main_text> p > span"); //distance
-				let costTxt = document.querySelector("em"); //cost
+				//let distanceTxt = document.querySelector(".main_text> p > span"); //distance
+				//let costTxt = document.querySelector("em"); //cost
 
 
 				//reset check
@@ -184,8 +185,8 @@
 						
 						
 						let i = firstLunchList.indexOf(lunckPick);
-						distanceTxt.innerHTML = distanceList[i];
-						costTxt.innerHTML = costList[i];
+						//distanceTxt.innerHTML = distanceList[i];
+						//costTxt.innerHTML = costList[i];
 
 						//reset 되었을 경우에 숨겨진 메뉴를 다시 노출시킴
 						if (resetNum == 0) {
@@ -280,7 +281,8 @@
 								for (var i=0; i<data.length; i++) {
 										displayMarker(data[i]);
 										foodHtml += ("<li>" + data[i].place_name + "</li>"); 
-								}       
+								}
+								$('.slide_box').append(foodHtml);
 						}
 					}
 
