@@ -11309,7 +11309,6 @@ header.masthead .site-heading .h1 {
 }
 
 .receipt {
-  width: 100%;
   height: 80%;
   background-image: url("../img/slot_back.jpg");
   display: flex;
@@ -11321,14 +11320,12 @@ header.masthead .site-heading .h1 {
 }
 
 .receipt .title_text {
-  width: 500%;
   text-align: center;
 }
 
 .receipt .title_text h1 {
   font-family: "Orelega One", cursive;
   font-size: 50px;
-  margin-bottom: 0;
 }
 
 .menu_print {
