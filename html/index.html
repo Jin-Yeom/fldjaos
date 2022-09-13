@@ -96,6 +96,7 @@
 								<div class="menu_slot">
 									<div class="slot_container">
 										<ul class="slide_box" style="padding-left: 0px;">
+											<li>처갓집양념치킨 잠원점</li>
 										</ul>
 									</div>
 								</div>
@@ -137,15 +138,6 @@
 				//배열복사
 				let firstLunchList = [];
 
-				// kakao map food search info list
-				for(var i = 0; i < $('.slide_box li').length; i++) {
-					lunchList.push(('.slide_box li')[i].innerHTML);
-				}
-
-				lunchList.forEach(function(item) {
-					firstLunchList.push(item);
-				});
-
 				//let distanceList = ["10m", "8m", "7m", "7m", "9m"];
 				//let costList = ["7000won", "5000won", "4500won", "8000won", "9000won"];
 
@@ -174,6 +166,15 @@
 							}
 							return a;
 						}
+
+						// kakao map food search info list
+						for(var i = 0; i < $('.slide_box li').length; i++) {
+							lunchList.push($('.slide_box li')[i].innerHTML);
+						}
+
+						lunchList.forEach(function(item) {
+							firstLunchList.push(item);
+						});
 
 						//슬롯애니메이션 감추기
 						displaySlot.style.display = "none";
