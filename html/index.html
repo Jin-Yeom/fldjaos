@@ -131,12 +131,6 @@
 			
 			<!-- slot script -->
 			<script>
-				//런치리스트 배열생성
-				const lunchList = [];
-
-				//배열복사
-				let firstLunchList = [];
-
 				//let distanceList = ["10m", "8m", "7m", "7m", "9m"];
 				//let costList = ["7000won", "5000won", "4500won", "8000won", "9000won"];
 
@@ -165,6 +159,12 @@
 							}
 							return a;
 						}
+
+						//런치리스트 배열생성
+						let lunchList = [];
+
+						//배열복사
+						let firstLunchList = [];
 
 						// kakao map food search info list
 						for(var i = 0; i < $('.slide_box li').length; i++) {
