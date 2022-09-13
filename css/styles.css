@@ -11299,7 +11299,7 @@ header.masthead .site-heading .h1 {
 .slide_box {
   width: 500px;
   height: 100px;
-  animation: slide 0.5s infinite;
+  animation: slide 1s infinite;
   color: black;
 }
 
