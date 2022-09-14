@@ -11250,7 +11250,7 @@ header.masthead .site-heading .h1 {
 
 /* slot */
 .slot_container {
-  width: 500vh;
+  width: 400vh;
   height: 50px;
   overflow: hidden;
 }
@@ -11297,14 +11297,14 @@ header.masthead .site-heading .h1 {
 }
 
 .slide_box {
-  width: 500vh;
+  width: 400vh;
   height: 50px * 5;
   animation: slide 1.2s infinite;
   color: black;
 }
 
 .slide_box li {
-  width: 500vh;
+  width: 400vh;
   height: 50px;
   display: flex;
   align-items: center;
