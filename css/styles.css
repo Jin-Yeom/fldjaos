@@ -11250,8 +11250,14 @@ header.masthead .site-heading .h1 {
 
 /* slot */
 .slot_container {
-  height: 100px;
+  width: 500px;
+  height: 50px;
   overflow: hidden;
+}
+
+.menu_slot {
+  position: absolute;
+  top: 44%;
 }
 
 @keyframes slide {
@@ -11291,12 +11297,15 @@ header.masthead .site-heading .h1 {
 }
 
 .slide_box {
+  width: 500px;
+  height: 50px * 5;
   animation: slide 1.2s infinite;
   color: black;
 }
 
 .slide_box li {
-  height: 100px;
+  width: 500px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11304,8 +11313,10 @@ header.masthead .site-heading .h1 {
   font-weight: bold;
 }
 
+
 .receipt {
-  height: 80%;
+  width: 100%;
+  height: 100%;
   background-image: url("../img/slot_back.jpg");
   display: flex;
   flex-direction: column;
@@ -11316,7 +11327,7 @@ header.masthead .site-heading .h1 {
 }
 
 .receipt .title_text {
-  width: 500%;
+  width: 100%;
   text-align: center;
 }
 
@@ -11326,17 +11337,29 @@ header.masthead .site-heading .h1 {
   margin-bottom: 0;
 }
 
+.receipt .title_text h3 {
+  margin-bottom: 20px;
+}
+
 .menu_print {
+  position: absolute;
   top: 40%;
   font-size: 40px;
   color: black;
   transition: 0.5s;
 }
 
+.receipt .main_text {
+  font-family: "Roboto Mono", monospace;
+  position: absolute;
+  left: 30px;
+  bottom: 5%;
+}
 
 .receipt .main_text p > em {
   font-style: normal;
 }
+
 
 .btn_area {
   position: absolute;
@@ -11357,7 +11380,6 @@ header.masthead .site-heading .h1 {
   outline: none;
   font-family: "Orelega One", cursive;
 }
-
 .btn_area button:hover {
   background: #fff;
   color: black;
