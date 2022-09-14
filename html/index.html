@@ -287,7 +287,12 @@
 										displayMarker(data[i]);
 										foodHtml += ("<li>" + data[i].place_name + "</li>"); 
 								}
-								$('.slide_box').append(foodHtml);
+
+								if(foodHtml != "") {	//주변에 식당이 있다면
+									$('.slide_box').append(foodHtml);
+								} else {							//주변에 식당이 없다면
+									$('.slide_box').append("<li>주변에 식당이 없습니다.</li>");
+								}
 						}
 					}
 

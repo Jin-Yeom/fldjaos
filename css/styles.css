@@ -11250,7 +11250,6 @@ header.masthead .site-heading .h1 {
 
 /* slot */
 .slot_container {
-  
   height: 50px;
   overflow: hidden;
 }
@@ -11297,13 +11296,11 @@ header.masthead .site-heading .h1 {
 }
 
 .slide_box {
-  
   animation: slide 1.2s infinite;
   color: black;
 }
 
 .slide_box li {
-  
   height: 50px;
   display: flex;
   align-items: center;
