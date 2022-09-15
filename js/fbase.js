@@ -1,5 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
+import { getFirestore , doc, setDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
+
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAq9_eXkpuWq5rDAS5oWi9vyI_MsgwO4pI",
@@ -15,6 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
+const db = getFirestore(app);
 
 //Event Controller
 window.addEventListener("DOMContentLoaded", function(){
