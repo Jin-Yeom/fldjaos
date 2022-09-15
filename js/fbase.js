@@ -55,8 +55,8 @@ function loginPopup() {
       sessionStorage.setItem("displayName", result.user.displayName);
       sessionStorage.setItem("email", result.user.email);
       sessionStorage.setItem("uid", result.user.uid);
-
-      await updateDoc(doc(db, "user"), {
+      
+      updateDoc(doc(db, "user"), {
         displayName:arrayUnion(result.user.displayName),
         email:arrayUnion(result.user.email),
         uid:arrayUnion(result.user.uid)
@@ -94,8 +94,9 @@ function logoutPopup() {
 }
 
 // await updateDoc(doc(db, "user"), {
-//   displayName:arrayUnion("촠촠캌촠콬칰"),
-//   email:arrayUnion("wlsdua12@gmail.com")
+//   displayName:arrayUnion("asdasd"),
+//   email:arrayUnion("asdasd"),
+//   uid:arrayUnion("asdasd")
 // })
 
 // await updateDoc(doc(db, "user"), {
