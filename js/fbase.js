@@ -50,16 +50,16 @@ function loginPopup() {
     const token = credential.accessToken;
     // The signed-in user info.
     const user = result.user;
-
+    
     if(result != null && result.user != null) {
       sessionStorage.setItem("displayName", result.user.displayName);
       sessionStorage.setItem("email", result.user.email);
       sessionStorage.setItem("uid", result.user.uid);
       
       updateDoc(doc(db, "user"), {
-        displayName:arrayUnion(result.user.displayName),
-        email:arrayUnion(result.user.email),
-        uid:arrayUnion(result.user.uid)
+        displayName:arrayUnion("result.user.displayName"),
+        email:arrayUnion("result.user.email"),
+        uid:arrayUnion("result.user.uid")
       })
     }
 
