@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-import { getFirestore , doc, setDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, deleteField, getDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -17,7 +17,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
-const db = getFirestore(app);
+const database = getFirestore(app);
+const db = collection(database, "fldjaos");
 
 //Event Controller
 window.addEventListener("DOMContentLoaded", function(){
@@ -54,6 +55,12 @@ function loginPopup() {
       sessionStorage.setItem("displayName", result.user.displayName);
       sessionStorage.setItem("email", result.user.email);
       sessionStorage.setItem("uid", result.user.uid);
+
+      await updateDoc(doc(db, "user"), {
+        displayName:arrayUnion(result.user.displayName),
+        email:arrayUnion(result.user.email),
+        uid:arrayUnion(result.user.uid)
+      })
     }
 
     location.reload();
@@ -85,3 +92,16 @@ function logoutPopup() {
     // An error happened.
   });
 }
+
+// await updateDoc(doc(db, "user"), {
+//   displayName:arrayUnion("촠촠캌촠콬칰"),
+//   email:arrayUnion("wlsdua12@gmail.com")
+// })
+
+// await updateDoc(doc(db, "user"), {
+//   ff:arrayRemove("qqqqqq"),
+//   dd:arrayRemove("wwwwww")
+// })
+
+// const querySnapshot = await getDoc(doc(db, "user"));
+// querySnapshot.data();
