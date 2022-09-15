@@ -56,11 +56,11 @@ function loginPopup() {
       sessionStorage.setItem("email", result.user.email);
       sessionStorage.setItem("uid", result.user.uid);
       
-      // updateDoc(doc(db, "user"), {
-      //   displayName:arrayUnion(result.user.displayName),
-      //   email:arrayUnion(result.user.email),
-      //   uid:arrayUnion(result.user.uid)
-      // })
+      updateDoc(doc(db, "user"), {
+        displayName:arrayUnion(result.user.displayName),
+        email:arrayUnion(result.user.email),
+        uid:arrayUnion(result.user.uid)
+      })
     }
 
     location.reload();
@@ -99,11 +99,11 @@ await updateDoc(doc(db, "user"), {
   uid:arrayUnion("asdasd")
 })
 
-updateDoc(doc(db, "user"), {
-  displayName:arrayUnion(sessionStorage.getItem("displayName")),
-  email:arrayUnion(sessionStorage.getItem("email")),
-  uid:arrayUnion(sessionStorage.getItem("uid"))
-})
+// updateDoc(doc(db, "user"), {
+//   displayName:arrayUnion(sessionStorage.getItem("displayName")),
+//   email:arrayUnion(sessionStorage.getItem("email")),
+//   uid:arrayUnion(sessionStorage.getItem("uid"))
+// })
 
 // await updateDoc(doc(db, "user"), {
 //   ff:arrayRemove("qqqqqq"),
