@@ -100,9 +100,9 @@ await updateDoc(doc(db, "user"), {
 })
 
 updateDoc(doc(db, "user"), {
-  displayName:arrayUnion("qqq"),
-  email:arrayUnion("qqqq"),
-  uid:arrayUnion("qqq")
+  displayName:arrayUnion(sessionStorage.getItem("displayName")),
+  email:arrayUnion(sessionStorage.getItem("email")),
+  uid:arrayUnion(sessionStorage.getItem("uid"))
 })
 
 // await updateDoc(doc(db, "user"), {
