@@ -62,11 +62,8 @@ function loginPopup(callbackFn) {
     })
     
     /* 동적 로그인 UI */
-    if(sessionStorage.getItem("uid") != null) {
-      $("#navbar").append('<li id="firebase-logout" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">logout</a></li>');
-    } else {
-      $("#navbar").append('<li id="firebase-login" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>');
-    }
+    $("#navbar li").remove()
+    $("#navbar").append('<li id="firebase-logout" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">logout</a></li>');
 
   }).catch((error) => {
     // Handle Errors here.
