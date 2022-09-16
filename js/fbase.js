@@ -55,7 +55,11 @@ function loginPopup() {
       sessionStorage.setItem("displayName", result.user.displayName);
       sessionStorage.setItem("email", result.user.email);
       sessionStorage.setItem("uid", result.user.uid);
-      
+    }
+
+    location.reload();
+
+    if(result != null && result.user != null) {
       updateDoc(doc(db, "user"), {
         displayName:arrayUnion(result.user.displayName),
         email:arrayUnion(result.user.email),
@@ -63,16 +67,7 @@ function loginPopup() {
       })
     }
 
-    //location.reload();
-
   }).catch((error) => {
-    // debugger;
-    // updateDoc(doc(db, "user"), {
-    //   displayName:arrayUnion("11111"),
-    //   email:arrayUnion("2222222"),
-    //   uid:arrayUnion("333333")
-    // })
-
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
