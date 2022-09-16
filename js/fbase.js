@@ -24,7 +24,9 @@ const db = collection(database, "fldjaos");
 window.addEventListener("DOMContentLoaded", function(){
   if(document.getElementById("firebase-login") != null) {
     document.getElementById("firebase-login").addEventListener("click", function(){
-      loginPopup();
+      loginPopup().then(function() {
+        debugger;
+      });
     })
   } else {
     document.getElementById("firebase-logout").addEventListener("click", function(){
@@ -60,11 +62,6 @@ function loginPopup(callbackFn) {
       email:arrayUnion(result.user.email),
       uid:arrayUnion(result.user.uid)
     })
-    
-    /* 동적 로그인 UI */
-    $("#navbar li").remove();
-    $("#navbar").append('<li id="firebase-logout" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">logout</a></li>');
-
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
@@ -87,10 +84,6 @@ function logoutPopup() {
     sessionStorage.removeItem("displayName");
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("uid");
-    
-    /* 동적 로그인 UI */
-    $("#navbar li").remove();
-    $("#navbar").append('<li id="firebase-login" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>');
   }).catch((error) => {
     // An error happened.
   });
