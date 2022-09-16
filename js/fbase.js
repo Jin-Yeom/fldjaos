@@ -25,7 +25,6 @@ window.addEventListener("DOMContentLoaded", function(){
   if(document.getElementById("firebase-login") != null) {
     document.getElementById("firebase-login").addEventListener("click", function(){
       loginPopup();
-      location.reload();
     })
   } else {
     document.getElementById("firebase-logout").addEventListener("click", function(){
@@ -52,17 +51,18 @@ function loginPopup() {
     // The signed-in user info.
     const user = result.user;
     
-    if(result != null && result.user != null) {
-      sessionStorage.setItem("displayName", result.user.displayName);
-      sessionStorage.setItem("email", result.user.email);
-      sessionStorage.setItem("uid", result.user.uid);
+    sessionStorage.setItem("displayName", result.user.displayName);
+    sessionStorage.setItem("email", result.user.email);
+    sessionStorage.setItem("uid", result.user.uid);
 
-      updateDoc(doc(db, "user"), {
-        displayName:arrayUnion(result.user.displayName),
-        email:arrayUnion(result.user.email),
-        uid:arrayUnion(result.user.uid)
-      })
+    updateDoc(doc(db, "user"), {
+      displayName:arrayUnion(result.user.displayName),
+      email:arrayUnion(result.user.email),
+      uid:arrayUnion(result.user.uid)
+    }).then() {
+      location.reload();
     }
+    
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
