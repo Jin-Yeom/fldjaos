@@ -62,7 +62,7 @@ function loginPopup(callbackFn) {
     })
     
     /* 동적 로그인 UI */
-    $("#navbar li").remove()
+    $("#navbar li").remove();
     $("#navbar").append('<li id="firebase-logout" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">logout</a></li>');
 
   }).catch((error) => {
@@ -87,7 +87,10 @@ function logoutPopup() {
     sessionStorage.removeItem("displayName");
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("uid");
-    location.reload();
+    
+    /* 동적 로그인 UI */
+    $("#navbar li").remove();
+    $("#navbar").append('<li id="firebase-login" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>');
   }).catch((error) => {
     // An error happened.
   });
