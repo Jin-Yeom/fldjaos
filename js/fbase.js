@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", function(){
  * 이벤트 종류 : 클릭
  * 설명 : 로그인 및 로그인 세션스토리지 set
  */
-function loginPopup(callbackFn) {
+function loginPopup() {
   signInWithPopup(auth, provider)
   .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -59,8 +59,8 @@ function loginPopup(callbackFn) {
       displayName:arrayUnion(result.user.displayName),
       email:arrayUnion(result.user.email),
       uid:arrayUnion(result.user.uid)
-    }).then(()=>{
-      console.log("aaaaa");
+    }).then(() => {
+      location.reload();
     })
 
   }).catch((error) => {
