@@ -24,7 +24,9 @@ const db = collection(database, "fldjaos");
 window.addEventListener("DOMContentLoaded", function(){
   if(document.getElementById("firebase-login") != null) {
     document.getElementById("firebase-login").addEventListener("click", function(){
-      loginPopup();
+      loginPopup(function() {
+        location.reload();
+      });
     })
   } else {
     document.getElementById("firebase-logout").addEventListener("click", function(){
@@ -42,7 +44,7 @@ window.addEventListener("DOMContentLoaded", function(){
  * 이벤트 종류 : 클릭
  * 설명 : 로그인 및 로그인 세션스토리지 set
  */
-function loginPopup() {
+function loginPopup(callbackFn) {
   signInWithPopup(auth, provider)
   .then((result) => {
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -60,8 +62,6 @@ function loginPopup() {
       email:arrayUnion(result.user.email),
       uid:arrayUnion(result.user.uid)
     })
-    
-    windowReload();
     
   }).catch((error) => {
     // Handle Errors here.
@@ -89,10 +89,6 @@ function logoutPopup() {
   }).catch((error) => {
     // An error happened.
   });
-}
-
-function windowReload() {
-  location.reload();
 }
 
 // await updateDoc(doc(db, "user"), {
