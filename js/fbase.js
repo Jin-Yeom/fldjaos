@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, deleteField, getDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
+import { getFirestore, collection, doc, deleteDoc, updateDoc, deleteField, getDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -25,6 +25,7 @@ window.addEventListener("DOMContentLoaded", function(){
   if(document.getElementById("firebase-login") != null) {
     document.getElementById("firebase-login").addEventListener("click", function(){
       loginPopup();
+      location.reload();
     })
   } else {
     document.getElementById("firebase-logout").addEventListener("click", function(){
@@ -55,18 +56,13 @@ function loginPopup() {
       sessionStorage.setItem("displayName", result.user.displayName);
       sessionStorage.setItem("email", result.user.email);
       sessionStorage.setItem("uid", result.user.uid);
-    }
 
-    location.reload();
-
-    if(result != null && result.user != null) {
       updateDoc(doc(db, "user"), {
         displayName:arrayUnion(result.user.displayName),
         email:arrayUnion(result.user.email),
         uid:arrayUnion(result.user.uid)
       })
     }
-
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
@@ -99,12 +95,6 @@ function logoutPopup() {
 //   displayName:arrayUnion("asdasd"),
 //   email:arrayUnion("asdasd"),
 //   uid:arrayUnion("asdasd")
-// })
-
-// updateDoc(doc(db, "user"), {
-//   displayName:arrayUnion(sessionStorage.getItem("displayName")),
-//   email:arrayUnion(sessionStorage.getItem("email")),
-//   uid:arrayUnion(sessionStorage.getItem("uid"))
 // })
 
 // await updateDoc(doc(db, "user"), {
