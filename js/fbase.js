@@ -24,9 +24,7 @@ const db = collection(database, "fldjaos");
 window.addEventListener("DOMContentLoaded", function(){
   if(document.getElementById("firebase-login") != null) {
     document.getElementById("firebase-login").addEventListener("click", function(){
-      loginPopup().then(function() {
-        debugger;
-      });
+      loginPopup();
     })
   } else {
     document.getElementById("firebase-logout").addEventListener("click", function(){
@@ -61,7 +59,10 @@ function loginPopup(callbackFn) {
       displayName:arrayUnion(result.user.displayName),
       email:arrayUnion(result.user.email),
       uid:arrayUnion(result.user.uid)
+    }).then(()=>{
+      console.log("aaaaa");
     })
+
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
