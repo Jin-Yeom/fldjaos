@@ -63,9 +63,16 @@ function loginPopup() {
       })
     }
 
-    location.reload();
+    //location.reload();
 
   }).catch((error) => {
+    // debugger;
+    // updateDoc(doc(db, "user"), {
+    //   displayName:arrayUnion("11111"),
+    //   email:arrayUnion("2222222"),
+    //   uid:arrayUnion("333333")
+    // })
+
     // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -93,11 +100,11 @@ function logoutPopup() {
   });
 }
 
-await updateDoc(doc(db, "user"), {
-  displayName:arrayUnion("asdasd"),
-  email:arrayUnion("asdasd"),
-  uid:arrayUnion("asdasd")
-})
+// await updateDoc(doc(db, "user"), {
+//   displayName:arrayUnion("asdasd"),
+//   email:arrayUnion("asdasd"),
+//   uid:arrayUnion("asdasd")
+// })
 
 // updateDoc(doc(db, "user"), {
 //   displayName:arrayUnion(sessionStorage.getItem("displayName")),
