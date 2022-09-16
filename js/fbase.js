@@ -59,9 +59,9 @@ function loginPopup() {
       displayName:arrayUnion(result.user.displayName),
       email:arrayUnion(result.user.email),
       uid:arrayUnion(result.user.uid)
-    }).then() {
-      location.reload();
-    }
+    })
+    
+    windowReload();
     
   }).catch((error) => {
     // Handle Errors here.
@@ -89,6 +89,10 @@ function logoutPopup() {
   }).catch((error) => {
     // An error happened.
   });
+}
+
+function windowReload() {
+  location.reload();
 }
 
 // await updateDoc(doc(db, "user"), {
