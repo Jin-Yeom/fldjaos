@@ -85,6 +85,8 @@ function logoutPopup() {
     sessionStorage.removeItem("displayName");
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("uid");
+
+    location.reload();
   }).catch((error) => {
     // An error happened.
   });
