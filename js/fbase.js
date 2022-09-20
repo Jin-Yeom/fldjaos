@@ -20,6 +20,12 @@ const auth = getAuth();
 const database = getFirestore(app);
 const db = collection(database, "fldjaos");
 
+/*******************************************
+ * 전역변수
+ *******************************************/
+var coinCnt = 0;
+/*******************************************/
+
 //Event Controller
 window.addEventListener("DOMContentLoaded", function(){
   if(document.getElementById("firebase-login") != null) {
@@ -37,9 +43,21 @@ window.addEventListener("DOMContentLoaded", function(){
  * method area
  *******************************************/
 
+
+/* 
+ * 이름 : addCoin
+ * 설명 : 하루에 한번씩 실행되어 코인을 한개씩 증가해준다
+ */
+function addCoin() {
+  if(coinCnt < 10) {
+    coinCnt++;
+  }
+  $(".coin h5")[0].innerText = 'X ' + coinCnt;
+}
+setInterval(addCoin, 6000);
+
 /* 
  * 이름 : loginPopup
- * 이벤트 종류 : 클릭
  * 설명 : 로그인 및 로그인 세션스토리지 set
  */
 function loginPopup() {
@@ -76,7 +94,6 @@ function loginPopup() {
 
 /* 
  * 이름 : logoutPopup
- * 이벤트 종류 : 클릭
  * 설명 : 로그아웃 및 로그인 세션스토리지 remove
  */
 function logoutPopup() {
