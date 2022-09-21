@@ -60,19 +60,19 @@ async function addCoin() {
     for(var i = 0; i < coinDb.length; i++) {
       coinCnt = parseInt(coinDb[i][coinDb[i].length-1]);
   
-      if(coinCnt < 10) {
+      if(coinCnt < 7) {
         coinCnt++;
-      }
-  
-      for(var j = 0; j < 10; j++) {
+        
+        for(var j = 0; j < 8; j++) {
+          updateDoc(doc(db, "user"), {
+            coin:arrayRemove(coinDb[i].substring(0, coinDb[i].length-1) + j)
+          })
+        }
+        
         updateDoc(doc(db, "user"), {
-          coin:arrayRemove(coinDb[i].substring(0, coinDb[i].length-1) + j)
+          coin:arrayUnion(coinDb[i].substring(0, coinDb[i].length-1) + coinCnt)
         })
       }
-      
-      updateDoc(doc(db, "user"), {
-        coin:arrayUnion(coinDb[i].substring(0, coinDb[i].length-1) + coinCnt)
-      })
     }
   });
 }
