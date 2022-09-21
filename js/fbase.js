@@ -24,7 +24,11 @@ const queryUser = await getDoc(doc(db, "user"));
 /*******************************************
  * 전역변수
  *******************************************/
-var coinDb = queryUser.data().coin;
+if(queryUser.data().coin != "") {
+  var coinDb = queryUser.data().coin;
+} else {
+  var coinDb = "";
+}
 /*******************************************/
 
 //Event Controller
@@ -45,13 +49,13 @@ window.addEventListener("DOMContentLoaded", function(){
  *******************************************/
 
 
-/* 
+/**
  * 이름 : addCoin
  * 설명 : 하루에 한번씩 실행되어 코인을 한개씩 증가해준다
  */
 function addCoin() {
   var coinCnt = 0;
-
+  
   for(var i = 0; i < coinDb.length; i++) {
     coinCnt = parseInt(coinDb[i][coinDb[i].length-1]);
 
@@ -64,7 +68,7 @@ function addCoin() {
         coin:arrayRemove(coinDb[i].substring(0, coinDb[i].length-1) + j)
       })
     }
-
+    
     updateDoc(doc(db, "user"), {
       coin:arrayUnion(coinDb[i].substring(0, coinDb[i].length-1) + coinCnt)
     })
@@ -84,20 +88,25 @@ function loginPopup() {
     const token = credential.accessToken;
     // The signed-in user info.
     const user = result.user;
-    
+
     sessionStorage.setItem("displayName", result.user.displayName);
     sessionStorage.setItem("email", result.user.email);
     sessionStorage.setItem("uid", result.user.uid);
 
-    updateDoc(doc(db, "user"), {
-      displayName:arrayUnion(result.user.displayName),
-      email:arrayUnion(result.user.email),
-      uid:arrayUnion(result.user.uid),
-      coin:arrayUnion(result.user.uid + "1")
-    }).then(() => {
-      location.reload();
-    })
+    var coinChk = coinCnt.find(val => val.indexOf(result.user.uid) > -1);
 
+    if(typeof coinChk !== "undefined") {
+      location.reload();
+    } else {
+      updateDoc(doc(db, "user"), {
+        displayName:arrayUnion(result.user.displayName),
+        email:arrayUnion(result.user.email),
+        uid:arrayUnion(result.user.uid),
+        coin:arrayUnion(result.user.uid + "1")
+      }).then(() => {
+        location.reload();
+      })
+    }
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
