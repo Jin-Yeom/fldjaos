@@ -19,11 +19,12 @@ const provider = new GoogleAuthProvider();
 const auth = getAuth();
 const database = getFirestore(app);
 const db = collection(database, "fldjaos");
+const queryUser = await getDoc(doc(db, "user"));
 
 /*******************************************
  * 전역변수
  *******************************************/
-var coinCnt = 0;
+var coinDb = queryUser.data().coin;
 /*******************************************/
 
 //Event Controller
@@ -49,10 +50,25 @@ window.addEventListener("DOMContentLoaded", function(){
  * 설명 : 하루에 한번씩 실행되어 코인을 한개씩 증가해준다
  */
 function addCoin() {
-  if(coinCnt < 10) {
-    coinCnt++;
+  var coinCnt = 0;
+
+  for(var i = 0; i < coinDb.length; i++) {
+    coinCnt = parseInt(coinDb[i][coinDb[i].length-1]);
+
+    if(coinCnt < 10) {
+      coinCnt++;
+    }
+
+    for(var j = 0; j < 10; j++) {
+      updateDoc(doc(db, "user"), {
+        coin:arrayRemove(coinDb[i].substring(0, coinDb[i].length-1) + j)
+      })
+    }
+
+    updateDoc(doc(db, "user"), {
+      coin:arrayUnion(coinDb[i].substring(0, coinDb[i].length-1) + coinCnt)
+    })
   }
-  $(".coin h5")[0].innerText = 'X ' + coinCnt;
 }
 setInterval(addCoin, 6000);
 
@@ -76,7 +92,8 @@ function loginPopup() {
     updateDoc(doc(db, "user"), {
       displayName:arrayUnion(result.user.displayName),
       email:arrayUnion(result.user.email),
-      uid:arrayUnion(result.user.uid)
+      uid:arrayUnion(result.user.uid),
+      coin:arrayUnion(result.user.uid + "1")
     }).then(() => {
       location.reload();
     })
@@ -122,3 +139,7 @@ function logoutPopup() {
 
 // const querySnapshot = await getDoc(doc(db, "user"));
 // querySnapshot.data();
+
+//coinCnt = coinCnt.find(val => val.indexOf("6kWRxQqzUvNBKRYB7CtuWkO2PD62") > -1);
+//coinCnt = parseInt(coinCnt[coinCnt.length-1]);
+//$(".coin h5")[0].innerText = 'X ' + coinCnt;
