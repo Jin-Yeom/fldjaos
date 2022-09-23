@@ -94,6 +94,12 @@ function loginPopup() {
     sessionStorage.setItem("displayName", result.user.displayName);
     sessionStorage.setItem("email", result.user.email);
     sessionStorage.setItem("uid", result.user.uid);
+    
+    await getDoc(doc(db, "user")).then((result) => {
+      if(result.data().coin != "") {
+        coinDb = result.data().coin;
+      }
+    })
 
     var coinChk = coinDb.find(val => val.indexOf(result.user.uid) > -1);
 
