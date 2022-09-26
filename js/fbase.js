@@ -43,6 +43,19 @@ window.addEventListener("DOMContentLoaded", function() {
  * method area
  *******************************************/
 
+await getDoc(doc(db, "user")).then((result) => {
+  if(result.data().coin != "") {
+    coinDb = result.data().coin;
+  }
+
+  if(sessionStorage.getItem("uid") != null) {
+    if(coinDb != null && coinDb.find(val => val.indexOf(sessionStorage.getItem("uid")) > -1) != "") {
+      var coinChk = coinDb.find(val => val.indexOf(sessionStorage.getItem("uid")) > -1);
+      $(".coin h5")[0].innerText = 'X ' + parseInt(coinChk[coinChk.length-1]);
+    }
+  }
+});
+
 
 /**
  * 이름 : addCoin
