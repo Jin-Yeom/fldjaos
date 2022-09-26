@@ -93,13 +93,14 @@ function loginPopup() {
     sessionStorage.setItem("displayName", result.user.displayName);
     sessionStorage.setItem("email", result.user.email);
     sessionStorage.setItem("uid", result.user.uid);
+
     var coinChk = "";
 
     if(coinDb != "") {
       coinChk = coinDb.find(val => val.indexOf(result.user.uid) > -1);
     }
 
-    if(typeof coinChk !== "undefined" || coinChk != "") {
+    if(typeof coinChk !== "undefined" && coinChk != "") {
       location.reload();
     } else {
       updateDoc(doc(db, "user"), {
