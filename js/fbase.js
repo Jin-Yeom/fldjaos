@@ -23,7 +23,7 @@ const db = collection(database, "fldjaos");
 /*******************************************
  * 전역변수
  *******************************************/
-let coinDb = "";
+var coinDb = "";
 /*******************************************/
 
 //Event Controller
@@ -71,6 +71,13 @@ async function addCoin() {
         updateDoc(doc(db, "user"), {
           coin:arrayUnion(coinDb[i].substring(0, coinDb[i].length-1) + coinCnt)
         })
+      }
+    }
+
+    if(sessionStorage.getItem("uid") != null) {
+      if(coinDb != null && coinDb.find(val => val.indexOf(sessionStorage.getItem("uid")) > -1) != "") {
+        var coinChk = coinDb.find(val => val.indexOf(sessionStorage.getItem("uid")) > -1);
+        $(".coin h5")[0].innerText = 'X ' + parseInt(coinChk[coinChk.length-1]);
       }
     }
   });
