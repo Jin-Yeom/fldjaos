@@ -95,7 +95,7 @@ async function addCoin() {
     }
   });
 }
-setInterval(addCoin, 6000);
+setInterval(addCoin, 24 * 60 * 60 * 1000);
 
 /* 
  * 이름 : loginPopup
