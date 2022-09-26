@@ -154,8 +154,14 @@
 
 				//LunchIs 함수선언
 				function lunchIs() {
+
+					if(sessionStorage.getItem("uid") == null) {	//로그인여부
+						alert("로그인이 필요한 서비스입니다.");
+						return;
+					}
+
 					//setTimeout 선언
-					setTimeout(timeFunc, 900);
+					setTimeout(timeFunc, 800);
 
 					function timeFunc() {
 						//shuffle 메소드 선언
@@ -207,6 +213,12 @@
 
 				//reset 함수선언
 				function reset() {
+					
+					if(sessionStorage.getItem("uid") == null) {	//로그인여부
+						alert("로그인이 필요한 서비스입니다.");
+						return;
+					}
+
 					//메뉴 숨기기
 					elem.style.display = "none";
 
