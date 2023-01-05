@@ -1,338 +1,58 @@
-	<!DOCTYPE html>
-	<html lang="en">
-		<head>
-			<meta charset="utf-8" />
-			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-			<meta name="description" content="" />
-			<meta name="author" content="" />
-			<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-			<title>lunch for us</title>
-			<link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Creative - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- jquery core JS-->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../css/home_styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top">
 
-			<!-- Font Awesome icons (free version)-->
-			<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
- 
-			<!-- jquery core JS-->
-			<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-			<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h1 class="text-white font-weight-bold">Welcome to My World!</h1>
+                        <!-- <hr class="divider" /> -->
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+                        <p class="text-white-75 mb-5"></p>
+                        <a class="btn btn-lunch btn-xl" href="../html/lunch.html" style="margin: 10px;">lunch</a>
+                        <a class="btn btn-kakao btn-xl" href="../html/kakao.html" style="margin: 10px;">kakao</a>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-			<!-- Google fonts-->
-			<link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-			<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
-
-			<!-- Kakao Map Api-->
-			<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=369cbfe9e265030d709d3af757bee96b&libraries=services"></script>
-
-			<!-- Core theme CSS (includes Bootstrap)-->
-			<link href="../css/styles.css" rel="stylesheet" />
-		</head>
-		<body>
-			<!-- Navigation-->
-			<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-				<div class="container px-4 px-lg-5">
-					<a class="navbar-brand" href="../html/index.html">Lunch for us</a>
-					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-						Menu
-						<i class="fas fa-bars"></i>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarResponsive">
-						<ul class="navbar-nav ms-auto py-4 py-lg-0" id="navbar">
-							<!-- 동적 로그인 UI -->
-							<script>
-								if(sessionStorage.getItem("uid") != null) {
-									$("#navbar").append('<li id="firebase-logout" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">logout</a></li>');
-								} else {
-									$("#navbar").append('<li id="firebase-login" class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" type="button">login</a></li>');
-								}
-							</script>
-						</ul>
-					</div>
-				</div>
-			</nav>
-			
-			<!-- Page Header-->
-			<header class="masthead" style="background-image: url('../img/food_main.jpg')">
-				<div class="container position-relative px-4 px-lg-5">
-					<div class="row gx-4 gx-lg-5 justify-content-center">
-						<div class="col-md-10 col-lg-8 col-xl-7">
-							<div class="site-heading">
-								<span class="subheading">Good luck to</span>
-								<h1>lunch!</h1>
-								<span class="subheading">for you</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</header>
-
-			<!-- Main Content-->
-			<div class="container px-4 px-lg-5" style="height: 140vh;">
-				<div class="row gx-4 gx-lg-5 justify-content-center">
-					<div class="col-md-10 col-lg-8 col-xl-7">
-						
-						<!-- Post preview-->
-						<!-- <div class="post-preview">
-							<a>
-								<h2 class="post-title">best of the week</h2>
-								<h2>여기에 이미지 넣을거야</h2>
-							</a>
-						</div> -->
-						<!-- Divider-->
-						<!-- <hr class="my-4" /> -->
-						<!-- Pager-->
-						<!-- <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="store">store</a></div> -->
-
-						<!-- Kakao map-->
-						<div id="map" style="height: 50vh;"></div>
-						<hr class="my-4" />
-						
-						<!-- slot-->
-						<div class="receipt">
-							<div class="title_text">
-								<h1>Lunch Slot</h1>
-							</div>
-							<div class="menu_print">
-								<h2></h2>
-							</div>
-							<div class="menu_slot">
-								<div class="slot_container">
-									<ul class="slide_box" style="padding-left: 0px;">
-										
-									</ul>
-								</div>
-							</div>
-							<div class="main_text" style="height: 200px;">
-								<!-- <p>DISTANCE<span>:??m</span></p>
-								<p>COST&<em>:?000won</em></p>
-								<p>LIKE<span>:♥♥♥♥♥</span></p>
-								<br />
-								<p>TOTAL<span>100% like it</span></p> -->
-							</div>
-							<div class="btn_area">
-								<button onclick="lunchIs();">Pick menu</button>
-								<button onclick="reset();">Reset</button>
-							</div>
-						</div>
-
-						<br />
-
-					</div>
-				</div>
-			</div>
-
-			<!-- Footer-->
-			<footer class="border-top">
-				<div class="container px-4 px-lg-5">
-					<div class="row gx-4 gx-lg-5 justify-content-center">
-						<div class="col-md-10 col-lg-8 col-xl-7">
-							<div class="small text-center text-muted fst-italic">&copy; It's me</div>
-						</div>
-					</div>
-				</div>
-			</footer>
-
-			<!-- slot script -->
-			<script>
-				//let distanceList = ["10m", "8m", "7m", "7m", "9m"];
-				//let costList = ["7000won", "5000won", "4500won", "8000won", "9000won"];
-
-
-				//제어할 요소선택 후 변수에 담기
-				let displaySlot = document.querySelector(".menu_slot"); //menu slot
-				let elem = document.querySelector(".menu_print > h2"); //menu print
-				//let distanceTxt = document.querySelector(".main_text> p > span"); //distance
-				//let costTxt = document.querySelector("em"); //cost
-
-
-				//reset check
-				let resetNum = 1;
-
-				//LunchIs 함수선언
-				function lunchIs() {
-
-					if(sessionStorage.getItem("uid") == null) {	//로그인여부
-						alert("로그인이 필요한 서비스입니다.");
-						return;
-					}
-
-					//setTimeout 선언
-					setTimeout(timeFunc, 800);
-
-					function timeFunc() {
-						//shuffle 메소드 선언
-						function shuffle(a) {
-							for (let i = a.length - 1; i > 0; i--) {
-								const j = Math.floor(Math.random() * (i + 1));
-								[a[i], a[j]] = [a[j], a[i]];
-							}
-							return a;
-						}
-
-						//런치리스트 배열생성
-						let lunchList = [];
-
-						//배열복사
-						let firstLunchList = [];
-
-						// kakao map food search info list
-						for(var i = 0; i < $('.slide_box li').length; i++) {
-							lunchList.push($('.slide_box li')[i].innerHTML);
-						}
-
-						lunchList.forEach(function(item) {
-							firstLunchList.push(item);
-						});
-
-						//슬롯애니메이션 감추기
-						displaySlot.style.display = "none";
-
-						//shuffle 메소드를 사용하여 석은 배열에서 index[0]을 가져오기
-						console.log(shuffle(lunchList));
-						let lunckPick = shuffle(lunchList)[0];
-
-						//메뉴 노출
-						console.log(lunckPick);
-						elem.innerHTML = lunckPick;
-
-						//선택된 메뉴의 indexOf를 이용하여 distanceTxt, costTxt 노출
-						//let i = firstLunchList.indexOf(lunckPick);
-						//distanceTxt.innerHTML = distanceList[i];
-						//costTxt.innerHTML = costList[i];
-
-						//reset 되었을 경우에 숨겨진 메뉴를 다시 노출시킴
-						if (resetNum == 0) {
-							elem.style.display = "block";
-						}
-					}
-				}
-
-				//reset 함수선언
-				function reset() {
-
-					//메뉴 숨기기
-					elem.style.display = "none";
-
-					//슬롯애니메이션 노출
-					displaySlot.style.display = "block";
-
-					//distance, cost 초기화
-					//distanceTxt.innerHTML = "??m";
-					//costTxt.innerHTML = "?000won";
-
-					//resetNum으로 reset여부를 구분하기 위해 0 할당
-					resetNum = 0;
-				}
-			</script>
-
-			<!-- kakao script-->
-			<script>
-				/* firebase db
-				// Import Admin SDK
-				const { getDatabase } = require('firebase-admin/database');
-
-				// Get a database reference to our blog
-				const db = getDatabase();
-				const ref = db.ref('server/saving-data/fireblog');
-				*/
-
-				var markerPosition;	//위치 변수
-
-				// 마커를 클릭하면 장소명을 표출할 인포윈도우
-				var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
-				//중심지 설정
-				var mapContainer = document.getElementById('map'),
-						mapOption = {
-								center: new kakao.maps.LatLng(37.5642135, 127.0016985),
-								level: 4
-						};
-
-				//지도 생성
-				var map = new kakao.maps.Map(mapContainer, mapOption);
-				
-				//position 사용
-				navigator.geolocation.getCurrentPosition(function(position) {
-
-					//위치 재설정	
-					markerPosition  = new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude); 
-					
-					//중심지 이동
-					map.panTo(markerPosition);
-
-					//내 위치 마커 생성
-					var marker = new kakao.maps.Marker({
-							position: markerPosition
-					});
-
-					//지도에 원 생성
-					var circle = new kakao.maps.Circle({
-							center : markerPosition,  //원의 중심좌표
-							radius: 200, //미터 단위의 원의 반지름
-							strokeWeight: 5, //선의 두께
-							strokeColor: '#75B8FA', //선의 색깔
-							strokeOpacity: 1, //선의 불투명도, 1에서 0 사이의 값이며 0에 가까울수록 투명
-							strokeStyle: 'dashed', //선의 스타일
-							fillColor: '#CFE7FF', //채우기 색깔
-							fillOpacity: 0.7  //채우기 불투명도
-					});
-
-					//지도에 원을 표시
-					circle.setMap(map);
-
-					//장소 검색 객체를 생성
-					var ps = new kakao.maps.services.Places(circle); 
-
-					//카테고리로 식당('FD6')을 검색
-					ps.categorySearch('FD6', placesSearchCB, {useMapBounds:true});
-
-					//키워드 검색 완료 시 호출되는 콜백함수
-					function placesSearchCB (data, status, pagination) {
-						var foodHtml = "";
-
-						if (status === kakao.maps.services.Status.OK) {
-								for (var i=0; i<data.length; i++) {
-										displayMarker(data[i]);
-										foodHtml += ("<li>" + data[i].place_name + "</li>"); 
-								}
-
-								if(foodHtml != "") {	//주변에 식당이 있다면
-									$('.slide_box').append(foodHtml);
-								} else {							//주변에 식당이 없다면
-									$('.slide_box').append("<li>주변에 식당이 없습니다.</li>");
-								}
-						}
-					}
-
-					//지도에 마커를 표시하는 함수
-					function displayMarker(place) {
-							//마커를 생성하고 지도에 표시
-							var marker = new kakao.maps.Marker({
-									map: map,
-									position: new kakao.maps.LatLng(place.y, place.x),
-									image: new kakao.maps.MarkerImage("../img/food-icon.png", new kakao.maps.Size(35, 40), {offset: new kakao.maps.Point(27, 69)})
-							});
-
-							//마커에 클릭 이벤트를 등록
-							kakao.maps.event.addListener(marker, 'click', function() {
-									//마커를 클릭 시 장소명이 인포윈도우에 표출
-									infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-									infowindow.open(map, marker);
-							});
-					}
-
-					//지도에 마커 적용
-					marker.setMap(map);
-				});
-
-			</script>
-
-			<!-- Bootstrap core JS-->
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-			<!-- Core theme JS-->
-			<script src="../js/scripts.js"></script>
-			<script src="../js/common.js"></script>
-			<script src="../js/fbase.js" type="module"></script>
-		</body>
-	</html>
-	
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
+        
+        <!-- Core theme JS-->
+        <script src="../js/home_scripts.js"></script>
+        <script src="../js/common.js"></script>
+        <!-- <script src="../js/fbase.js" type="module"></script> -->
+    </body>
+</html>

@@ -3,6 +3,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://w
 import { getFirestore, collection, doc, deleteDoc, updateDoc, deleteField, getDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
 
 
+
 const firebaseConfig = {
 	apiKey: "AIzaSyAq9_eXkpuWq5rDAS5oWi9vyI_MsgwO4pI",
 	authDomain: "main-32d80.firebaseapp.com",
@@ -27,75 +28,77 @@ const db = collection(database, "fldjaos");
 /*******************************************/
 
 //Event Controller
-window.addEventListener("DOMContentLoaded", function() {
-  if(document.getElementById("firebase-login") != null) {
-    document.getElementById("firebase-login").addEventListener("click", function(){
-      loginPopup();
-    })
-  } else {
-    document.getElementById("firebase-logout").addEventListener("click", function(){
-      logoutPopup();
-    })
-  }
-})
+// window.addEventListener("DOMContentLoaded", function() {
+//   if(document.getElementById("firebase-login") != null) {
+//     document.getElementById("firebase-login").addEventListener("click", function(){
+//       loginPopup();
+//     })
+//   } else {
+//     document.getElementById("firebase-logout").addEventListener("click", function(){
+//       logoutPopup();
+//     })
+//   }
+// })
 
 /*******************************************
  * method area
  *******************************************/
 
-/* 
- * 이름 : loginPopup
- * 설명 : 로그인 및 로그인 세션스토리지 set
- */
-function loginPopup() {
-  signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
+// /* 
+//  * 이름 : loginPopup
+//  * 설명 : 로그인 및 로그인 세션스토리지 set
+//  */
+// function loginPopup() {
+//   signInWithPopup(auth, provider)
+//   .then((result) => {
+//     // This gives you a Google Access Token. You can use it to access the Google API.
+//     const credential = GoogleAuthProvider.credentialFromResult(result);
+//     const token = credential.accessToken;
+//     // The signed-in user info.
+//     const user = result.user;
 
-    sessionStorage.setItem("displayName", result.user.displayName);
-    sessionStorage.setItem("email", result.user.email);
-    sessionStorage.setItem("uid", result.user.uid);
+//     sessionStorage.setItem("displayName", result.user.displayName);
+//     sessionStorage.setItem("email", result.user.email);
+//     sessionStorage.setItem("uid", result.user.uid);
 
-    updateDoc(doc(db, "user"), {
-      displayName:arrayUnion(result.user.displayName),
-      email:arrayUnion(result.user.email),
-      uid:arrayUnion(result.user.uid),
-    }).then(() => {
-      location.reload();
-    })
+//     updateDoc(doc(db, "user"), {
+//       displayName:arrayUnion(result.user.displayName),
+//       email:arrayUnion(result.user.email),
+//       uid:arrayUnion(result.user.uid),
+//     }).then(() => {
+//       location.reload();
+//     })
     
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-  });
-}
+//   }).catch((error) => {
+//     // Handle Errors here.
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // The email of the user's account used.
+//     const email = error.customData.email;
+//     // The AuthCredential type that was used.
+//     const credential = GoogleAuthProvider.credentialFromError(error);
+//   });
+// }
 
-/* 
- * 이름 : logoutPopup
- * 설명 : 로그아웃 및 로그인 세션스토리지 remove
- */
-function logoutPopup() {
-  signOut(auth).then(() => {
-    // Sign-out successful.
-    sessionStorage.removeItem("displayName");
-    sessionStorage.removeItem("email");
-    sessionStorage.removeItem("uid");
+// /* 
+//  * 이름 : logoutPopup
+//  * 설명 : 로그아웃 및 로그인 세션스토리지 remove
+//  */
+// function logoutPopup() {
+//   signOut(auth).then(() => {
+//     // Sign-out successful.
+//     sessionStorage.removeItem("displayName");
+//     sessionStorage.removeItem("email");
+//     sessionStorage.removeItem("uid");
 
-    location.reload();
-  }).catch((error) => {
-    // An error happened.
-  });
-}
+//     location.reload();
+//   }).catch((error) => {
+//     // An error happened.
+//   });
+// }
 
+
+/* fireBaseDb 사용 API */
 // await updateDoc(doc(db, "user"), {
 //   displayName:arrayUnion("asdasd"),
 //   email:arrayUnion("asdasd"),
@@ -111,8 +114,3 @@ function logoutPopup() {
 
 // const querySnapshot = await getDoc(doc(db, "user"));
 // querySnapshot.data();
-
-//coinCnt = coinCnt.find(val => val.indexOf("6kWRxQqzUvNBKRYB7CtuWkO2PD62") > -1);
-//coinCnt = parseInt(coinCnt[coinCnt.length-1]);
-//$(".coin h5")[0].innerText = 'X ' + coinCnt;
-
