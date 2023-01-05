@@ -36,15 +36,15 @@
 
 				displayToken()
 
-				// Kakao.API.request({
-				// 	url: '/v2/user/me',
-				// }).then(function(res) {
-				// 	alert(JSON.stringify(res));
-				// }).catch(function(err) {
-				// 	alert(
-				// 		'failed to request user information: ' + JSON.stringify(err)
-				// 	);
-				// });
+				Kakao.API.request({
+					url: '/v2/user/me',
+				}).then(function(res) {
+					alert(JSON.stringify(res));
+				}).catch(function(err) {
+					alert(
+						'failed to request user information: ' + JSON.stringify(err)
+					);
+				});
 
 				function displayToken() {
 					var token = getCookie('authorize-access-token');
