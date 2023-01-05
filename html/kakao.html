@@ -34,6 +34,8 @@
 					redirectUri: '${https://jin-yeom.github.io/fldjaos/html/kakao.html}'
 				});
 
+				displayToken()
+
 				Kakao.API.request({
 					url: '/v2/user/me',
 				}).then(function(res) {
@@ -43,6 +45,27 @@
 						'failed to request user information: ' + JSON.stringify(err)
 					);
 				});
+
+				function displayToken() {
+					var token = getCookie('authorize-access-token');
+
+					if(token) {
+						Kakao.Auth.setAccessToken(token);
+						Kakao.Auth.getStatusInfo()
+							.then(function(res) {
+								if (res.status === 'connected') {
+								}
+							})
+							.catch(function(err) {
+								Kakao.Auth.setAccessToken(null);
+							});
+					}
+				}
+
+				function getCookie(name) {
+					var parts = document.cookie.split(name + '=');
+					if (parts.length === 2) { return parts[1].split(';')[0]; }
+				}
 			</script>
 			<!-- Navigation-->
 			<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
