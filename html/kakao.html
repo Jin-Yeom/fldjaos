@@ -30,10 +30,9 @@
 			<script>
 				Kakao.init('369cbfe9e265030d709d3af757bee96b');
 
-				Kakao.Auth.login().then(function(response) {
-					console.log(response);
-				}).catch(function(error) {
-					console.log(error);
+				Kakao.Auth.authorize({
+					redirectUri: '${https://jin-yeom.github.io}',
+					prompts: 'none',
 				});
 			</script>
 			<!-- Navigation-->
