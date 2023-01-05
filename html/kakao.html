@@ -39,8 +39,10 @@
 				Kakao.API.request({
 					url: '/v2/user/me',
 				}).then(function(res) {
+					debugger;
 					alert(JSON.stringify(res));
 				}).catch(function(err) {
+					debugger;
 					alert(
 						'failed to request user information: ' + JSON.stringify(err)
 					);
