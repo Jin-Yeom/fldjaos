@@ -28,48 +28,19 @@
 		</head>
 		<body>
 			<script>
+				// 초기화
 				Kakao.init('369cbfe9e265030d709d3af757bee96b');
 
+				// 로그인
 				Kakao.Auth.authorize({
-					redirectUri: 'https://jin-yeom.github.io/fldjaos'
+					redirectUri: 'https://jin-yeom.github.io/fldjaos/html/kakao.html'
 				});
 
+				// 로그인 토큰 값 받아오기
 				displayToken()
 
-				Kakao.API.request({
-					url: '/v2/user/me',
-				}).then(function(res) {
-					debugger;
-					alert(JSON.stringify(res));
-				}).catch(function(err) {
-					debugger;
-					alert(
-						'failed to request user information: ' + JSON.stringify(err)
-					);
-				});
-
-				function displayToken() {
-					var token = getCookie('authorize-access-token');
-
-					if(token) {
-						Kakao.Auth.setAccessToken(token);
-						Kakao.Auth.getStatusInfo().then(function(res) {
-							if (res.status === 'connected') {
-								alert(res.status)
-							}
-						}).catch(function(err) {
-							Kakao.Auth.setAccessToken(null);
-						});
-					}
-				}
-
-				function getCookie(name) {
-					var parts = document.cookie.split(name + '=');
-
-					if (parts.length === 2) {
-						return parts[1].split(';')[0];
-					}
-				}
+				// 로그인사용자 정보 받아오기
+				userInfo()
 			</script>
 			<!-- Navigation-->
 			<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
@@ -121,6 +92,44 @@
 					</div>
 				</div>
 			</footer>
+
+			<script>
+				function userInfo() {
+					Kakao.API.request({
+						url: '/v2/user/me',
+					}).then(function(res) {
+						alert(JSON.stringify(res));
+					}).catch(function(err) {
+						alert(
+							'failed to request user information: ' + JSON.stringify(err)
+						);
+					});
+				}
+
+				function displayToken() {
+					var token = getCookie('authorize-access-token');
+
+					if(token) {
+						Kakao.Auth.setAccessToken(token);
+						Kakao.Auth.getStatusInfo().then(function(res) {
+							if (res.status === 'connected') {
+								console.log(res)
+							}
+						}).catch(function(err) {
+							Kakao.Auth.setAccessToken(null);
+						});
+					}
+				}
+
+				function getCookie(name) {
+					var parts = document.cookie.split(name + '=');
+
+					if (parts.length === 2) {
+						return parts[1].split(';')[0];
+					}
+				}
+			</script>
+
 
 			<!-- Bootstrap core JS-->
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
