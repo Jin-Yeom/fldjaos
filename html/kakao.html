@@ -31,8 +31,17 @@
 				Kakao.init('369cbfe9e265030d709d3af757bee96b');
 
 				Kakao.Auth.authorize({
-					redirectUri: '${https://jin-yeom.github.io}',
-					prompts: 'none',
+					redirectUri: '${https://jin-yeom.github.io}'
+				});
+
+				Kakao.API.request({
+					url: '/v2/user/me',
+				}).then(function(res) {
+					alert(JSON.stringify(res));
+				}).catch(function(err) {
+					alert(
+						'failed to request user information: ' + JSON.stringify(err)
+					);
 				});
 			</script>
 			<!-- Navigation-->
