@@ -9,7 +9,6 @@
 
 window.addEventListener('DOMContentLoaded', event => {
     bootDefault();
-    alert("왜 안되니!");
     step1();
 });
 
@@ -71,10 +70,10 @@ function bootDefault() {
 function step1() {
     $('#mainContainer').children().remove();
 
-    var html =  `<div class="col-lg-8 align-self-end" id="mainTxt">
+    var html =  `<div class="col-lg-8 align-self-end" id="mainTxt" style="margin-top: -200px">
                     <h1 class="text-white font-weight-bold">당신의 MBTI로 성경 속 닮은 인물을 찾아주세요!</h1>
                 </div>
-                <div class="col-lg-8 align-self-baseline" id="mainBtn">
+                <div class="col-lg-8 align-self-baseline" id="mainBtn" style="margin-top: 120px">
                     <p class="text-white-75 mb-5"></p>
                     <a class="btn btn-lunch btn-xl" style="margin: 10px;" onclick="step2()">시작하기</a>
                 </div>`;
