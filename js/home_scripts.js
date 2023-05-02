@@ -8,7 +8,7 @@
 // 
 
 window.addEventListener('DOMContentLoaded', event => {
-
+    step1();
     // Navbar shrink function
     var navbarShrink = function () {
         const navbarCollapsible = document.body.querySelector('#mainNav');
@@ -57,3 +57,89 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+/**
+ * 시작하기
+ */
+function step1() {
+    $('#mainContainer').children().remove();
+
+    var html =  `<div class="col-lg-8 align-self-end" id="mainTxt">
+                    <h1 class="text-white font-weight-bold">당신의 MBTI로 성경 속 닮은 인물을 찾아주세요!</h1>
+                </div>
+                <div class="col-lg-8 align-self-baseline" id="mainBtn">
+                    <p class="text-white-75 mb-5"></p>
+                    <a class="btn btn-lunch btn-xl" style="margin: 10px;" onclick="step2()">시작하기</a>
+                </div>`;
+
+    $('#mainContainer').append(html);
+}
+
+/**
+ * mbti 고르기
+ */
+function step2() {
+    $('#mainContainer').children().remove();
+    
+    $('#mainTxt').css('display','none');
+    $('#mainBtn').css('display','none');
+
+    var html = `<div class="box-container">
+                    <div class="box" id="enfp">
+                        <img src="../img/mbti_enfp.png">
+                    </div>
+                    <div class="box" id="enfj">
+                        <img src="../img/mbti_enfj.png">
+                    </div>
+                    <div class="box" id="esfp">
+                        <img src="../img/mbti_esfp.png">
+                    </div>
+                    <div class="box" id="esfj">
+                        <img src="../img/mbti_esfj.png">
+                    </div>
+                    <div class="box" id="entp">
+                        <img src="../img/mbti_entp.png">
+                    </div>
+                    <div class="box" id="entj">
+                        <img src="../img/mbti_entj.png">
+                    </div>
+                    <div class="box" id="estp">
+                        <img src="../img/mbti_estp.png">
+                    </div>
+                    <div class="box" id="estj">
+                        <img src="../img/mbti_estj.png">
+                    </div>
+                    <div class="box" id="infp">
+                        <img src="../img/mbti_infp.png">
+                    </div>
+                    <div class="box" id="infj">
+                        <img src="../img/mbti_infj.png">
+                    </div>
+                    <div class="box" id="isfp">
+                        <img src="../img/mbti_isfp.png">
+                    </div>
+                    <div class="box" id="isfj">
+                        <img src="../img/mbti_isfj.png">
+                    </div>
+                    <div class="box" id="intp">
+                        <img src="../img/mbti_intp.png">
+                    </div>
+                    <div class="box" id="infj">
+                        <img src="../img/mbti_intj.png">
+                    </div>
+                    <div class="box" id="istp">
+                        <img src="../img/mbti_istp.png">
+                    </div>
+                    <div class="box" id="istj">
+                        <img src="../img/mbti_istj.png">
+                    </div>
+                </div>
+                <a class="btn btn-lunch btn-xl" style="margin: 10px;" onclick="step1()">뒤로가기</a>`;
+
+            $('#mainContainer').append(html);
+
+}
+
+function step3() {
+    
+}
