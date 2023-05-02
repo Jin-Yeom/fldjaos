@@ -8,7 +8,15 @@
 // 
 
 window.addEventListener('DOMContentLoaded', event => {
-    step1(); 
+    bootDefault();
+    alert("왜 안되니!");
+    step1();
+});
+
+/**
+ * 부트스트랩 기본 함수
+ */
+function bootDefault() {
     // Navbar shrink function
     var navbarShrink = function () {
         const navbarCollapsible = document.body.querySelector('#mainNav');
@@ -55,8 +63,7 @@ window.addEventListener('DOMContentLoaded', event => {
     new SimpleLightbox({
         elements: '#portfolio a.portfolio-box'
     });
-
-});
+}
 
 /**
  * 시작하기
