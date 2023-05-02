@@ -3055,37 +3055,38 @@ textarea.form-control-lg {
 .btn-check:checked + .btn-lunch:focus, .btn-check:active + .btn-lunch:focus, .btn-lunch:active:focus, .btn-lunch.active:focus, .show > .btn-lunch.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.25rem rgba(0, 20, 10, 0.5);
 }
+.btn-lunch:disabled, .btn-lunch.disabled {
+  color: #000;
+  background-color: #008000;
+  border-color: #008000;
+}
 
-.btn-lunch:disabled, .btn-lunch.disabled {
+
+.btn-mbti {
   color: #000;
   background-color: #FF7F00;
   border-color: #FF7F00;
 }
-.btn-lunch {
-  color: #000;
-  background-color: #FF7F00;
-  border-color: #FF7F00;
-}
-.btn-lunch:hover {
+.btn-mbti:hover {
   color: #000;
   background-color: #FF5500;
   border-color: #101214;
 }
-.btn-check:focus + .btn-lunch, .btn-lunch:focus {
+.btn-check:focus + .btn-mbti, .btn-mbti:focus {
   color: #000;
   background-color: #FF5500;
   border-color: #101214;
   box-shadow: 0 0 0 0.25rem rgba(0, 20, 10, 0.5);
 }
-.btn-check:checked + .btn-lunch, .btn-check:active + .btn-lunch, .btn-lunch:active, .btn-lunch.active, .show > .btn-lunch.dropdown-toggle {
+.btn-check:checked + .btn-mbti, .btn-check:active + .btn-mbti, .btn-mbti:active, .btn-mbti.active, .show > .btn-mbti.dropdown-toggle {
   color: #000;
   background-color: #FF5500;
   border-color: #101214;
 }
-.btn-check:checked + .btn-lunch:focus, .btn-check:active + .btn-lunch:focus, .btn-lunch:active:focus, .btn-lunch.active:focus, .show > .btn-lunch.dropdown-toggle:focus {
+.btn-check:checked + .btn-mbti:focus, .btn-check:active + .btn-mbti:focus, .btn-mbti:active:focus, .btn-mbti.active:focus, .show > .btn-mbti.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.25rem rgba(0, 20, 10, 0.5);
 }
-.btn-lunch:disabled, .btn-lunch.disabled {
+.btn-mbti:disabled, .btn-mbti.disabled {
   color: #000;
   background-color: #FF7F00;
   border-color: #FF7F00;
@@ -11535,10 +11536,17 @@ header.masthead h1, header.masthead .h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid black;
 }
 
 .box img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+.selected {
+  opacity: 0.7;
+  filter: grayscale(100%);
+  transition: opacity 0.2s ease-in-out;
 }
