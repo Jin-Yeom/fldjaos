@@ -2,7 +2,10 @@
  * 전역변수
  ********************/
 let boxId = "";
-
+let userData = {
+    name : "",
+    mbti : ""
+};
 
 /**
  * onReady
@@ -74,7 +77,7 @@ function step1() {
     //     <h1 class="text-white font-weight-bold">당신의 MBTI로 성경 속 닮은 인물을 찾아주세요!</h1>
     // </div>
 
-    var html =  `<div class="col-lg-8 align-self-baseline" id="container-step1" style="margin-top: 150px">
+    var html =  `<div class="col-lg-8 align-self-baseline" id="container-step1" style="margin-top: 140px">
                     <div>                
                         <input type="text" placeholder="이름">
                     </div>
@@ -96,6 +99,8 @@ function step1() {
 function step2() {
     boxId= "";
     
+    userData.name = $('#container-step1 input').val();
+
     $('#mainContainer').children().remove();
 
     var html = `<div class="class-step2" id="container-step2">
@@ -151,7 +156,7 @@ function step2() {
                     </div>
                     <div class="btn_area">
                         <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step1()">뒤로가기</a>
-                        <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step3()">선택하기</a>
+                        <a class="btn btn-mbti btn-xl" style="margin: 10px;" id="select" onclick="step3()">선택하기</a>
                     </div>
                 </div>`;
 
@@ -184,9 +189,14 @@ function step2() {
 
 function step3() {
     if(boxId == "") {
-        alert('mbti를 선택해주세요!')
+        alert("mbti를 선택해주세요!")
         return;
     }
+
+    userData.mbti = boxId;
+    // localStorage.setItem('name', userData.name);
+    // localStorage.setItem('mbti', userData.mbti);
+    
 
     $('#mainContainer').children().remove();
     
@@ -199,4 +209,79 @@ function step3() {
                 </div>`;
 
     $('#mainContainer').append(html);
+}
+
+/**
+ * mbti유형별 팀 매칭
+ */
+function mbtiTeamMatching() {
+    const data = [
+        { name: '김철수', mbti: 'ENTJ' },
+        { name: '박영희', mbti: 'ISFJ' },
+        { name: '이민호', mbti: 'ESFP' },
+        { name: '김qq', mbti: 'ENTP' },
+        { name: '박qq', mbti: 'ISFJ' },
+        { name: '이qq', mbti: 'ESFJ' },
+        { name: '김ww', mbti: 'ENTJ' },
+        { name: '박ww', mbti: 'ISFJ' },
+        { name: '이ww', mbti: 'ESFP' },
+        { name: '김ee', mbti: 'INFP' },
+        { name: '박ee', mbti: 'ISFJ' },
+        { name: '이ee', mbti: 'INFP' },
+        { name: '김rr', mbti: 'ENTP' },
+        { name: '박rr', mbti: 'ISFJ' },
+        { name: '이rr', mbti: 'ISFP' },
+        { name: '김ㅑㅑ', mbti: 'ENTP' },
+        { name: '박ㅑㅑ', mbti: 'ISFJ' },
+        { name: '이ㅑㅑ', mbti: 'ESFJ' },
+        { name: '김ㅗㅗ', mbti: 'ENTP' },
+        { name: '박ㅗㅗ', mbti: 'ESFP' },
+        { name: '이ㅗㅗ', mbti: 'INFJ' },
+        { name: '김ㅁㅁ', mbti: 'ESFJ' },
+        { name: '박ㅁㅁ', mbti: 'ESTP' },
+        { name: '이ㅁㅁ', mbti: 'ESFP' },
+        { name: '김ㅍㅍ', mbti: 'ENTP' },
+        { name: '박ㅍㅍ', mbti: 'INFJ' },
+        { name: '이ㅍㅍ', mbti: 'ESTP' },
+        { name: '김ㅡㅡ', mbti: 'INFJ' },
+        { name: '박ㅡㅡ', mbti: 'ISFJ' },
+        { name: '이ㅡㅡ', mbti: 'ISFP' },
+        // ... 30 ~ 35명의 데이터를 추가할 수 있습니다.
+    ];
+    
+      // mbti 잘 맞는 유형 배열
+    const matchingTypes = {
+        'ENTJ': ['ISFP', 'INFP', 'ESFP', 'ESTP'],
+        'ENTP': ['ISFJ', 'ISTJ', 'ENTP', 'ESTJ'],
+        'INTJ': ['ESFP', 'ESTP', 'ISFP', 'INFP'],
+        'INTP': ['ESFJ', 'ENFJ', 'ISFJ', 'INFJ'],
+        'ESTJ': ['INFP', 'ISFP', 'INTP', 'ENTP'],
+        'ESFJ': ['INTP', 'ISTP', 'ENTP', 'ENFP'],
+        'ISTJ': ['ENFP', 'ENTP', 'ISFP', 'INFP'],
+        'ISFJ': ['ENTP', 'ENFP', 'INTP', 'ISTP'],
+        'ENFJ': ['ISTP', 'INTP', 'ESTP', 'ESFP'],
+        'ENFP': ['ISTJ', 'ISFJ', 'ESFJ', 'ESTJ'],
+        'INFJ': ['ESTP', 'ESFP', 'ISTP', 'INTP'],
+        'INFP': ['ESTJ', 'ENTJ', 'INTJ', 'ISTJ'],
+        'ESTP': ['INFJ', 'INTJ', 'ENFJ', 'ENTJ'],
+        'ESFP': ['INTJ', 'INFJ', 'ENTJ', 'ENFJ'],
+        'ISTP': ['ENFJ', 'ESFJ', 'INFJ', 'ISFJ'],
+        'ISFP': ['ENTJ', 'ESTJ', 'INTJ', 'ISTJ'],
+    };
+    
+    const teamCount = 4;
+    const teams = Array.from({ length: teamCount }, () => []);
+    
+      // mbti 유형에 따라 팀에 추가합니다.
+    for (const d of data) {
+        const { name, mbti } = d;
+        const matchedTypes = matchingTypes[mbti];
+        const availableTeams = teams.filter(team => 
+        matchedTypes.some(type => team.every(member => matchingTypes[member.mbti].includes(type)))
+        );
+        const team = availableTeams[Math.floor(Math.random() * availableTeams.length)];
+        team.push({ name, mbti });
+    }
+    
+    console.log(teams);
 }

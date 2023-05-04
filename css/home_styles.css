@@ -11560,6 +11560,7 @@ input[type="text"] {
   padding: 15px 20px;
   width: 100%;
   box-sizing: border-box;
+  text-align: center;
 }
 input::placeholder {
   text-align: center;
