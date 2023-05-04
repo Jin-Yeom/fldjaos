@@ -77,9 +77,9 @@ function step1() {
     //     <h1 class="text-white font-weight-bold">당신의 MBTI로 성경 속 닮은 인물을 찾아주세요!</h1>
     // </div>
 
-    var html =  `<div class="col-lg-8 align-self-baseline" id="container-step1" style="margin-top: 141px">
+    var html =  `<div class="col-lg-8 align-self-baseline" id="container-step1" style="margin-top: 142px">
                     <div>                
-                        <input type="text" placeholder="이름d">
+                        <input type="text" placeholder="이름">
                     </div>
                     <div>       
                         <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step2()">시작하기</a>
