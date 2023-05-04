@@ -28,6 +28,19 @@ const db = collection(database, "fldjaos");
 /*******************************************/
 
 //Event Controller
+window.addEventListener("DOMContentLoaded", function() {
+  setInterval(function() {
+		updateDoc(doc(db, "user"), {
+			userData:arrayUnion(localStorage.getItem('name') + "," + localStorage.getItem('mbti'))
+		}).then(() => {
+			localStorage.clear();
+		})
+
+	}, 1000);
+})
+
+
+//Event Controller
 // window.addEventListener("DOMContentLoaded", function() {
 //   if(document.getElementById("firebase-login") != null) {
 //     document.getElementById("firebase-login").addEventListener("click", function(){

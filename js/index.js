@@ -194,8 +194,8 @@ function step3() {
     }
 
     userData.mbti = boxId;
-    // localStorage.setItem('name', userData.name);
-    // localStorage.setItem('mbti', userData.mbti);
+    localStorage.setItem('name', userData.name);
+    localStorage.setItem('mbti', userData.mbti);
     
 
     $('#mainContainer').children().remove();
