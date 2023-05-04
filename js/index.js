@@ -69,17 +69,25 @@ function bootDefault() {
  */
 function step1() {
     $('#mainContainer').children().remove();
-    
+
     // <div class="col-lg-8 align-self-end" id="mainTxt" style="margin-top: -200px">
     //     <h1 class="text-white font-weight-bold">당신의 MBTI로 성경 속 닮은 인물을 찾아주세요!</h1>
     // </div>
 
-    var html =  `<div class="col-lg-8 align-self-baseline" id="mainBtn" style="margin-top: 150px">
-                    <p class="text-white-75 mb-5"></p>
-                    <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step2()">시작하기</a>
+    var html =  `<div class="col-lg-8 align-self-baseline" id="container-step1" style="margin-top: 150px">
+                    <div>                
+                        <input type="text" placeholder="이름">
+                    </div>
+                    <div>       
+                        <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step2()">시작하기</a>
+                    </div>
                 </div>`;
 
     $('#mainContainer').append(html);
+
+    setTimeout(() => {
+        $('#container-step1')[0].classList.add('show');
+    }, 100);
 }
 
 /**
@@ -87,67 +95,71 @@ function step1() {
  */
 function step2() {
     boxId= "";
-    $('#mainContainer').children().remove();
     
-    $('#mainTxt').css('display','none');
-    $('#mainBtn').css('display','none');
+    $('#mainContainer').children().remove();
 
-    var html = `<div class="box-container">
-                    <div class="box" type="button">
-                        <img src="../img/mbti_enfp.png" id="enfp">
+    var html = `<div class="class-step2" id="container-step2">
+                    <div class="box-container">
+                        <div class="box" type="button">
+                            <img src="../img/mbti_enfp.png" id="enfp">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_enfj.png" id="enfj">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_esfp.png" id="esfp">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_esfj.png" id="esfj">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_entp.png" id="entp">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_entj.png" id="entj">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_estp.png" id="estp">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_estj.png" id="estj">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_infp.png" id="infp">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_infj.png" id="infj">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_isfp.png" id="isfp">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_isfj.png" id="isfj">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_intp.png" id="intp">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_intj.png" id="infj">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_istp.png" id="istp">
+                        </div>
+                        <div class="box" type="button">
+                            <img src="../img/mbti_istj.png" id="istj">
+                        </div>
                     </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_enfj.png" id="enfj">
+                    <div class="btn_area">
+                        <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step1()">뒤로가기</a>
+                        <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step3()">선택하기</a>
                     </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_esfp.png" id="esfp">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_esfj.png" id="esfj">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_entp.png" id="entp">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_entj.png" id="entj">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_estp.png" id="estp">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_estj.png" id="estj">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_infp.png" id="infp">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_infj.png" id="infj">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_isfp.png" id="isfp">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_isfj.png" id="isfj">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_intp.png" id="intp">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_intj.png" id="infj">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_istp.png" id="istp">
-                    </div>
-                    <div class="box" type="button">
-                        <img src="../img/mbti_istj.png" id="istj">
-                    </div>
-                </div>
-                <div class="btn_area">
-                    <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step1()">뒤로가기</a>
-                    <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step3()">선택하기</a>
                 </div>`;
 
             $('#mainContainer').append(html);
+
+            setTimeout(() => {
+                $('#container-step2')[0].classList.add('show');
+            }, 100);
 
             // 모든 box 엘리먼트를 선택
             const boxes = document.querySelectorAll('.box');

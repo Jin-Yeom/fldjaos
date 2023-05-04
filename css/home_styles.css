@@ -11522,7 +11522,7 @@ header.masthead h1, header.masthead .h1 {
   opacity: 1;
 }
 
-/* 박스 스타일 설정 */
+/* ljy */
 .box-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -11549,4 +11549,40 @@ header.masthead h1, header.masthead .h1 {
   opacity: 0.7;
   filter: grayscale(100%);
   transition: opacity 0.2s ease-in-out;
+}
+
+/* input 요소 스타일링 */
+input[type="text"] {
+  border: none;
+  background-color: #f4f5f7;
+  border-radius: 30px;
+  font-size: 16px;
+  padding: 15px 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+input::placeholder {
+  text-align: center;
+}
+
+/* step1 애니메이션 */
+.col-lg-8.align-self-baseline {
+  opacity: 0; /* 처음에는 투명하게 설정 */
+  transform: translateY(150px); /* 아래에서 위로 30px 만큼 이동 */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* 애니메이션 속성 설정 */
+}
+
+.col-lg-8.align-self-baseline.show {
+  opacity: 1; /* 나타날 때는 불투명하게 설정 */
+  transform: translateY(0); /* 이동하지 않음 */
+}
+
+/* step2 애니메이션 */
+.class-step2 {
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+
+.class-step2.show {
+  opacity: 1;
 }
