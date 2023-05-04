@@ -30,12 +30,14 @@ const db = collection(database, "fldjaos");
 //Event Controller
 window.addEventListener("DOMContentLoaded", function() {
   setInterval(function() {
-		updateDoc(doc(db, "user"), {
-			userData:arrayUnion(localStorage.getItem('name') + "," + localStorage.getItem('mbti'))
-		}).then(() => {
-			localStorage.clear();
-		})
-
+		if((localStorage.getItem('name') != null && localStorage.getItem('name') != "")
+			&& localStorage.getItem('mbti') != null && localStorage.getItem('mbti') != "") {
+				updateDoc(doc(db, "user"), {
+					userData:arrayUnion(localStorage.getItem('name') + "," + localStorage.getItem('mbti'))
+				}).then(() => {
+					localStorage.clear();
+				})
+		}
 	}, 1000);
 })
 
