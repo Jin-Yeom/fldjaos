@@ -11587,3 +11587,72 @@ input::placeholder {
 .class-step2.show {
   opacity: 1;
 }
+
+/* alert */
+/* #alertBox {
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  border: 1px solid orange;
+  border-radius: 5px;
+  padding: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+#alertBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 270px; /* 원하는 크기로 지정 */
+  height: 140px; /* 원하는 크기로 지정 */
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+#alertHeader {
+  background-color: orange;
+  color: white;
+  padding: 15px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+#closeButton {
+  float: right;
+  cursor: pointer;
+  font-size: 30px;
+  margin-top: -23px;
+  margin-right: -6px;
+}
+
+#alertContent {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 50px); /* 수정: 상단바 높이만큼 뺀 높이 지정 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  text-align: center;
+}
+
+#alertContent p{
+  margin-bottom: -0.6rem;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+} 

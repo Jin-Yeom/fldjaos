@@ -10,3 +10,27 @@ var showPopup = function(pageNm) {
 	window.open("../html/" + pageNm + ".html", "popup", 'width=' + _width + ', height=' + _height + ', left=' + _left + ', top=' + _top);
 }
 
+/**
+ * alert
+ * @param {alert text} text 
+ */
+var alertBox = function(text) {
+	var html =  `<div class="overlay"></div>
+				<div id="alertBox">
+					<div id="alertHeader">
+						<span type="button" id="closeButton" onclick="closeAlert()">&times;</span>
+					</div>
+					<div id="alertContent">
+						<p>${text}</p>
+					</div>
+				</div>`;
+	$("body").append(html);
+}
+
+/**
+ * alert close
+ */
+var closeAlert = function() {
+	$('.overlay').remove();
+	$('#alertBox').remove();
+}

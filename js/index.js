@@ -76,10 +76,9 @@ function step1() {
     // <div class="col-lg-8 align-self-end" id="mainTxt" style="margin-top: -200px">
     //     <h1 class="text-white font-weight-bold">당신의 MBTI로 성경 속 닮은 인물을 찾아주세요!</h1>
     // </div>
-
     var html =  `<div class="col-lg-8 align-self-baseline" id="container-step1" style="margin-top: 142px">
                     <div>                
-                        <input type="text" placeholder="이름">
+                        <input type="text" id="name" placeholder="이름">
                     </div>
                     <div>       
                         <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step2()">시작하기</a>
@@ -97,6 +96,11 @@ function step1() {
  * mbti 고르기
  */
 function step2() {
+    if($('#name').val() == "") {
+        alertBox("이름을 입력해주세요!");
+        return;
+    }
+
     boxId= "";
     
     userData.name = $('#container-step1 input').val();
@@ -189,7 +193,7 @@ function step2() {
 
 function step3() {
     if(boxId == "") {
-        alert("mbti를 선택해주세요!")
+        alertBox("mbti를 선택해주세요!");
         return;
     }
 
