@@ -219,39 +219,19 @@ function step3() {
  * mbti유형별 팀 매칭
  */
 function mbtiTeamMatching() {
-    const data = [
-        { name: '김철수', mbti: 'ENTJ' },
-        { name: '박영희', mbti: 'ISFJ' },
-        { name: '이민호', mbti: 'ESFP' },
-        { name: '김qq', mbti: 'ENTP' },
-        { name: '박qq', mbti: 'ISFJ' },
-        { name: '이qq', mbti: 'ESFJ' },
-        { name: '김ww', mbti: 'ENTJ' },
-        { name: '박ww', mbti: 'ISFJ' },
-        { name: '이ww', mbti: 'ESFP' },
-        { name: '김ee', mbti: 'INFP' },
-        { name: '박ee', mbti: 'ISFJ' },
-        { name: '이ee', mbti: 'INFP' },
-        { name: '김rr', mbti: 'ENTP' },
-        { name: '박rr', mbti: 'ISFJ' },
-        { name: '이rr', mbti: 'ISFP' },
-        { name: '김ㅑㅑ', mbti: 'ENTP' },
-        { name: '박ㅑㅑ', mbti: 'ISFJ' },
-        { name: '이ㅑㅑ', mbti: 'ESFJ' },
-        { name: '김ㅗㅗ', mbti: 'ENTP' },
-        { name: '박ㅗㅗ', mbti: 'ESFP' },
-        { name: '이ㅗㅗ', mbti: 'INFJ' },
-        { name: '김ㅁㅁ', mbti: 'ESFJ' },
-        { name: '박ㅁㅁ', mbti: 'ESTP' },
-        { name: '이ㅁㅁ', mbti: 'ESFP' },
-        { name: '김ㅍㅍ', mbti: 'ENTP' },
-        { name: '박ㅍㅍ', mbti: 'INFJ' },
-        { name: '이ㅍㅍ', mbti: 'ESTP' },
-        { name: '김ㅡㅡ', mbti: 'INFJ' },
-        { name: '박ㅡㅡ', mbti: 'ISFJ' },
-        { name: '이ㅡㅡ', mbti: 'ISFP' },
-        // ... 30 ~ 35명의 데이터를 추가할 수 있습니다.
-    ];
+    const tmpData = JSON.parse(localStorage.getItem('userData'));
+
+    const data = Object.values(tmpData).reduce((result, value) => {
+        if (Array.isArray(value)) {
+            value.forEach(item => {
+            if (typeof item === 'string') {
+                const [name, mbti] = item.split(",");
+                result.push({ name, mbti });
+            }
+            });
+        }
+        return result;
+    }, []);
     
       // mbti 잘 맞는 유형 배열
     const matchingTypes = {
@@ -276,12 +256,12 @@ function mbtiTeamMatching() {
     const teamCount = 4;
     const teams = Array.from({ length: teamCount }, () => []);
     
-      // mbti 유형에 따라 팀에 추가합니다.
+      // mbti 유형에 따라 팀에 추가합니다. **** 에러남 로직 수정 필요 2023.05.22
     for (const d of data) {
         const { name, mbti } = d;
-        const matchedTypes = matchingTypes[mbti];
+        const matchedTypes = matchingTypes[mbti.toUpperCase()];
         const availableTeams = teams.filter(team => 
-        matchedTypes.some(type => team.every(member => matchingTypes[member.mbti].includes(type)))
+        matchedTypes.some(type => team.every(member => matchingTypes[member.mbti]?.includes(type)))
         );
         const team = availableTeams[Math.floor(Math.random() * availableTeams.length)];
         team.push({ name, mbti });

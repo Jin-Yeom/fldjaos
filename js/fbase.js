@@ -35,9 +35,20 @@ window.addEventListener("DOMContentLoaded", function() {
 				updateDoc(doc(db, "user"), {
 					userData:arrayUnion(localStorage.getItem('name') + "," + localStorage.getItem('mbti'))
 				}).then(() => {
-					localStorage.clear();
+					localStorage.removeItem('mbti');
+					localStorage.removeItem('name');
 				})
 		}
+
+		getData();
+
+		if(data == "") {	// 처음 실행 시
+			data = userData;
+		} else if(JSON.stringify(data) !== JSON.stringify(userData)) {	// 데이터가 업데이트 되었다면
+			data = userData;
+			localStorage.setItem('userData', JSON.stringify(data));
+		}
+
 	}, 1000);
 })
 
@@ -128,4 +139,12 @@ window.addEventListener("DOMContentLoaded", function() {
 // await getDoc(doc(db, "user")).then((result) => {});
 
 // const querySnapshot = await getDoc(doc(db, "user"));
-// querySnapshot.data();
+// const userData =  querySnapshot.data();
+
+let data = "";
+let userData = "";
+
+async function getData() {
+	const querySnapshot = await getDoc(doc(db, "user"));
+	userData =  querySnapshot.data();
+}
