@@ -292,7 +292,7 @@ function mbtiTeamMatching() {
         }
         return result;
     }, []);
-    
+
     // mbti 잘 맞는 유형 배열
     const matchingTypes = {
         // 'ENTJ': ['ISFP', 'INFP', 'ESFP', 'ESTP'],
@@ -334,18 +334,59 @@ function mbtiTeamMatching() {
     // 16개의 서로 다른 mbti 비어있는 팀을 만들고
     // 가장 잘 맞는 첫번째 유형과 짝지어준 다음
     // 두번째로 잘 맞는 유형과 묶기
-    const teams = Array.from({ length: matchingTypes.length }, () => []);
+    const teams = Array.from({}, () => []);
+    const delName = Array.from({}, () => []);
+    const etcTeam = Array.from({}, () => []);
 
+    // 첫번째로 잘 맞는 mbti 유형
+    Loop1 :
     for(const d of userData) {
+        var team = [];
         const {name, mbti} = d;
 
-        for(var i = 0; i < 2; i++) {
-            if(typeof userData.find(user => user.mbti == matchingTypes[mbti][i]) !== 'undefined') {
-                teams.push(userData.find(user => user.mbti == matchingTypes[mbti][i]));
+        // 사용된 이름 제거
+        Loop2 :
+        for(var i = 0; i < delName.length; i++) {
+            if(delName[i].name == name) {
+                continue Loop1;
+            }
+
+            if(typeof userData.find(user => user.mbti == matchingTypes[mbti][0]) !== 'undefined') {
+                if(delName[i].name == userData.find(user => user.mbti == matchingTypes[mbti][0]).name) {
+                    continue Loop1;
+                }
+            }
+        }
+
+        if(typeof userData.find(user => user.mbti == matchingTypes[mbti][0]) !== 'undefined') {
+            team.push(userData.find(user => user.name == name));
+            team.push(userData.find(user => user.mbti == matchingTypes[mbti][0]));
+
+            delName.push(userData.find(user => user.name == name));
+            delName.push(userData.find(user => user.mbti == matchingTypes[mbti][0]));
+
+            teams.push(team);
+        }
+    }
+
+    // 두번째로 잘 맞는 mbti 유형
+    for(var i = 0; i < teams.length; i++) {
+        for(var j = 0; j < 2; j++) {
+            if(typeof userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]) !== 'undefined') {
+                if(typeof delName.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]) === 'undefined') {
+                    teams[i].push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]));
+                    delName.push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]));
+                }
             }
         }
     }
 
+    // 그 외..
+    for(var i = 0; i < userData.length; i++) {
+        for(var j = 0; j < delName.length; j++) {
+            //etcTeam.push(delName.find(user => user.name == userData[i].name));
+        }
+    }
 
 
 

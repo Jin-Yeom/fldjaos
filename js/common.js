@@ -34,3 +34,14 @@ var closeAlert = function() {
 	$('.overlay').remove();
 	$('#alertBox').remove();
 }
+
+/**
+ * null, type, 빈값 체크
+ */
+var checkVal = function(val) {
+	if(val != null && typeof val !== "undefined" && val != "") {
+		return true;
+	} else {
+		return false;
+	}
+}

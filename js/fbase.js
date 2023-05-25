@@ -25,8 +25,9 @@ const db = collection(database, "fldjaos");
  * 전역변수
  *******************************************/
 
-/*******************************************/
+let userData = "";
 
+/*******************************************/
 //Event Controller
 window.addEventListener("DOMContentLoaded", function() {
   setInterval(function() {
@@ -40,17 +41,28 @@ window.addEventListener("DOMContentLoaded", function() {
 				})
 		}
 
-		getData();
+		getData();	// user 데이터 불러오기
 
-		if(data == "") {	// 처음 실행 시
-			data = userData;
-		} else if(JSON.stringify(data) !== JSON.stringify(userData)) {	// 데이터가 업데이트 되었다면
-			data = userData;
-			localStorage.setItem('userData', JSON.stringify(data));
+		if(!checkVal(localStorage.getItem('userData'))) {	// 첫 실행 시 로컬스토리지 생성
+			localStorage.setItem('userData', JSON.stringify(userData));
+		} else if(checkVal(localStorage.getItem('userData')) && localStorage.getItem('userData') != JSON.stringify(userData)) {	// 데이터가 바뀌었다면 업데이트
+			localStorage.setItem('userData', JSON.stringify(userData));
 		}
 
 	}, 1000);
 })
+
+/*******************************************
+ * method area
+ *******************************************/
+
+/**
+ * user 데이터 가져오기
+ */
+async function getData() {
+	const querySnapshot = await getDoc(doc(db, "user"));
+	userData =  querySnapshot.data();
+}
 
 
 //Event Controller
@@ -65,10 +77,6 @@ window.addEventListener("DOMContentLoaded", function() {
 //     })
 //   }
 // })
-
-/*******************************************
- * method area
- *******************************************/
 
 // /* 
 //  * 이름 : loginPopup
@@ -140,11 +148,3 @@ window.addEventListener("DOMContentLoaded", function() {
 
 // const querySnapshot = await getDoc(doc(db, "user"));
 // const userData =  querySnapshot.data();
-
-let data = "";
-let userData = "";
-
-async function getData() {
-	const querySnapshot = await getDoc(doc(db, "user"));
-	userData =  querySnapshot.data();
-}
