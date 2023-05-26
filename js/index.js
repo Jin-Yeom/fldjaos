@@ -215,66 +215,6 @@ function step3() {
     $('#mainContainer').append(html);
 }
 
-// /**
-//  * mbti유형별 팀 매칭
-//  */
-// function mbtiTeamMatching() {
-//     const tmpData = JSON.parse(localStorage.getItem('userData'));
-
-//     const data = Object.values(tmpData).reduce((result, value) => {
-//         if (Array.isArray(value)) {
-//             value.forEach(item => {
-//             if (typeof item === 'string') {
-//                 const [name, mbti] = item.split(",");
-//                 result.push({ name, mbti });
-//             }
-//             });
-//         }
-//         return result;
-//     }, []);
-    
-//       // mbti 잘 맞는 유형 배열
-//     const matchingTypes = {
-//         'ENTJ': ['ISFP', 'INFP', 'ESFP', 'ESTP'],
-//         'ENTP': ['ISFJ', 'ISTJ', 'ENTP', 'ESTJ'],
-//         'INTJ': ['ESFP', 'ESTP', 'ISFP', 'INFP'],
-//         'INTP': ['ESFJ', 'ENFJ', 'ISFJ', 'INFJ'],
-//         'ESTJ': ['INFP', 'ISFP', 'INTP', 'ENTP'],
-//         'ESFJ': ['INTP', 'ISTP', 'ENTP', 'ENFP'],
-//         'ISTJ': ['ENFP', 'ENTP', 'ISFP', 'INFP'],
-//         'ISFJ': ['ENTP', 'ENFP', 'INTP', 'ISTP'],
-//         'ENFJ': ['ISTP', 'INTP', 'ESTP', 'ESFP'],
-//         'ENFP': ['ISTJ', 'ISFJ', 'ESFJ', 'ESTJ'],
-//         'INFJ': ['ESTP', 'ESFP', 'ISTP', 'INTP'],
-//         'INFP': ['ESTJ', 'ENTJ', 'INTJ', 'ISTJ'],
-//         'ESTP': ['INFJ', 'INTJ', 'ENFJ', 'ENTJ'],
-//         'ESFP': ['INTJ', 'INFJ', 'ENTJ', 'ENFJ'],
-//         'ISTP': ['ENFJ', 'ESFJ', 'INFJ', 'ISFJ'],
-//         'ISFP': ['ENTJ', 'ESTJ', 'INTJ', 'ISTJ'],
-//     };
-    
-//     const teamCount = 4;
-//     const teams = Array.from({ length: teamCount }, () => []);
-    
-//       // mbti 유형에 따라 팀에 추가합니다. **** 에러남 로직 수정 필요 2023.05.22
-//     for (const d of data) {
-//         const { name, mbti } = d;
-//         const matchedTypes = matchingTypes[mbti.toUpperCase()];
-//         const availableTeams = teams.filter(team => 
-//         matchedTypes.some(type => team.every(member => matchingTypes[member.mbti]?.includes(type)))
-//         );
-//         const team = availableTeams[Math.floor(Math.random() * availableTeams.length)];
-//         team.push({ name, mbti });
-//     }
-    
-//     console.log(teams);
-// }
-
-
-
-/////////////////
-
-
 /**
  * mbti유형별 팀 매칭
  */
@@ -295,45 +235,42 @@ function mbtiTeamMatching() {
 
     // mbti 잘 맞는 유형 배열
     const matchingTypes = {
-        // 'ENTJ': ['ISFP', 'INFP', 'ESFP', 'ESTP'],
-        // 'ENTP': ['ISFJ', 'ISTJ', 'ENTP', 'ESTJ'],
-        // 'INTJ': ['ESFP', 'ESTP', 'ISFP', 'INFP'],
-        // 'INTP': ['ESFJ', 'ENFJ', 'ISFJ', 'INFJ'],
-        // 'ESTJ': ['INFP', 'ISFP', 'INTP', 'ENTP'],
-        // 'ESFJ': ['INTP', 'ISTP', 'ENTP', 'ENFP'],
-        // 'ISTJ': ['ENFP', 'ENTP', 'ISFP', 'INFP'],
-        // 'ISFJ': ['ENTP', 'ENFP', 'INTP', 'ISTP'],
-        // 'ENFJ': ['ISTP', 'INTP', 'ESTP', 'ESFP'],
-        // 'ENFP': ['ISTJ', 'ISFJ', 'ESFJ', 'ESTJ'],
-        // 'INFJ': ['ESTP', 'ESFP', 'ISTP', 'INTP'],
-        // 'INFP': ['ESTJ', 'ENTJ', 'INTJ', 'ISTJ'],
-        // 'ESTP': ['INFJ', 'INTJ', 'ENFJ', 'ENTJ'],
-        // 'ESFP': ['INTJ', 'INFJ', 'ENTJ', 'ENFJ'],
-        // 'ISTP': ['ENFJ', 'ESFJ', 'INFJ', 'ISFJ'],
-        // 'ISFP': ['ENTJ', 'ESTJ', 'INTJ', 'ISTJ']
+        'ENTJ': ['ISFP', 'INFP', 'ESFP', 'ESTP'],
+        'ENTP': ['ISFJ', 'ISTJ', 'ENTP', 'ESTJ'],
+        'INTJ': ['ESFP', 'ESTP', 'ISFP', 'INFP'],
+        'INTP': ['ESFJ', 'ENFJ', 'ISFJ', 'INFJ'],
+        'ESTJ': ['INFP', 'ISFP', 'INTP', 'ENTP'],
+        'ESFJ': ['INTP', 'ISTP', 'ENTP', 'ENFP'],
+        'ISTJ': ['ENFP', 'ENTP', 'ISFP', 'INFP'],
+        'ISFJ': ['ENTP', 'ENFP', 'INTP', 'ISTP'],
+        'ENFJ': ['ISTP', 'INTP', 'ESTP', 'ESFP'],
+        'ENFP': ['ISTJ', 'ISFJ', 'ESFJ', 'ESTJ'],
+        'INFJ': ['ESTP', 'ESFP', 'ISTP', 'INTP'],
+        'INFP': ['ESTJ', 'ENTJ', 'INTJ', 'ISTJ'],
+        'ESTP': ['INFJ', 'INTJ', 'ENFJ', 'ENTJ'],
+        'ESFP': ['INTJ', 'INFJ', 'ENTJ', 'ENFJ'],
+        'ISTP': ['ENFJ', 'ESFJ', 'INFJ', 'ISFJ'],
+        'ISFP': ['ENTJ', 'ESTJ', 'INTJ', 'ISTJ']
 
-        'ENTJ': ['ISFP', 'INFP'],
-        'ENTP': ['ISFJ', 'ISTJ'],
-        'INTJ': ['ESFP', 'ESTP'],
-        'INTP': ['ESFJ', 'ENFJ'],
-        'ESTJ': ['INFP', 'ISFP'],
-        'ESFJ': ['INTP', 'ISTP'],
-        'ISTJ': ['ENFP', 'ENTP'],
-        'ISFJ': ['ENTP', 'ENFP'],
-        'ENFJ': ['ISTP', 'INTP'],
-        'ENFP': ['ISTJ', 'ISFJ'],
-        'INFJ': ['ESTP', 'ESFP'],
-        'INFP': ['ESTJ', 'ENTJ'],
-        'ESTP': ['INFJ', 'INTJ'],
-        'ESFP': ['INTJ', 'INFJ'],
-        'ISTP': ['ENFJ', 'ESFJ'],
-        'ISFP': ['ENTJ', 'ESTJ']
+        // 'ENTJ': ['ISFP', 'INFP'],
+        // 'ENTP': ['ISFJ', 'ISTJ'],
+        // 'INTJ': ['ESFP', 'ESTP'],
+        // 'INTP': ['ESFJ', 'ENFJ'],
+        // 'ESTJ': ['INFP', 'ISFP'],
+        // 'ESFJ': ['INTP', 'ISTP'],
+        // 'ISTJ': ['ENFP', 'ENTP'],
+        // 'ISFJ': ['ENTP', 'ENFP'],
+        // 'ENFJ': ['ISTP', 'INTP'],
+        // 'ENFP': ['ISTJ', 'ISFJ'],
+        // 'INFJ': ['ESTP', 'ESFP'],
+        // 'INFP': ['ESTJ', 'ENTJ'],
+        // 'ESTP': ['INFJ', 'INTJ'],
+        // 'ESFP': ['INTJ', 'INFJ'],
+        // 'ISTP': ['ENFJ', 'ESFJ'],
+        // 'ISFP': ['ENTJ', 'ESTJ']
     };
     
     // mbti 유형에 따라 팀에 추가합니다.
-    // 16개의 서로 다른 mbti 비어있는 팀을 만들고
-    // 가장 잘 맞는 첫번째 유형과 짝지어준 다음
-    // 두번째로 잘 맞는 유형과 묶기
     const teams = Array.from({}, () => []);
     const delName = Array.from({}, () => []);
     const etcTeam = Array.from({}, () => []);
@@ -351,14 +288,14 @@ function mbtiTeamMatching() {
                 continue Loop1;
             }
 
-            if(typeof userData.find(user => user.mbti == matchingTypes[mbti][0]) !== 'undefined') {
+            if(checkVal(userData.find(user => user.mbti == matchingTypes[mbti][0]))) {
                 if(delName[i].name == userData.find(user => user.mbti == matchingTypes[mbti][0]).name) {
                     continue Loop1;
                 }
             }
         }
 
-        if(typeof userData.find(user => user.mbti == matchingTypes[mbti][0]) !== 'undefined') {
+        if(checkVal(userData.find(user => user.mbti == matchingTypes[mbti][0]))) {
             team.push(userData.find(user => user.name == name));
             team.push(userData.find(user => user.mbti == matchingTypes[mbti][0]));
 
@@ -366,16 +303,40 @@ function mbtiTeamMatching() {
             delName.push(userData.find(user => user.mbti == matchingTypes[mbti][0]));
 
             teams.push(team);
-        }
-    }
 
-    // 두번째로 잘 맞는 mbti 유형
-    for(var i = 0; i < teams.length; i++) {
-        for(var j = 0; j < 2; j++) {
-            if(typeof userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]) !== 'undefined') {
-                if(typeof delName.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]) === 'undefined') {
-                    teams[i].push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]));
-                    delName.push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]));
+            // 두번째로 잘 맞는 mbti 유형
+            for(var i = 0; i < teams.length; i++) {
+                for(var j = 0; j < 2; j++) {
+                    if(checkVal(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]))) {
+                        if(!checkVal(delName.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]))) {
+                            teams[i].push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]));
+                            delName.push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]));
+                        }
+                    }
+                }
+            }
+
+            // 세번째로 잘 맞는 mbti 유형
+            for(var i = 0; i < teams.length; i++) {
+                for(var j = 0; j < 2; j++) {
+                    if(checkVal(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][2]))) {
+                        if(!checkVal(delName.find(user => user.mbti == matchingTypes[teams[i][j].mbti][2]))) {
+                            teams[i].push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][2]));
+                            delName.push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][2]));
+                        }
+                    }
+                }
+            }
+
+            // 네번째로 잘 맞는 mbti 유형
+            for(var i = 0; i < teams.length; i++) {
+                for(var j = 0; j < 2; j++) {
+                    if(checkVal(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][3]))) {
+                        if(!checkVal(delName.find(user => user.mbti == matchingTypes[teams[i][j].mbti][3]))) {
+                            teams[i].push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][3]));
+                            delName.push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][3]));
+                        }
+                    }
                 }
             }
         }
@@ -383,63 +344,14 @@ function mbtiTeamMatching() {
 
     // 그 외..
     for(var i = 0; i < userData.length; i++) {
-        for(var j = 0; j < delName.length; j++) {
-            //etcTeam.push(delName.find(user => user.name == userData[i].name));
+        if(!checkVal(delName.find(user => user.name == userData[i].name))) {
+            etcTeam.push(userData[i]);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // const teams = [];
-    // const remainingMembers = [];
-  
-    // // 매칭된 팀 구성
-    // for (const d of userData) {
-    //   const { name, mbti } = d;
-    //   let matchedTeam = teams.find(team => matchingTypes[mbti].every(type => matchingTypes[team[0].mbti].includes(type)));
-  
-    //   if (!matchedTeam) {
-    //     matchedTeam = [];
-    //     teams.push(matchedTeam);
-    //   }
-  
-    //   matchedTeam.push({ name, mbti });
-    // }
-  
-    // // 초과 인원 처리
-    // for (const team of teams) {
-    //   if (team.length > 7) {
-    //     const remaining = team.splice(7);
-    //     remainingMembers.push(...remaining);
-    //   }
-    // }
-  
-    // // 추가 팀 구성
-    // while (remainingMembers.length > 0) {
-    //   const newTeam = remainingMembers.splice(0, Math.min(7, remainingMembers.length));
-    //   teams.push(newTeam);
-    // }
     
+    if(etcTeam.length > 0) {
+        teams.push(etcTeam);
+    }
+
     console.log(teams);
 }
