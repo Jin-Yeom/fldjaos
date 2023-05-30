@@ -149,7 +149,7 @@ function step2() {
                             <img src="../img/mbti_intp.png" id="INTP">
                         </div>
                         <div class="box" type="button">
-                            <img src="../img/mbti_intj.png" id="INFJ">
+                            <img src="../img/mbti_intj.png" id="INTJ">
                         </div>
                         <div class="box" type="button">
                             <img src="../img/mbti_istp.png" id="ISTP">
@@ -221,6 +221,7 @@ function step3() {
 function mbtiTeamMatching() {
     const tmpData = JSON.parse(localStorage.getItem('userData'));
 
+    // firebase 데이터 가공
     const userData = Object.values(tmpData).reduce((result, value) => {
         if (Array.isArray(value)) {
             value.forEach(item => {
@@ -232,6 +233,9 @@ function mbtiTeamMatching() {
         }
         return result;
     }, []);
+
+    // 항상 같은 결과를 주지 않기 위한 데이터 셔플
+    shuffleArray(userData);
 
     // mbti 잘 맞는 유형 배열
     const matchingTypes = {
@@ -251,23 +255,6 @@ function mbtiTeamMatching() {
         'ESFP': ['INTJ', 'INFJ', 'ENTJ', 'ENFJ'],
         'ISTP': ['ENFJ', 'ESFJ', 'INFJ', 'ISFJ'],
         'ISFP': ['ENTJ', 'ESTJ', 'INTJ', 'ISTJ']
-
-        // 'ENTJ': ['ISFP', 'INFP'],
-        // 'ENTP': ['ISFJ', 'ISTJ'],
-        // 'INTJ': ['ESFP', 'ESTP'],
-        // 'INTP': ['ESFJ', 'ENFJ'],
-        // 'ESTJ': ['INFP', 'ISFP'],
-        // 'ESFJ': ['INTP', 'ISTP'],
-        // 'ISTJ': ['ENFP', 'ENTP'],
-        // 'ISFJ': ['ENTP', 'ENFP'],
-        // 'ENFJ': ['ISTP', 'INTP'],
-        // 'ENFP': ['ISTJ', 'ISFJ'],
-        // 'INFJ': ['ESTP', 'ESFP'],
-        // 'INFP': ['ESTJ', 'ENTJ'],
-        // 'ESTP': ['INFJ', 'INTJ'],
-        // 'ESFP': ['INTJ', 'INFJ'],
-        // 'ISTP': ['ENFJ', 'ESFJ'],
-        // 'ISFP': ['ENTJ', 'ESTJ']
     };
     
     // mbti 유형에 따라 팀에 추가합니다.
@@ -275,67 +262,36 @@ function mbtiTeamMatching() {
     const delName = Array.from({}, () => []);
     const etcTeam = Array.from({}, () => []);
 
-    // 첫번째로 잘 맞는 mbti 유형
+    // 잘 맞는 mbti 유형
     Loop1 :
     for(const d of userData) {
         var team = [];
         const {name, mbti} = d;
 
-        // 사용된 이름 제거
+        // 사용된 이름 건너뛰기
         Loop2 :
         for(var i = 0; i < delName.length; i++) {
             if(delName[i].name == name) {
                 continue Loop1;
             }
-
-            if(checkVal(userData.find(user => user.mbti == matchingTypes[mbti][0]))) {
-                if(delName[i].name == userData.find(user => user.mbti == matchingTypes[mbti][0]).name) {
-                    continue Loop1;
-                }
-            }
         }
 
-        if(checkVal(userData.find(user => user.mbti == matchingTypes[mbti][0]))) {
+        // 기준점이 되는 가장 잘맞는 mbti유형의 두명을 배열에 생성
+        if(checkVal(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[mbti][0]))) {
             team.push(userData.find(user => user.name == name));
-            team.push(userData.find(user => user.mbti == matchingTypes[mbti][0]));
+            team.push(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[mbti][0]));
 
             delName.push(userData.find(user => user.name == name));
-            delName.push(userData.find(user => user.mbti == matchingTypes[mbti][0]));
+            delName.push(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[mbti][0]));
 
             teams.push(team);
 
-            // 두번째로 잘 맞는 mbti 유형
-            for(var i = 0; i < teams.length; i++) {
+            // 두번째, 세번째, 네번째 잘 맞는 mbti 유형
+            for(var i = 1; i < 4; i++) {    // matchingTypes 배열의 1,2,3 요소
                 for(var j = 0; j < 2; j++) {
-                    if(checkVal(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]))) {
-                        if(!checkVal(delName.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]))) {
-                            teams[i].push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]));
-                            delName.push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][1]));
-                        }
-                    }
-                }
-            }
-
-            // 세번째로 잘 맞는 mbti 유형
-            for(var i = 0; i < teams.length; i++) {
-                for(var j = 0; j < 2; j++) {
-                    if(checkVal(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][2]))) {
-                        if(!checkVal(delName.find(user => user.mbti == matchingTypes[teams[i][j].mbti][2]))) {
-                            teams[i].push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][2]));
-                            delName.push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][2]));
-                        }
-                    }
-                }
-            }
-
-            // 네번째로 잘 맞는 mbti 유형
-            for(var i = 0; i < teams.length; i++) {
-                for(var j = 0; j < 2; j++) {
-                    if(checkVal(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][3]))) {
-                        if(!checkVal(delName.find(user => user.mbti == matchingTypes[teams[i][j].mbti][3]))) {
-                            teams[i].push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][3]));
-                            delName.push(userData.find(user => user.mbti == matchingTypes[teams[i][j].mbti][3]));
-                        }
+                    if(checkVal(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[teams[teams.length-1][j].mbti][i]))) {
+                        teams[teams.length-1].push(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[teams[teams.length-1][j].mbti][i]));
+                        delName.push(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[teams[teams.length-1][j].mbti][i]));   
                     }
                 }
             }
@@ -354,4 +310,17 @@ function mbtiTeamMatching() {
     }
 
     console.log(teams);
+}
+
+/**
+ * 배열의 요소를 무작위로 섞기
+ * @param {배열} array 
+ * @returns 
+ */
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
