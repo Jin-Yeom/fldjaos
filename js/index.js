@@ -73,9 +73,6 @@ function bootDefault() {
 function step1() {
     $('#mainContainer').children().remove();
 
-    // <div class="col-lg-8 align-self-end" id="mainTxt" style="margin-top: -200px">
-    //     <h1 class="text-white font-weight-bold">당신의 MBTI로 성경 속 닮은 인물을 찾아주세요!</h1>
-    // </div>
     var html =  `<div class="col-lg-8 align-self-baseline" id="container-step1" style="margin-top: 142px">
                     <div>                
                         <input type="text" id="name" placeholder="이름">
@@ -101,107 +98,145 @@ function step2() {
         return;
     }
 
-    boxId= "";
-    
-    userData.name = $('#container-step1 input').val();
+    if($('#name').val() == "admin") {
+        $('#mainContainer').children().remove();
 
-    $('#mainContainer').children().remove();
+        var html =  `<div class="col-lg-8" id="container-admin">
+                        <div>                
+                            <input type="number" id="personCnt" maxlength="3" oninput="maxLengthCheck(this)" placeholder="인원수">
+                        </div>
+                        <br/>
+                        <div>                
+                            <input type="number" id="teamCnt"  maxlength="1" oninput="maxLengthCheck(this)" placeholder="팀개수">
+                        </div>
+                        <div>       
+                            <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="adminSet()">완료</a>
+                        </div>
+                    </div>`;
 
-    var html = `<div class="class-step2" id="container-step2">
-                    <div class="box-container">
-                        <div class="box" type="button">
-                            <img src="../img/mbti_enfp.png" id="ENFP">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_enfj.png" id="ENFJ">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_esfp.png" id="ESFP">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_esfj.png" id="ESFJ">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_entp.png" id="ENTP">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_entj.png" id="ENTJ">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_estp.png" id="ESTP">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_estj.png" id="ESTJ">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_infp.png" id="INFP">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_infj.png" id="INFJ">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_isfp.png" id="ISFP">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_isfj.png" id="ISFJ">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_intp.png" id="INTP">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_intj.png" id="INTJ">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_istp.png" id="ISTP">
-                        </div>
-                        <div class="box" type="button">
-                            <img src="../img/mbti_istj.png" id="ISTJ">
-                        </div>
-                    </div>
-                    <div class="btn_area">
-                        <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step1()">뒤로가기</a>
-                        <a class="btn btn-mbti btn-xl" style="margin: 10px;" id="select" onclick="step3()">선택하기</a>
-                    </div>
-                </div>`;
+        $('#mainContainer').append(html);
+    } else {
+        boxId= "";
+        
+        userData.name = $('#container-step1 input').val();
 
-            $('#mainContainer').append(html);
+        $('#mainContainer').children().remove();
 
-            setTimeout(() => {
-                $('#container-step2')[0].classList.add('show');
-            }, 100);
+        var html = `<div class="class-step2" id="container-step2">
+                        <div class="box-container">
+                            <div class="box" type="button">
+                                <img src="../img/mbti_enfp.png" id="ENFP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_enfj.png" id="ENFJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_esfp.png" id="ESFP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_esfj.png" id="ESFJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_entp.png" id="ENTP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_entj.png" id="ENTJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_estp.png" id="ESTP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_estj.png" id="ESTJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_infp.png" id="INFP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_infj.png" id="INFJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_isfp.png" id="ISFP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_isfj.png" id="ISFJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_intp.png" id="INTP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_intj.png" id="INTJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_istp.png" id="ISTP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_istj.png" id="ISTJ">
+                            </div>
+                        </div>
+                        <div class="btn_area">
+                            <a class="btn btn-mbti btn-xl" style="margin: 10px;" onclick="step1()">뒤로가기</a>
+                            <a class="btn btn-mbti btn-xl" style="margin: 10px;" id="select" onclick="step3()">선택하기</a>
+                        </div>
+                    </div>`;
 
-            // 모든 box 엘리먼트를 선택
-            const boxes = document.querySelectorAll('.box');
+        $('#mainContainer').append(html);
 
-            // 각 box 엘리먼트에 클릭 이벤트 리스너 추가
-            boxes.forEach(box => {
-                box.addEventListener('click', (e) => {
-                    // 모든 box 엘리먼트에서 'selected' 클래스 제거
-                    boxes.forEach(box => {
-                    box.classList.remove('selected');
-                    });
+        setTimeout(() => {
+            $('#container-step2')[0].classList.add('show');
+        }, 100);
 
-                    // 현재 클릭한 box 엘리먼트에 'selected' 클래스 추가
-                    box.classList.add('selected');
+        // 모든 box 엘리먼트를 선택
+        const boxes = document.querySelectorAll('.box');
 
-                    boxId = e.target.id;
-                    //localStorage.setItem('mbti', boxId);
+        // 각 box 엘리먼트에 클릭 이벤트 리스너 추가
+        boxes.forEach(box => {
+            box.addEventListener('click', (e) => {
+                // 모든 box 엘리먼트에서 'selected' 클래스 제거
+                boxes.forEach(box => {
+                box.classList.remove('selected');
                 });
+
+                // 현재 클릭한 box 엘리먼트에 'selected' 클래스 추가
+                box.classList.add('selected');
+
+                boxId = e.target.id;
             });
+        });
+    }
 
 }
 
+/**
+ * 인원 loading
+ */
 function step3() {
     if(boxId == "") {
         alertBox("mbti를 선택해주세요!");
         return;
     }
-
+    
     userData.mbti = boxId;
     localStorage.setItem('name', userData.name);
     localStorage.setItem('mbti', userData.mbti);
     
+    
+    $('#mainContainer').children().remove();
+    
+    var html =  `<div class="loading-container">
+                    <div class="loading"></div>
+                    <div id="loading-text">loading</div>
+                </div>`;
 
+    $('#mainContainer').append(html);
+
+    setInterval(function(e) {
+        if(checkVal(localStorage.getItem('personCnt'))) {
+            $('#loading-text').text(JSON.parse(localStorage.getItem('userData')).userData.length + '/' + localStorage.getItem('personCnt'));
+        }
+    })
+}
+
+function step4() {
     $('#mainContainer').children().remove();
     
     var html = `<div class="col-lg-8 align-self-end" id="mainTxt" style="margin-top: -200px">
@@ -313,14 +348,19 @@ function mbtiTeamMatching() {
 }
 
 /**
- * 배열의 요소를 무작위로 섞기
- * @param {배열} array 
- * @returns 
+ * admin setting
  */
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+function adminSet() {
+    if($('#personCnt').val() == "") {
+        alertBox("인원수를 입력해주세요!");
+        return;
     }
-    return array;
+
+    if($('#teamCnt').val() == "") {
+        alertBox("팀 개수를 입력해주세요!");
+        return;
+    }
+
+    localStorage.setItem('personCnt', $('#personCnt').val());
+    localStorage.setItem('teamCnt', $('#teamCnt').val());
 }

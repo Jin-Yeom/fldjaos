@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-import { getFirestore, collection, doc, deleteDoc, updateDoc, deleteField, getDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
+import { GoogleAuthProvider, getAuth } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
+import { arrayUnion, collection, doc, getDoc, getFirestore, updateDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
 
 
 
@@ -26,11 +26,13 @@ const db = collection(database, "fldjaos");
  *******************************************/
 
 let userData = "";
+let settingData = "";
 
 /*******************************************/
 //Event Controller
 window.addEventListener("DOMContentLoaded", function() {
   setInterval(function() {
+		// firebase user db update
 		if((localStorage.getItem('name') != null && localStorage.getItem('name') != "")
 			&& localStorage.getItem('mbti') != null && localStorage.getItem('mbti') != "") {
 				updateDoc(doc(db, "user"), {
@@ -41,12 +43,34 @@ window.addEventListener("DOMContentLoaded", function() {
 				})
 		}
 
-		getData();	// user 데이터 불러오기
+		// firebase setting db update
+		if(checkVal(localStorage.getItem('personCnt')) && checkVal(localStorage.getItem('teamCnt'))) {
+			updateDoc(doc(db, "setting"), {
+				personCnt:arrayUnion(localStorage.getItem('personCnt')),
+		  	teamCnt:arrayUnion(localStorage.getItem('teamCnt'))
+			}).then(() => {
+				localStorage.removeItem('personCnt');
+				localStorage.removeItem('teamCnt');
+			})
+		}
 
+		getData();	// 데이터 불러오기
+		
 		if(!checkVal(localStorage.getItem('userData'))) {	// 첫 실행 시 로컬스토리지 생성
 			localStorage.setItem('userData', JSON.stringify(userData));
 		} else if(checkVal(localStorage.getItem('userData')) && localStorage.getItem('userData') != JSON.stringify(userData)) {	// 데이터가 바뀌었다면 업데이트
 			localStorage.setItem('userData', JSON.stringify(userData));
+		}
+
+		if(checkVal(settingData)) {
+			if(!checkVal(localStorage.getItem('personCnt')) && !checkVal(localStorage.getItem('teamCnt'))) {	// 첫 실행 시 로컬스토리지 생성
+				localStorage.setItem('personCnt', settingData.personCnt[0]);
+				localStorage.setItem('teamCnt', settingData.teamCnt[0]);
+			} else if((checkVal(localStorage.getItem('personCnt')) && checkVal(localStorage.getItem('teamCnt')))
+							&& (localStorage.getItem('personCnt') != settingData.personCnt[0] && localStorage.getItem('teamCnt') != settingData.teamCnt[0])) {	// 데이터가 바뀌었다면 업데이트
+				localStorage.setItem('personCnt', settingData.personCnt[0]);
+				localStorage.setItem('teamCnt', settingData.teamCnt[0]);
+			}
 		}
 
 	}, 1000);
@@ -60,8 +84,11 @@ window.addEventListener("DOMContentLoaded", function() {
  * user 데이터 가져오기
  */
 async function getData() {
-	const querySnapshot = await getDoc(doc(db, "user"));
-	userData =  querySnapshot.data();
+	const querySnapshot1 = await getDoc(doc(db, "user"));
+	userData =  querySnapshot1.data();
+
+	const querySnapshot2 = await getDoc(doc(db, "setting"));
+	settingData =  querySnapshot2.data();
 }
 
 

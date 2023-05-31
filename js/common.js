@@ -37,6 +37,8 @@ var closeAlert = function() {
 
 /**
  * null, type, 빈값 체크
+ * @param {val} val 
+ * @returns 
  */
 var checkVal = function(val) {
 	if(val != null && typeof val !== "undefined" && val != "") {
@@ -44,4 +46,27 @@ var checkVal = function(val) {
 	} else {
 		return false;
 	}
+}
+
+/**
+ * 배열의 요소를 무작위로 섞기
+ * @param {배열} array 
+ * @returns 
+ */
+function shuffleArray(array) {
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+	return array;
+}
+
+/**
+* type="number" maxLength
+* @param {this} object 
+*/
+function maxLengthCheck(object){
+	if (object.value.length > object.maxLength){
+			object.value = object.value.slice(0, object.maxLength);
+	}    
 }
