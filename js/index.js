@@ -230,10 +230,10 @@ function step3() {
     $('#mainContainer').append(html);
 
     setInterval(function(e) {
-        if(checkVal(localStorage.getItem('personCnt'))) {
-            $('#loading-text').text(JSON.parse(localStorage.getItem('userData')).userData.length + '/' + localStorage.getItem('personCnt'));
-        }
-    })
+    if(checkVal(localStorage.getItem('personCnt'))) {
+        $('#loading-text').text(JSON.parse(localStorage.getItem('userData')).userData.length + '/' + localStorage.getItem('personCnt'));
+    }
+    }, 1000)
 }
 
 function step4() {

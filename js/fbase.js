@@ -25,55 +25,69 @@ const db = collection(database, "fldjaos");
  * 전역변수
  *******************************************/
 
+let onePlay = true;
 let userData = "";
 let settingData = "";
 
 /*******************************************/
 //Event Controller
 window.addEventListener("DOMContentLoaded", function() {
-  setInterval(function() {
-		// firebase user db update
-		if((localStorage.getItem('name') != null && localStorage.getItem('name') != "")
-			&& localStorage.getItem('mbti') != null && localStorage.getItem('mbti') != "") {
-				updateDoc(doc(db, "user"), {
-					userData:arrayUnion(localStorage.getItem('name') + "," + localStorage.getItem('mbti'))
-				}).then(() => {
-					localStorage.removeItem('mbti');
-					localStorage.removeItem('name');
-				})
-		}
+//   setInterval(function() {
+// 		// firebase user db update
+// 		if((localStorage.getItem('name') != null && localStorage.getItem('name') != "")
+// 			&& localStorage.getItem('mbti') != null && localStorage.getItem('mbti') != "") {
+// 				updateDoc(doc(db, "user"), {
+// 					userData:arrayUnion(localStorage.getItem('name') + "," + localStorage.getItem('mbti'))
+// 				}).then(() => {
+// 					localStorage.removeItem('mbti');
+// 					localStorage.removeItem('name');
+// 				})
+// 		}
 
-		// firebase setting db update
-		if(checkVal(localStorage.getItem('personCnt')) && checkVal(localStorage.getItem('teamCnt'))) {
-			updateDoc(doc(db, "setting"), {
-				personCnt:arrayUnion(localStorage.getItem('personCnt')),
-		  	teamCnt:arrayUnion(localStorage.getItem('teamCnt'))
-			}).then(() => {
-				localStorage.removeItem('personCnt');
-				localStorage.removeItem('teamCnt');
-			})
-		}
+// 		getDataUser();
 
-		getData();	// 데이터 불러오기
-		
-		if(!checkVal(localStorage.getItem('userData'))) {	// 첫 실행 시 로컬스토리지 생성
-			localStorage.setItem('userData', JSON.stringify(userData));
-		} else if(checkVal(localStorage.getItem('userData')) && localStorage.getItem('userData') != JSON.stringify(userData)) {	// 데이터가 바뀌었다면 업데이트
-			localStorage.setItem('userData', JSON.stringify(userData));
-		}
+// 		if(!checkVal(localStorage.getItem('userData'))) {	// 첫 실행 시 로컬스토리지 생성
+// 			localStorage.setItem('userData', JSON.stringify(userData));
+// 		} else if(checkVal(localStorage.getItem('userData')) && localStorage.getItem('userData') != JSON.stringify(userData)) {	// 데이터가 바뀌었다면 업데이트
+// 			localStorage.setItem('userData', JSON.stringify(userData));
+// 		}
+// 	}, 1000);
 
-		if(checkVal(settingData)) {
-			if(!checkVal(localStorage.getItem('personCnt')) && !checkVal(localStorage.getItem('teamCnt'))) {	// 첫 실행 시 로컬스토리지 생성
-				localStorage.setItem('personCnt', settingData.personCnt[0]);
-				localStorage.setItem('teamCnt', settingData.teamCnt[0]);
-			} else if((checkVal(localStorage.getItem('personCnt')) && checkVal(localStorage.getItem('teamCnt')))
-							&& (localStorage.getItem('personCnt') != settingData.personCnt[0] && localStorage.getItem('teamCnt') != settingData.teamCnt[0])) {	// 데이터가 바뀌었다면 업데이트
-				localStorage.setItem('personCnt', settingData.personCnt[0]);
-				localStorage.setItem('teamCnt', settingData.teamCnt[0]);
-			}
-		}
 
-	}, 1000);
+// 	var intervalId = setInterval(function() {
+// 		if (checkVal(localStorage.getItem('personCnt')) && checkVal(localStorage.getItem('teamCnt'))) {
+// 			updateDoc(doc(db, "setting"), {
+// 				personCnt: localStorage.getItem('personCnt'),
+// 				teamCnt: localStorage.getItem('teamCnt')
+// 			});
+// 		}
+	
+// 		getDataSetting();   // 데이터 불러오기
+	
+// 		if (checkVal(settingData)) {
+// 			if (!checkVal(localStorage.getItem('personCnt')) && !checkVal(localStorage.getItem('teamCnt'))) {
+// 				// 첫 실행 시 로컬스토리지 생성
+// 				localStorage.setItem('personCnt', settingData.personCnt[0]);
+// 				localStorage.setItem('teamCnt', settingData.teamCnt[0]);
+// 			} else if ((checkVal(localStorage.getItem('personCnt')) && checkVal(localStorage.getItem('teamCnt')))
+// 				&& (localStorage.getItem('personCnt') != settingData.personCnt[0] || localStorage.getItem('teamCnt') != settingData.teamCnt[0])) {
+// 				// 데이터가 바뀌었다면 업데이트
+// 				localStorage.setItem('personCnt', settingData.personCnt[0]);
+// 				localStorage.setItem('teamCnt', settingData.teamCnt[0]);
+// 			}
+// 		}
+// 	}, 7500);
+
+	// localstorge에 저장했다 firebase에 저장하는 것이 아니라 바로 firebase에 저장하는 방법으로 변경해보기, 테스트필요!! 
+    setInterval(function() {
+	onePlay = true;
+			$('#select').on('click', function(e) {
+				if(onePlay) {
+					var dd = "das";
+					onePlay = false;
+				}
+			});
+ 	}, 1000);
 })
 
 /*******************************************
@@ -83,10 +97,15 @@ window.addEventListener("DOMContentLoaded", function() {
 /**
  * user 데이터 가져오기
  */
-async function getData() {
+async function getDataUser() {
 	const querySnapshot1 = await getDoc(doc(db, "user"));
 	userData =  querySnapshot1.data();
+}
 
+/**
+ * user 데이터 가져오기
+ */
+async function getDataSetting() {
 	const querySnapshot2 = await getDoc(doc(db, "setting"));
 	settingData =  querySnapshot2.data();
 }
