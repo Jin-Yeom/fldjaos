@@ -76,12 +76,15 @@ window.addEventListener('DOMContentLoaded', event => {
     bootDefault();
     step1();
 
-		// firebase 이벤트 리스너 등록, user 데이터가 변경 시 실행
-		onSnapshot(doc(db, "user"), (docSnapshot) => {
-			userFb = docSnapshot.data();
-		}, (error) => {
-			console.error("user 이벤트 리스너 등록 실패:", error);
-		});
+
+		setInterval(function() {
+			// firebase 이벤트 리스너 등록, user 데이터가 변경 시 실행
+			onSnapshot(doc(db, "user"), (docSnapshot) => {
+				userFb = docSnapshot.data();
+			}, (error) => {
+				console.error("user 이벤트 리스너 등록 실패:", error);
+			});
+		}, 2000);
 
 		mbtiTeamMatching()
 });
@@ -184,18 +187,14 @@ function step2() {
     if($('#name').val() == "admin") {
         $('#mainContainer').children().remove();
 
-        var html =  `<div class="col-lg-8" id="container-admin">
-                        <div>                
-                            <input type="number" id="personCnt" maxlength="3" oninput="maxLengthCheck(this)" placeholder="인원수">
-                        </div>
-                        <br/>
-                        <div>                
-                            <input type="number" id="teamCnt"  maxlength="1" oninput="maxLengthCheck(this)" placeholder="팀개수">
-                        </div>
-                        <div>       
-                            <a class="btn btn-mbti btn-xl" style="margin: 10px;" id="success">완료</a>
-                        </div>
-                    </div>`;
+			var html = `
+										<div class="form-container sign-in-container">
+												<h1>Setting</h1>
+												<input type="number" id="personCnt" maxlength="3" oninput="maxLengthCheck(this)" placeholder="인원수">
+												<input type="number" id="teamCnt"  maxlength="1" oninput="maxLengthCheck(this)" placeholder="팀개수">
+												<button class="btn btn-mbti btn-xl" style="margin: 10px;" id="success">완료</button>
+										</div>
+									`;
 
         $('#mainContainer').append(html);
 
@@ -332,20 +331,21 @@ async function step3() {
 
     $('#mainContainer').append(html);
 		
-		// firebase 이벤트 리스너 등록, setting 데이터가 변경 시 실행
-		onSnapshot(doc(db, "setting"), (docSnapshot) => {
-			const data = docSnapshot.data();
+		setInterval(function() {
+			// firebase 이벤트 리스너 등록, setting 데이터가 변경 시 실행
+			onSnapshot(doc(db, "setting"), (docSnapshot) => {
+				const data = docSnapshot.data();
 
-			// 변경된 데이터를 활용하는 로직을 작성하세요
-			const personCnt = data.personCnt;
-			const teamCnt = data.teamCnt;
+				// 변경된 데이터를 활용하는 로직을 작성하세요
+				const personCnt = data.personCnt;
+				const teamCnt = data.teamCnt;
 
-			// 데이터 변경에 따른 처리 로직 실행
-			$('#loading-text').text(userFb.userData.length + '/' + personCnt);
-		}, (error) => {
-			console.error("setting 이벤트 리스너 등록 실패:", error);
-		});
-
+				// 데이터 변경에 따른 처리 로직 실행
+				$('#loading-text').text(userFb.userData.length + '/' + personCnt);
+			}, (error) => {
+				console.error("setting 이벤트 리스너 등록 실패:", error);
+			});
+		}, 2000);
 }
 
 function step4() {
