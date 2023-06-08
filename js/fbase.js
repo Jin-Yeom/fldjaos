@@ -76,17 +76,16 @@ window.addEventListener('DOMContentLoaded', event => {
     bootDefault();
     step1();
 
+    setInterval(function() {
+        // firebase 이벤트 리스너 등록, user 데이터가 변경 시 실행
+        onSnapshot(doc(db, "user"), (docSnapshot) => {
+            userFb = docSnapshot.data();
+        }, (error) => {
+            console.error("user 이벤트 리스너 등록 실패:", error);
+        });
+    }, 2000);
 
-		setInterval(function() {
-			// firebase 이벤트 리스너 등록, user 데이터가 변경 시 실행
-			onSnapshot(doc(db, "user"), (docSnapshot) => {
-				userFb = docSnapshot.data();
-			}, (error) => {
-				console.error("user 이벤트 리스너 등록 실패:", error);
-			});
-		}, 2000);
-
-		mbtiTeamMatching()
+	mbtiTeamMatching()  // 임시
 });
 
 
@@ -159,20 +158,20 @@ function step1() {
                 </div>`;
 
     $('#mainContainer').append(html);
-		$('#name').val("")	// 이름 초기화
+	$('#name').val(""); 	// 이름 초기화
 
     setTimeout(() => {
         $('#container-step1')[0].classList.add('show');
     }, 100);
 
-		// event
-		try {
-			document.getElementById('start').addEventListener('click', function() {
-				step2();
-			});
-		} catch(e) {
-			console.log("Not Error : " + e)
-		}
+    // event
+    try {
+        document.getElementById('start').addEventListener('click', function() {
+            step2();
+        });
+    } catch(e) {
+        console.log("Not Error : " + e)
+    }
 }
 
 /**
@@ -187,25 +186,23 @@ function step2() {
     if($('#name').val() == "admin") {
         $('#mainContainer').children().remove();
 
-			var html = `
-										<div class="form-container sign-in-container">
-												<h1>Setting</h1>
-												<input type="number" id="personCnt" maxlength="3" oninput="maxLengthCheck(this)" placeholder="인원수">
-												<input type="number" id="teamCnt"  maxlength="1" oninput="maxLengthCheck(this)" placeholder="팀개수">
-												<button class="btn btn-mbti btn-xl" style="margin: 10px;" id="success">완료</button>
-										</div>
-									`;
+			var html = `<div class="form-container sign-in-container">
+                                <h1>Setting</h1>
+                                <input type="number" id="personCnt" maxlength="3" oninput="maxLengthCheck(this)" placeholder="인원수">
+                                <input type="number" id="teamCnt"  maxlength="1" oninput="maxLengthCheck(this)" placeholder="팀개수">
+                                <button class="btn btn-mbti btn-xl" style="margin: 10px;" id="success">완료</button>
+                        </div>`;
 
         $('#mainContainer').append(html);
 
-				// event
-				try {
-					document.getElementById('success').addEventListener('click', function() {
-						adminSet();
-					});
-				} catch(e) {
-					console.log("Not Error : " + e)
-				}
+        // event
+        try {
+            document.getElementById('success').addEventListener('click', function() {
+                adminSet();
+            });
+        } catch(e) {
+            console.log("Not Error : " + e)
+        }
     } else {
         userData.name = $('#container-step1 input').val();
 				userData.mbti = "";
@@ -293,18 +290,18 @@ function step2() {
             });
         });
 
-			// event
-			try {
-				document.getElementById('back').addEventListener('click', function() {
-					step1();
-				});
-		
-				document.getElementById('select').addEventListener('click', function() {
-					step3();
-				});
-			} catch(e) {
-				console.log("Not Error : " + e)
-			}
+        // event
+        try {
+            document.getElementById('back').addEventListener('click', function() {
+                step1();
+            });
+    
+            document.getElementById('select').addEventListener('click', function() {
+                step3();
+            });
+        } catch(e) {
+            console.log("Not Error : " + e)
+        }
     }
 }
 
@@ -317,10 +314,10 @@ async function step3() {
         return;
     }
 		
-		// firebase userDB에 insert
-		await updateDoc(doc(db, "user"), {
-			userData:arrayUnion(userData.name + "," + userData.mbti)
-		})
+    // firebase userDB에 insert
+    await updateDoc(doc(db, "user"), {
+        userData:arrayUnion(userData.name + "," + userData.mbti)
+    })
     
     $('#mainContainer').children().remove();
     
@@ -331,21 +328,21 @@ async function step3() {
 
     $('#mainContainer').append(html);
 		
-		setInterval(function() {
-			// firebase 이벤트 리스너 등록, setting 데이터가 변경 시 실행
-			onSnapshot(doc(db, "setting"), (docSnapshot) => {
-				const data = docSnapshot.data();
+    setInterval(function() {
+        // firebase 이벤트 리스너 등록, setting 데이터가 변경 시 실행
+        onSnapshot(doc(db, "setting"), (docSnapshot) => {
+            const data = docSnapshot.data();
 
-				// 변경된 데이터를 활용하는 로직을 작성하세요
-				const personCnt = data.personCnt;
-				const teamCnt = data.teamCnt;
+            // 변경된 데이터를 활용하는 로직을 작성하세요
+            const personCnt = data.personCnt;
+            const teamCnt = data.teamCnt;
 
-				// 데이터 변경에 따른 처리 로직 실행
-				$('#loading-text').text(userFb.userData.length + '/' + personCnt);
-			}, (error) => {
-				console.error("setting 이벤트 리스너 등록 실패:", error);
-			});
-		}, 2000);
+            // 데이터 변경에 따른 처리 로직 실행
+            $('#loading-text').text(userFb.userData.length + '/' + personCnt);
+        }, (error) => {
+            console.error("setting 이벤트 리스너 등록 실패:", error);
+        });
+    }, 2000);
 }
 
 function step4() {
@@ -366,7 +363,7 @@ function step4() {
  * mbti유형별 팀 매칭
  */
 async function mbtiTeamMatching() {
-		await getDataFb();
+    await getDataFb();
 		
     // firebase 데이터 가공
     const userData = Object.values(userFb).reduce((result, value) => {
@@ -456,6 +453,21 @@ async function mbtiTeamMatching() {
         teams.push(etcTeam);
     }
 
+
+    // teams와 userData개수가 맞지 않아서 찾는중.....
+    var ss = 0;
+    userData.forEach(e => {
+        try{
+            var dd = teams.flat().filter(user => user.name == userData[ss].name);
+            var qe = teams.flat().filter(item => !userData.includes(item));
+            ss++;
+            console.log("index["+ss+"]" + dd[0].name + "," + dd[0].mbti);
+        } catch(ed) {
+            console.log("error : " + e.name);
+        }
+        
+    })
+
     console.log(teams);
 }
 
@@ -474,7 +486,16 @@ function adminSet() {
     }
 
     updateDoc(doc(db, "setting"), {
-			personCnt: $('#personCnt').val(),
-			teamCnt: $('#teamCnt').val()
-		});
+        personCnt: $('#personCnt').val(),
+        teamCnt: $('#teamCnt').val()
+    });
 }
+
+
+// teams와 userData개수가 맞지 않아서 찾는중.....
+// 팀 병합 기준
+// 팀 개수 제한
+// 팀 개수만큼 팀 병함
+// 인원차면 자동으로 팀 배치
+// setting 완료하면 배치된 팀 조회 가능하도록 페이지 생성
+// 
