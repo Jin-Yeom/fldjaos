@@ -1,8 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
 import { GoogleAuthProvider, getAuth } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-import { arrayUnion, collection, doc, getDoc, getFirestore, updateDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
-
-
+import { arrayUnion, collection, doc, getDoc, getFirestore, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAq9_eXkpuWq5rDAS5oWi9vyI_MsgwO4pI",
@@ -22,167 +20,17 @@ const database = getFirestore(app);
 const db = collection(database, "fldjaos");
 
 /*******************************************
- * 전역변수
+ * fireBaseDb API 정의서
+ * updateDoc() - update or add
+ * getDoc() - get
  *******************************************/
 
-let onePlay = true;
-let userData = "";
-let settingData = "";
-
-/*******************************************/
-//Event Controller
-window.addEventListener("DOMContentLoaded", function() {
-//   setInterval(function() {
-// 		// firebase user db update
-// 		if((localStorage.getItem('name') != null && localStorage.getItem('name') != "")
-// 			&& localStorage.getItem('mbti') != null && localStorage.getItem('mbti') != "") {
-// 				updateDoc(doc(db, "user"), {
-// 					userData:arrayUnion(localStorage.getItem('name') + "," + localStorage.getItem('mbti'))
-// 				}).then(() => {
-// 					localStorage.removeItem('mbti');
-// 					localStorage.removeItem('name');
-// 				})
-// 		}
-
-// 		getDataUser();
-
-// 		if(!checkVal(localStorage.getItem('userData'))) {	// 첫 실행 시 로컬스토리지 생성
-// 			localStorage.setItem('userData', JSON.stringify(userData));
-// 		} else if(checkVal(localStorage.getItem('userData')) && localStorage.getItem('userData') != JSON.stringify(userData)) {	// 데이터가 바뀌었다면 업데이트
-// 			localStorage.setItem('userData', JSON.stringify(userData));
-// 		}
-// 	}, 1000);
-
-
-// 	var intervalId = setInterval(function() {
-// 		if (checkVal(localStorage.getItem('personCnt')) && checkVal(localStorage.getItem('teamCnt'))) {
-// 			updateDoc(doc(db, "setting"), {
-// 				personCnt: localStorage.getItem('personCnt'),
-// 				teamCnt: localStorage.getItem('teamCnt')
-// 			});
-// 		}
-	
-// 		getDataSetting();   // 데이터 불러오기
-	
-// 		if (checkVal(settingData)) {
-// 			if (!checkVal(localStorage.getItem('personCnt')) && !checkVal(localStorage.getItem('teamCnt'))) {
-// 				// 첫 실행 시 로컬스토리지 생성
-// 				localStorage.setItem('personCnt', settingData.personCnt[0]);
-// 				localStorage.setItem('teamCnt', settingData.teamCnt[0]);
-// 			} else if ((checkVal(localStorage.getItem('personCnt')) && checkVal(localStorage.getItem('teamCnt')))
-// 				&& (localStorage.getItem('personCnt') != settingData.personCnt[0] || localStorage.getItem('teamCnt') != settingData.teamCnt[0])) {
-// 				// 데이터가 바뀌었다면 업데이트
-// 				localStorage.setItem('personCnt', settingData.personCnt[0]);
-// 				localStorage.setItem('teamCnt', settingData.teamCnt[0]);
-// 			}
-// 		}
-// 	}, 7500);
-
-	// localstorge에 저장했다 firebase에 저장하는 것이 아니라 바로 firebase에 저장하는 방법으로 변경해보기, 테스트필요!! 
-    setInterval(function() {
-	onePlay = true;
-			$('#select').on('click', function(e) {
-				if(onePlay) {
-					var dd = "das";
-					onePlay = false;
-				}
-			});
- 	}, 1000);
-})
-
-/*******************************************
- * method area
- *******************************************/
-
-/**
- * user 데이터 가져오기
- */
-async function getDataUser() {
-	const querySnapshot1 = await getDoc(doc(db, "user"));
-	userData =  querySnapshot1.data();
-}
-
-/**
- * user 데이터 가져오기
- */
-async function getDataSetting() {
-	const querySnapshot2 = await getDoc(doc(db, "setting"));
-	settingData =  querySnapshot2.data();
-}
-
-
-//Event Controller
-// window.addEventListener("DOMContentLoaded", function() {
-//   if(document.getElementById("firebase-login") != null) {
-//     document.getElementById("firebase-login").addEventListener("click", function(){
-//       loginPopup();
-//     })
-//   } else {
-//     document.getElementById("firebase-logout").addEventListener("click", function(){
-//       logoutPopup();
-//     })
-//   }
-// })
-
-// /* 
-//  * 이름 : loginPopup
-//  * 설명 : 로그인 및 로그인 세션스토리지 set
-//  */
-// function loginPopup() {
-//   signInWithPopup(auth, provider)
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access the Google API.
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
-//     // The signed-in user info.
-//     const user = result.user;
-
-//     sessionStorage.setItem("displayName", result.user.displayName);
-//     sessionStorage.setItem("email", result.user.email);
-//     sessionStorage.setItem("uid", result.user.uid);
-
-//     updateDoc(doc(db, "user"), {
-//       displayName:arrayUnion(result.user.displayName),
-//       email:arrayUnion(result.user.email),
-//       uid:arrayUnion(result.user.uid),
-//     }).then(() => {
-//       location.reload();
-//     })
-    
-//   }).catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // The email of the user's account used.
-//     const email = error.customData.email;
-//     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//   });
-// }
-
-// /* 
-//  * 이름 : logoutPopup
-//  * 설명 : 로그아웃 및 로그인 세션스토리지 remove
-//  */
-// function logoutPopup() {
-//   signOut(auth).then(() => {
-//     // Sign-out successful.
-//     sessionStorage.removeItem("displayName");
-//     sessionStorage.removeItem("email");
-//     sessionStorage.removeItem("uid");
-
-//     location.reload();
-//   }).catch((error) => {
-//     // An error happened.
-//   });
-// }
-
-
-/* fireBaseDb 사용 API */
 // await updateDoc(doc(db, "user"), {
 //   displayName:arrayUnion("asdasd"),
 //   email:arrayUnion("asdasd"),
 //   uid:arrayUnion("asdasd")
+// }).then(() => {
+// 	후처리 로직
 // })
 
 // await updateDoc(doc(db, "user"), {
@@ -194,3 +42,460 @@ async function getDataSetting() {
 
 // const querySnapshot = await getDoc(doc(db, "user"));
 // const userData =  querySnapshot.data();
+
+/*******************************************
+ * 전역변수
+ *******************************************/
+
+let userFb = "";
+let settingFb = "";
+let userData = {
+    name : "",
+    mbti : ""
+};
+
+/*******************************************
+ * firebase
+ *******************************************/
+async function getDataFb() {
+	const querySnapshot1 = await getDoc(doc(db, "user"));
+	userFb =  querySnapshot1.data();
+
+	const querySnapshot2 = await getDoc(doc(db, "setting"));
+	settingFb =  querySnapshot2.data();
+}
+
+/*******************************************
+ * javascript
+ *******************************************/
+
+/**
+ * onReady
+ */
+window.addEventListener('DOMContentLoaded', event => {
+    bootDefault();
+    step1();
+
+    setInterval(function() {
+        // firebase 이벤트 리스너 등록, user 데이터가 변경 시 실행
+        onSnapshot(doc(db, "user"), (docSnapshot) => {
+            userFb = docSnapshot.data();
+        }, (error) => {
+            console.error("user 이벤트 리스너 등록 실패:", error);
+        });
+    }, 2000);
+
+	mbtiTeamMatching()  // 임시
+});
+
+
+
+/**
+ * 부트스트랩 기본 함수
+ */
+function bootDefault() {
+    // Navbar shrink function
+    var navbarShrink = function () {
+        const navbarCollapsible = document.body.querySelector('#mainNav');
+        if (!navbarCollapsible) {
+            return;
+        }
+        if (window.scrollY === 0) {
+            navbarCollapsible.classList.remove('navbar-shrink')
+        } else {
+            navbarCollapsible.classList.add('navbar-shrink')
+        }
+
+    };
+
+    // Shrink the navbar 
+    navbarShrink();
+
+    // Shrink the navbar when page is scrolled
+    document.addEventListener('scroll', navbarShrink);
+
+    // Activate Bootstrap scrollspy on the main nav element
+    const mainNav = document.body.querySelector('#mainNav');
+    if (mainNav) {
+        new bootstrap.ScrollSpy(document.body, {
+            target: '#mainNav',
+            offset: 74,
+        });
+    };
+
+    // Collapse responsive navbar when toggler is visible
+    const navbarToggler = document.body.querySelector('.navbar-toggler');
+    const responsiveNavItems = [].slice.call(
+        document.querySelectorAll('#navbarResponsive .nav-link')
+    );
+    responsiveNavItems.map(function (responsiveNavItem) {
+        responsiveNavItem.addEventListener('click', () => {
+            if (window.getComputedStyle(navbarToggler).display !== 'none') {
+                navbarToggler.click();
+            }
+        });
+    });
+
+    // Activate SimpleLightbox plugin for portfolio items
+    new SimpleLightbox({
+        elements: '#portfolio a.portfolio-box'
+    });
+}
+
+/**
+ * 시작하기
+ */
+function step1() {
+    $('#mainContainer').children().remove();
+
+    var html =  `<div class="col-lg-8 align-self-baseline" id="container-step1" style="margin-top: 142px">
+                    <div>                
+                        <input type="text" id="name" placeholder="이름">
+                    </div>
+                    <div>       
+                        <a class="btn btn-mbti btn-xl" id="start" style="margin: 10px;">시작하기</a>
+                    </div>
+                </div>`;
+
+    $('#mainContainer').append(html);
+	$('#name').val(""); 	// 이름 초기화
+
+    setTimeout(() => {
+        $('#container-step1')[0].classList.add('show');
+    }, 100);
+
+    // event
+    try {
+        document.getElementById('start').addEventListener('click', function() {
+            step2();
+        });
+    } catch(e) {
+        console.log("Not Error : " + e)
+    }
+}
+
+/**
+ * mbti 고르기
+ */
+function step2() {
+    if($('#name').val() == "") {
+        alertBox("이름을 입력해주세요!");
+        return;
+    }
+
+    if($('#name').val() == "admin") {
+        $('#mainContainer').children().remove();
+
+			var html = `<div class="form-container sign-in-container">
+                                <h1>Setting</h1>
+                                <input type="number" id="personCnt" maxlength="3" oninput="maxLengthCheck(this)" placeholder="인원수">
+                                <input type="number" id="teamCnt"  maxlength="1" oninput="maxLengthCheck(this)" placeholder="팀개수">
+                                <button class="btn btn-mbti btn-xl" style="margin: 10px;" id="success">완료</button>
+                        </div>`;
+
+        $('#mainContainer').append(html);
+
+        // event
+        try {
+            document.getElementById('success').addEventListener('click', function() {
+                adminSet();
+            });
+        } catch(e) {
+            console.log("Not Error : " + e)
+        }
+    } else {
+        userData.name = $('#container-step1 input').val();
+				userData.mbti = "";
+				
+        $('#mainContainer').children().remove();
+
+        var html = `<div class="class-step2" id="container-step2">
+                        <div class="box-container">
+                            <div class="box" type="button">
+                                <img src="../img/mbti_enfp.png" id="ENFP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_enfj.png" id="ENFJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_esfp.png" id="ESFP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_esfj.png" id="ESFJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_entp.png" id="ENTP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_entj.png" id="ENTJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_estp.png" id="ESTP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_estj.png" id="ESTJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_infp.png" id="INFP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_infj.png" id="INFJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_isfp.png" id="ISFP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_isfj.png" id="ISFJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_intp.png" id="INTP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_intj.png" id="INTJ">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_istp.png" id="ISTP">
+                            </div>
+                            <div class="box" type="button">
+                                <img src="../img/mbti_istj.png" id="ISTJ">
+                            </div>
+                        </div>
+                        <div class="btn_area">
+                            <a class="btn btn-mbti btn-xl" style="margin: 10px;" id="back">뒤로가기</a>
+                            <a class="btn btn-mbti btn-xl" style="margin: 10px;" id="select">선택하기</a>
+                        </div>
+                    </div>`;
+
+        $('#mainContainer').append(html);
+
+        setTimeout(() => {
+            $('#container-step2')[0].classList.add('show');
+        }, 100);
+
+        // 모든 box 엘리먼트를 선택
+        const boxes = document.querySelectorAll('.box');
+
+        // 각 box 엘리먼트에 클릭 이벤트 리스너 추가
+        boxes.forEach(box => {
+            box.addEventListener('click', (e) => {
+                // 모든 box 엘리먼트에서 'selected' 클래스 제거
+                boxes.forEach(box => {
+                box.classList.remove('selected');
+                });
+
+                // 현재 클릭한 box 엘리먼트에 'selected' 클래스 추가
+                box.classList.add('selected');
+
+                userData.mbti = e.target.id;
+            });
+        });
+
+        // event
+        try {
+            document.getElementById('back').addEventListener('click', function() {
+                step1();
+            });
+    
+            document.getElementById('select').addEventListener('click', function() {
+                step3();
+            });
+        } catch(e) {
+            console.log("Not Error : " + e)
+        }
+    }
+}
+
+/**
+ * 인원 loading
+ */
+async function step3() {
+    if(checkVal(userData) && userData.mbti == "") {
+        alertBox("mbti를 선택해주세요!");
+        return;
+    }
+		
+    // firebase userDB에 insert
+    await updateDoc(doc(db, "user"), {
+        userData:arrayUnion(userData.name + "," + userData.mbti)
+    })
+    
+    $('#mainContainer').children().remove();
+    
+    var html =  `<div class="loading-container">
+                    <div class="loading"></div>
+                    <div id="loading-text">loading</div>
+                </div>`;
+
+    $('#mainContainer').append(html);
+		
+    setInterval(function() {
+        // firebase 이벤트 리스너 등록, setting 데이터가 변경 시 실행
+        onSnapshot(doc(db, "setting"), (docSnapshot) => {
+            const data = docSnapshot.data();
+
+            // 변경된 데이터를 활용하는 로직을 작성하세요
+            const personCnt = data.personCnt;
+            const teamCnt = data.teamCnt;
+
+            // 데이터 변경에 따른 처리 로직 실행
+            $('#loading-text').text(userFb.userData.length + '/' + personCnt);
+        }, (error) => {
+            console.error("setting 이벤트 리스너 등록 실패:", error);
+        });
+    }, 2000);
+}
+
+function step4() {
+    $('#mainContainer').children().remove();
+    
+    var html = `<div class="col-lg-8 align-self-end" id="mainTxt" style="margin-top: -200px">
+                    <h1 class="text-white font-weight-bold">퀴즈!!</h1>
+                </div>
+                <div class="btn_area">
+                    <a class="btn btn-mbti btn-xl" style="margin: 10px;" id="back">뒤로가기</a>
+                    <a class="btn btn-mbti btn-xl" style="margin: 10px;" id="ok">정답</a>
+                </div>`;
+
+    $('#mainContainer').append(html);
+}
+
+/**
+ * mbti유형별 팀 매칭
+ */
+async function mbtiTeamMatching() {
+    await getDataFb();
+		
+    // firebase 데이터 가공
+    const userData = Object.values(userFb).reduce((result, value) => {
+        if (Array.isArray(value)) {
+            value.forEach(item => {
+            if (typeof item === 'string') {
+                const [name, mbti] = item.split(",");
+                result.push({ name, mbti });
+            }
+            });
+        }
+        return result;
+    }, []);
+
+    // 항상 같은 결과를 주지 않기 위한 데이터 셔플
+    shuffleArray(userData);
+
+    // mbti 잘 맞는 유형 배열
+    const matchingTypes = {
+        'ENTJ': ['ISFP', 'INFP', 'ESFP', 'ESTP'],
+        'ENTP': ['ISFJ', 'ISTJ', 'ENTP', 'ESTJ'],
+        'INTJ': ['ESFP', 'ESTP', 'ISFP', 'INFP'],
+        'INTP': ['ESFJ', 'ENFJ', 'ISFJ', 'INFJ'],
+        'ESTJ': ['INFP', 'ISFP', 'INTP', 'ENTP'],
+        'ESFJ': ['INTP', 'ISTP', 'ENTP', 'ENFP'],
+        'ISTJ': ['ENFP', 'ENTP', 'ISFP', 'INFP'],
+        'ISFJ': ['ENTP', 'ENFP', 'INTP', 'ISTP'],
+        'ENFJ': ['ISTP', 'INTP', 'ESTP', 'ESFP'],
+        'ENFP': ['ISTJ', 'ISFJ', 'ESFJ', 'ESTJ'],
+        'INFJ': ['ESTP', 'ESFP', 'ISTP', 'INTP'],
+        'INFP': ['ESTJ', 'ENTJ', 'INTJ', 'ISTJ'],
+        'ESTP': ['INFJ', 'INTJ', 'ENFJ', 'ENTJ'],
+        'ESFP': ['INTJ', 'INFJ', 'ENTJ', 'ENFJ'],
+        'ISTP': ['ENFJ', 'ESFJ', 'INFJ', 'ISFJ'],
+        'ISFP': ['ENTJ', 'ESTJ', 'INTJ', 'ISTJ']
+    };
+    
+    // mbti 유형에 따라 팀에 추가합니다.
+    const teams = Array.from({}, () => []);
+    const delName = Array.from({}, () => []);
+    const etcTeam = Array.from({}, () => []);
+
+    // 잘 맞는 mbti 유형
+    Loop1 :
+    for(const d of userData) {
+        var team = [];
+        const {name, mbti} = d;
+
+        // 사용된 이름 건너뛰기
+        Loop2 :
+        for(var i = 0; i < delName.length; i++) {
+            if(delName[i].name == name) {
+                continue Loop1;
+            }
+        }
+
+        // 기준점이 되는 가장 잘맞는 mbti유형의 두명을 배열에 생성
+        if(checkVal(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[mbti][0]))) {
+            team.push(userData.find(user => user.name == name));
+            team.push(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[mbti][0]));
+
+            delName.push(userData.find(user => user.name == name));
+            delName.push(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[mbti][0]));
+
+            teams.push(team);
+
+            // 두번째, 세번째, 네번째 잘 맞는 mbti 유형
+            for(var i = 1; i < 4; i++) {    // matchingTypes 배열의 1,2,3 요소
+                for(var j = 0; j < 2; j++) {
+                    if(checkVal(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[teams[teams.length-1][j].mbti][i]))) {
+                        teams[teams.length-1].push(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[teams[teams.length-1][j].mbti][i]));
+                        delName.push(userData.filter(user => !delName.some(delUser => delUser.name === user.name)).find(user => user.mbti == matchingTypes[teams[teams.length-1][j].mbti][i]));   
+                    }
+                }
+            }
+        }
+    }
+
+    // 그 외..
+    for(var i = 0; i < userData.length; i++) {
+        if(!checkVal(delName.find(user => user.name == userData[i].name))) {
+            etcTeam.push(userData[i]);
+        }
+    }
+    
+    if(etcTeam.length > 0) {
+        teams.push(etcTeam);
+    }
+
+
+    // teams와 userData개수가 맞지 않아서 찾는중.....
+    var ss = 0;
+    userData.forEach(e => {
+        try{
+            var dd = teams.flat().filter(user => user.name == userData[ss].name);
+            var qe = teams.flat().filter(item => !userData.includes(item));
+            ss++;
+            console.log("index["+ss+"]" + dd[0].name + "," + dd[0].mbti);
+        } catch(ed) {
+            console.log("error : " + e.name);
+        }
+        
+    })
+
+    console.log(teams);
+}
+
+/**
+ * admin setting
+ */
+function adminSet() {
+    if($('#personCnt').val() == "") {
+        alertBox("인원수를 입력해주세요!");
+        return;
+    }
+
+    if($('#teamCnt').val() == "") {
+        alertBox("팀 개수를 입력해주세요!");
+        return;
+    }
+
+    updateDoc(doc(db, "setting"), {
+        personCnt: $('#personCnt').val(),
+        teamCnt: $('#teamCnt').val()
+    });
+}
+
+
+// teams와 userData개수가 맞지 않아서 찾는중.....
+// 팀 병합 기준
+// 팀 개수 제한
+// 팀 개수만큼 팀 병함
+// 인원차면 자동으로 팀 배치
+// setting 완료하면 배치된 팀 조회 가능하도록 페이지 생성
+// 
