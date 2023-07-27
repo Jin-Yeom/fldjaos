@@ -19,13 +19,12 @@ window.addEventListener('DOMContentLoaded', event => {
     // 초기화
     Kakao.init('369cbfe9e265030d709d3af757bee96b');
     Kakao.Share.sendCustom({
-        templateId : 96527
-        // 'title' :  '하하하',
-        // 'desc' :  '호호호',
-        // 'img_url' :  '../img/coin.png',
-        // 'height' :  '100',
-        // 'width' :  '300',
-        // 'btn_url' :  'https://jin-yeom.github.io/fldjaos/html/kakao.html'
+        templateId : 96527,
+        templateArgs: {
+            title: '라이언이 즐겨먹던 바로 그 틴케이스 치즈볼',
+            description: '바라만 봐도 즐거워지는 힐링 패키지에는 시크릿 스토리가 숨어있어요.',
+            //imageUrl: '../img/mbti.jpg'
+        }
     });
 
     // Kakao.Auth.login({
