@@ -18,15 +18,23 @@
 window.addEventListener('DOMContentLoaded', event => {
     // 초기화
     Kakao.init('369cbfe9e265030d709d3af757bee96b');
-    Kakao.Share.sendCustom({
-        templateId : 96527,
-        'title' :  '하하하',
-        'desc' :  '호호호',
-        'img_url' :  '../img/coin.png',
-        'height' :  '100',
-        'width' :  '300',
-        'btn_url' :  'https://jin-yeom.github.io/fldjaos/html/kakao.html'
+    Kakao.Link.sendCustom({
+        templateId : 96527
+        // 'title' :  '하하하',
+        // 'desc' :  '호호호',
+        // 'img_url' :  '../img/coin.png',
+        // 'height' :  '100',
+        // 'width' :  '300',
+        // 'btn_url' :  'https://jin-yeom.github.io/fldjaos/html/kakao.html'
     });
+
+    // Kakao.Auth.login({
+    //     success: function(response) {
+    //         Kakao.API.request({
+    //             url: 'https://jin-yeom.github.io/fldjaos/html/kakao.html'
+    //         })
+    //     }
+    // })
     
     // // 로그인
     // Kakao.Auth.authorize({
