@@ -18,7 +18,7 @@
 window.addEventListener('DOMContentLoaded', event => {
     // 초기화
     Kakao.init('369cbfe9e265030d709d3af757bee96b');
-    Kakao.Link.sendCustom({
+    Kakao.Share.sendCustom({
         templateId : 96527
         // 'title' :  '하하하',
         // 'desc' :  '호호호',
