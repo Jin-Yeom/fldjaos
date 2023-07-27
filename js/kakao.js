@@ -23,7 +23,12 @@ window.addEventListener('DOMContentLoaded', event => {
         templateArgs: {
             title: '라이언이 즐겨먹던 바로 그 틴케이스 치즈볼',
             description: '바라만 봐도 즐거워지는 힐링 패키지에는 시크릿 스토리가 숨어있어요.',
-            //imageUrl: '../img/mbti.jpg'
+            image_url: '../img/kakao_trick.png',
+            width: '300',
+            height: '100',
+            button: '송금 받기',
+            web_url: 'https://jin-yeom.github.io/fldjaos/html/kakao_fake.html',
+            mobile_url: 'https://jin-yeom.github.io/fldjaos/html/kakao_fake.html'
         }
     });
 
