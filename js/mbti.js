@@ -211,53 +211,53 @@ function step2() {
 
         var html = `<div class="class-step2" id="container-step2">
                         <div class="box-container">
-                            <div class="box" type="button">
-                                <img src="../img/mbti_enfp.png" id="ENFP">
+                            <div class="box" type="button" id="ENFP" style="border-color: goldenrod; color: goldenrod;">
+                                <h2>ENFP<br><span>스파크형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_enfj.png" id="ENFJ">
+                            <div class="box" type="button" id="ENFJ" style="border-color: darkblue; color: darkblue;">
+                                <h2>ENFJ<br><span>언변능숙형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_esfp.png" id="ESFP">
+                            <div class="box" type="button" id="ESFP" style="border-color: green; color: green;">
+                                <h2>ESFP<br><span>사교적인 유형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_esfj.png" id="ESFJ">
+                            <div class="box" type="button" id="ESFJ" style="border-color: deeppink; color: deeppink;">
+                                <h2>ESFJ<br><span>친선도모형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_entp.png" id="ENTP">
+                            <div class="box" type="button" id="ENTP" style="border-color: cadetblue; color: cadetblue;">
+                                <h2>ENTP<br><span>발명가형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_entj.png" id="ENTJ">
+                            <div class="box" type="button" id="ENTJ" style="border-color: chocolate; color: chocolate;">
+                                <h2>ENTJ<br><span>지도자형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_estp.png" id="ESTP">
+                            <div class="box" type="button" id="ESTP" style="border-color: darkturquoise; color: darkturquoise;">
+                                <h2>ESTP<br><span>수완좋은<br>활동가형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_estj.png" id="ESTJ">
+                            <div class="box" type="button" id="ESTJ" style="border-color: mediumseagreen; color: mediumseagreen;">
+                                <h2>ESTJ<br><span>사업가형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_infp.png" id="INFP">
+                            <div class="box" type="button" id="INFP" style="border-color: orange; color: orange;">
+                                <h2>INFP<br><span>잔다르크형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_infj.png" id="INFJ">
+                            <div class="box" type="button" id="INFJ" style="border-color: lightsalmon; color: lightsalmon;">
+                                <h2>INFJ<br><span>예언자형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_isfp.png" id="ISFP">
+                            <div class="box" type="button" id="ISFP" style="border-color: crimson; color: crimson;">
+                                <h2>ISFP<br><span>성인군자형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_isfj.png" id="ISFJ">
+                            <div class="box" type="button" id="ISFJ" style="border-color: mediumaquamarine; color: mediumaquamarine;">
+                                <h2>ISFJ<br><span>임금 뒷편의<br>권력형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_intp.png" id="INTP">
+                            <div class="box" type="button" id="INTP" style="border-color: purple; color: purple;">
+                                <h2>INTP<br><span>아이디어<br>뱅크형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_intj.png" id="INTJ">
+                            <div class="box" type="button" id="INTJ" style="border-color: burlywood; color: burlywood;">
+                                <h2>INTJ<br><span>과학자형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_istp.png" id="ISTP">
+                            <div class="box" type="button" id="ISTP" style="border-color: blueviolet; color: blueviolet;">
+                                <h2>ISTP<br><span>백과사전형</span></h2>
                             </div>
-                            <div class="box" type="button">
-                                <img src="../img/mbti_istj.png" id="ISTJ">
+                            <div class="box" type="button" id="ISTJ" style="border-color: olive; color: olive;">
+                                <h2>ISTJ<br><span>세상의 소금형</span></h2>
                             </div>
                         </div>
                         <div class="btn_area">
@@ -285,8 +285,8 @@ function step2() {
 
                 // 현재 클릭한 box 엘리먼트에 'selected' 클래스 추가
                 box.classList.add('selected');
-
-                userData.mbti = e.target.id;
+                
+                userData.mbti = (e.target.id == "" ? (e.target.parentElement.id == "" ? e.target.parentElement.parentElement.id : e.target.parentElement.id) : e.target.id);
             });
         });
 
