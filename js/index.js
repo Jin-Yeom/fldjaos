@@ -1,54 +1,40 @@
-/*!
-* Start Bootstrap - Freelancer v7.0.7 (https://startbootstrap.com/theme/freelancer)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-freelancer/blob/master/LICENSE)
-*/
-//
-// Scripts
-// 
 
-window.addEventListener('DOMContentLoaded', event => {
+/****************************
+ * global common object
+ ****************************/
+const gcm = {};
 
-    // Navbar shrink function
-    var navbarShrink = function () {
-        const navbarCollapsible = document.body.querySelector('#mainNav');
-        if (!navbarCollapsible) {
-            return;
-        }
-        if (window.scrollY === 0) {
-            navbarCollapsible.classList.remove('navbar-shrink')
-        } else {
-            navbarCollapsible.classList.add('navbar-shrink')
+gcm.openPage = function() {
+    const createHtml = () => {
+        const clockHtml = () => {
+            const clock = document.querySelector('#clock');
+            const toDate = new Date();
+            clock.innerText = `${toDate.getHours()}:${toDate.getMinutes()}`;
         }
 
-    };
+        const appHtml = () => {
+            const appBox = document.querySelector('.app-box-container');
+            let html = "";
 
-    // Shrink the navbar 
-    navbarShrink();
-
-    // Shrink the navbar when page is scrolled
-    document.addEventListener('scroll', navbarShrink);
-
-    // Activate Bootstrap scrollspy on the main nav element
-    const mainNav = document.body.querySelector('#mainNav');
-    if (mainNav) {
-        new bootstrap.ScrollSpy(document.body, {
-            target: '#mainNav',
-            rootMargin: '0px 0px -40%',
-        });
-    };
-
-    // Collapse responsive navbar when toggler is visible
-    const navbarToggler = document.body.querySelector('.navbar-toggler');
-    const responsiveNavItems = [].slice.call(
-        document.querySelectorAll('#navbarResponsive .nav-link')
-    );
-    responsiveNavItems.map(function (responsiveNavItem) {
-        responsiveNavItem.addEventListener('click', () => {
-            if (window.getComputedStyle(navbarToggler).display !== 'none') {
-                navbarToggler.click();
+            for(let i = 0; i < 5; i++) {
+                html += `<div class="app-box" id="app-${i}"></div>`;
             }
-        });
-    });
 
-});
+            appBox.innerHTML = html;
+        }
+
+        setInterval(() => {clockHtml()}, 100);
+        appHtml();
+    }
+
+    const init = () => {
+        createHtml();
+    }
+
+    return init;
+}();
+
+/**
+ * 첫 page loading 시 실행
+ */
+gcm.openPage();
