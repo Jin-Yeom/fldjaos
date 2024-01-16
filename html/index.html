@@ -8,11 +8,24 @@
     <link href="../css/index.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="top-box"><a id="clock"></a></div>
+    <div class="clock-box"></div>
+    <div class="plmi-box">
+        <!-- span으로 변경해줄 것? 이미지 안 쓰도록 -->
+        <div id="plus" type="button">
+        </div>
+        <div id="minus" type="button">
+        </div>
+    </div>
     <div class="container">
         <div class="app-box-container">
             
         </div>
+    </div>
+    <div class="popup" style="display: none;">
+        <span class="close-btn" onclick="gcm.closePopup()">×</span>
+        <h2>Hello, Popup!</h2>
+        <div class="popContent"></div>
+        <p>This is a simple popup example.</p>
     </div>
 </body>
 </html>

@@ -10,22 +10,55 @@ body {
     background-repeat: no-repeat; 
 }
 
-.top-box {
+/* clock area */
+.clock-box {
     position: absolute;
-    top: 15%;
+    top: 20%;
     width: 100%;
     height: 30px;
     text-align: center;
 }
 
-.top-box a {
+.clock-box #clock {
     font-family: 'Arial', sans-serif;
     font-size: 2.5em;
     font-weight: bold;
-    color: #818285;;
+    color: #818285;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* plus minus area */
+.plmi-box {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    position: absolute;
+    top: 32%;
+    width: 80%;
+    height: 40px;
+}
+
+.plmi-box #plus {
+    width: 40px;
+    height: 40px;
+    opacity: 0.6;
+    background-image: url('../img/index_plus.png');
+    background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
+    background-position: center; /* 이미지를 가운데 정렬합니다 */
+    background-repeat: no-repeat; 
+}
+
+.plmi-box #minus {
+    width: 40px;
+    height: 40px;
+    opacity: 0.6;
+    background-image: url('../img/index_minus.png');
+    background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
+    background-position: center; /* 이미지를 가운데 정렬합니다 */
+    background-repeat: no-repeat; 
+}
+
+/* app area */
 .container {
     width: 80%;
     opacity: 0.8;
@@ -55,6 +88,43 @@ body {
     margin-left: -41%;
 }
 
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.popup .popContent {
+    position: relative;
+    margin-left: 5%;
+    width: 90%;
+    height: 50%;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    background-color: #444; /* 흐린 회색 박스 */
+    background-image: url('../img/box_food.jpg');
+    background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
+    background-position: center; /* 이미지를 가운데 정렬합니다 */
+    background-repeat: no-repeat; 
+}
+
+.close-btn {
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+    color: #444;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* media */
 @media (min-width: 300px) {
     .app-box {
         margin-left: 10%;
