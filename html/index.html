@@ -3,29 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Design Example</title>
-    <script defer src="../js/index.js"></script>
+    <link rel="short icon" href="#">
+    <title>jin-yeom</title>
+    <script defer src="../js/index.js" type="module"></script>
     <link href="../css/index.css" rel="stylesheet" />
 </head>
 <body>
     <div class="clock-box"></div>
     <div class="plmi-box">
-        <!-- span으로 변경해줄 것? 이미지 안 쓰도록 -->
-        <div id="plus" type="button">
-        </div>
-        <div id="minus" type="button">
-        </div>
+        <span id="plus" type="button">
+        </span>
+        <span id="minus" type="button">
+        </span>
     </div>
     <div class="container">
         <div class="app-box-container">
             
         </div>
     </div>
-    <div class="popup" style="display: none;">
-        <span class="close-btn" onclick="gcm.closePopup()">×</span>
-        <h2>Hello, Popup!</h2>
-        <div class="popContent"></div>
-        <p>This is a simple popup example.</p>
+    <div class="popupContainer" style="display: none;">
+
     </div>
 </body>
 </html>
