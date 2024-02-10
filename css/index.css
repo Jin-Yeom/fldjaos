@@ -119,6 +119,31 @@ body {
     background-repeat: no-repeat; 
 }
 
+/* 버튼 스타일 */
+.popupContainer .popup button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #3498db; /* 버튼 배경색 */
+    color: #fff; /* 버튼 글자색 */
+    border: 2px solid #3498db; /* 버튼 테두리 색상 */
+    transition: background-color 0.3s, color 0.3s; /* 전환 효과 */
+    margin-top: 10%;
+}
+
+/* Disabled 상태의 버튼 스타일 */
+.popupContainer .popup button:disabled {
+    background-color: #bdc3c7; /* Disabled 배경색 */
+    color: #7f8c8d; /* Disabled 글자색 */
+    border: 2px solid #bdc3c7; /* Disabled 테두리 색상 */
+    cursor: not-allowed; /* Disabled 시 마우스 커서 변경 */
+}
+
 .close-btn {
     cursor: pointer;
     font-family: 'Arial', sans-serif;

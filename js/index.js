@@ -23,36 +23,120 @@ const db = collection(database, "fldjaos");
 /****************************
  * Global Common Object
  ****************************/
+
 const gcm = {};
 
 /****************************
  * gcm 전역 변수
  ****************************/
 
-gcm.appFb = "";
-gcm.tmpArr = [];
+gcm.appFb;
+gcm.appArrFb = [];
 
 /****************************
  * Event
  ****************************/
+
+/**
+ * onpageload
+ */
 document.addEventListener('DOMContentLoaded', () => {
     // 초기화
     initialize();
 });
 
+/**
+ * 모든 이벤트
+ */
+gcm.eventAll = () => {
+    // 앱 클릭 이벤트
+    gcm.btn_app_onclick();
+
+    // 팝업 닫기 클릭 이벤트
+    gcm.closePopup();
+}
+
+/**
+ * app icon 클릭, 팝업 띄우기 이벤트
+ */
+gcm.btn_app_onclick = () => {
+    const btn_app = document.querySelectorAll('.app-box');
+    btn_app.forEach((item, idx) => {
+        item.onclick = () => {
+            document.querySelector('.popupContainer').style.display = 'block';
+            document.querySelector(`.popup#${gcm.appArrFb[idx].ID}`).style.display = 'block';
+        }
+    })
+}
+
+/**
+ * app 클릭, 팝업 닫기 이벤트
+ */
+gcm.closePopup = () => {
+    const btn_app = document.querySelectorAll('.close-btn');
+
+    btn_app.forEach((item, idx) => {
+        item.onclick = () => {
+            document.querySelectorAll('.popup')[idx].style.display = 'none';
+            document.querySelector('.popupContainer').style.display = 'none';
+        }
+    })
+}
+
+/****************************
+ * FireBase
+ ****************************/
+
+/**
+ * fireBase Data get
+ */
+gcm.getDataFb = async () => {
+    const querySnapshot1 = await getDoc(doc(db, "app"));
+	gcm.appFb = querySnapshot1.data();
+}
+
+/**
+ * fireBase Data insert
+ */
+gcm.insertDataFb = async () => {
+    await updateDoc(doc(db, "app"), {
+        CONTENT:arrayUnion("귀찮은데 대충 먹자..", "이곳은 불법사이트가 아닙니다.</br>안심하고 즐겨주세요."),
+        ICON : arrayUnion("../img/app_food.png", "../img/app_toto.jpg"),
+        ID:arrayUnion("food", "toto"),
+        IMAGE:arrayUnion("../img/pop_food.jpg", "../img/pop_toto.jpg"),
+        READY:arrayUnion(0, 1),
+        TITLE:arrayUnion("Lunch for us", "당신의 운명에 배팅을!"),
+        URL:arrayUnion("#food", "../html/toto.html"),
+    }).then(() => {
+        // 후처리 로직
+        // fireBase Data 재구성
+        for(let i = 0; i < gcm.appFb.ID.length; i++) {
+            const data = {
+                CONTENT : gcm.appFb.CONTENT[i],
+                ICON : gcm.appFb.ICON[i],
+                ID : gcm.appFb.ID[i],
+                IMAGE : gcm.appFb.IMAGE[i],
+                READY : gcm.appFb.READY[i],
+                TITLE : gcm.appFb.TITLE[i],
+                URL : gcm.appFb.URL[i]
+            };
+
+            gcm.appArrFb.push(data);
+        }
+    })
+}
 
 /****************************
  * Function
  ****************************/
+
 /**
  * Init Function
  */
 const initialize = async () => {
     // fireBase Data get
     await gcm.getDataFb();
-
-    // 임시 배열, fireBase Data array로 변환 후 수정 예정
-    gcm.tmpArr.push(gcm.appFb);
+    await gcm.insertDataFb();
 
     // HTML append
     const appBoxContainer = document.querySelector('.app-box-container');
@@ -71,17 +155,6 @@ const initialize = async () => {
 };
 
 /**
- * 모든 이벤트
- */
-gcm.eventAll = () => {
-    // 앱 클릭 이벤트
-    gcm.btn_app_onclick();
-
-    // 앱 팝업 닫기 이벤트
-    gcm.closePopup();
-}
-
-/**
  * HTML 템플릿, clock
  * @param {시간} hours 
  * @param {분} minutes 
@@ -97,7 +170,7 @@ gcm.createClockHTML = (hours, minutes) => `<div id="clock">${hours}:${minutes}</
 gcm.createAppBoxHTML = count => {
     let html = "";
 
-    gcm.tmpArr.forEach((item, idx) => {
+    gcm.appArrFb.forEach((item, idx) => {
         const {ID:id, ICON:icon} = item;
 
         html += `<div class="app-box" id="app-${id}" style="background-image: url(${icon});"></div>`;
@@ -118,57 +191,24 @@ gcm.updateClock = () => {
 };
 
 /**
- * app 클릭 팝업 닫기
- */
-gcm.closePopup = () => {
-    const btn_app = document.querySelectorAll('.close-btn');
-
-    btn_app.forEach((item, idx) => {
-        item.onclick = () => {
-            document.querySelectorAll('.popup')[idx].style.display = 'none';
-            document.querySelector('.popupContainer').style.display = 'none';
-        }
-    })
-}
-
-/**
- * fireBase Data get
- */
-gcm.getDataFb = async () => {
-    const querySnapshot1 = await getDoc(doc(db, "app"));
-	gcm.appFb =  querySnapshot1.data();
-}
-
-/**
  * 매핑된 앱의 팝업 생성
  */
 gcm.createPopupHTML = () => {
     let html = "";
 
-    gcm.tmpArr.forEach((item, idx) => {
-        const {ID:id, TITLE:title, IMAGE:image, CONTENT:content} = item;
+    gcm.appArrFb.forEach((item, idx) => {
+        const {ID:id, TITLE:title, IMAGE:image, CONTENT:content, READY:ready, URL:url} = item;
 
         html += `<div class="popup" id=${id} style="display: none;">
                     <span class="close-btn">×</span>
                     <h2>${title}</h2>
                     <div class="popContent" style="background-image: url(${image});"></div>
                     <p>${content}</p>
-                 </div>`;
+                    ${ready ? `<button class="btn-start" id="btn-start-${id}" onclick="location.href='${url}'">시작하기</button>` : 
+                    `<button class="btn-start" id="btn-start-${id}" disabled=true>준비중..</button>`}
+                </div>`;
     })
 
 
     return html;
-}
-
-/**
- * app icon 클릭 이벤트
- */
-gcm.btn_app_onclick = () => {
-    const btn_app = document.querySelectorAll('.app-box');
-    btn_app.forEach((item, idx) => {
-        item.onclick = () => {
-            document.querySelector('.popupContainer').style.display = 'block';
-            document.querySelector(`.popup#${gcm.tmpArr[idx].ID}`).style.display = 'block';
-        }
-    })
 }
