@@ -194,7 +194,6 @@ body {
 */
 
 /************** Loading **************/
-/*
 @keyframes rotate-loading {
     0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
     100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
@@ -264,22 +263,22 @@ body {
 }
 .loading-container,
 .loading {
-    height: 100px;
+    height: 200px;
     position: relative;
-    width: 100px;
+    width: 200px;
     border-radius: 100%;
 }
 
 .loading-container { 
   margin: 40px auto;
+  margin-top: 40%;
   position: relative;
   text-align: center;
-  left: -10px;
 }
 
 .loading {
     border: 3px solid transparent;
-    border-color: transparent #1338BE transparent #1338BE;
+    border-color: transparent #010206 transparent #010206;
     -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
     -moz-transform-origin: 50% 50%;
     -o-animation: rotate-loading 1.5s linear 0s infinite normal;
@@ -303,16 +302,67 @@ body {
     -o-animation: loading-text-opacity 2s linear 0s infinite normal;
     -webkit-animation: loading-text-opacity 2s linear 0s infinite normal;
     animation: loading-text-opacity 2s linear 0s infinite normal;
-    color: #1338BE;
+    color: #010206;
     font-family: "Helvetica Neue, "Helvetica", ""arial";
-    font-size: 15px;
+    font-size: 2rem;
     font-weight: bold;
-    margin-top: 40px;
+    margin-top: 40%;
     opacity: 0;
     position: absolute;
     text-align: center;
     text-transform: uppercase;
     top: 0;
-    width: 100px;
+    width: 200px;
 }
-*/
+
+/************** alert box **************/
+#alertBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 270px; /* 원하는 크기로 지정 */
+    height: 140px; /* 원하는 크기로 지정 */
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#alertHeader {
+    background-color: gray;
+    color: white;
+    padding: 15px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+#closeButton {
+    float: right;
+    cursor: pointer;
+    font-size: 30px;
+    margin-top: -23px;
+    margin-right: -6px;
+}
+
+#alertContent {
+    position: relative;
+    width: 93%;
+    height: calc(100% - 50px); /* 수정: 상단바 높이만큼 뺀 높이 지정 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+} 

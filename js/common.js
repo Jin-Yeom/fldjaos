@@ -24,6 +24,7 @@ var alertBox = function(text) {
 						<p>${text}</p>
 					</div>
 				</div>`;
+				
 	$("body").append(html);
 }
 

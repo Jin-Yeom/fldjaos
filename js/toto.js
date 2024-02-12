@@ -53,6 +53,8 @@ const eventAll = () => {
 
     userStart();
     teamSelect();
+    userBack();
+    btnOK();
 }
 
 /**
@@ -72,6 +74,11 @@ const regUser = () => {
             USERID : userId,
             COIN : "10"
         };
+
+        if(userId == "") {
+            alertBox("이름을 입력해주세요!");
+            return;
+        }
     
         await insertDataFb(objNm, obj);
         
@@ -114,7 +121,7 @@ const adminStats = () => {
         return;
     }
 
-    admin_stats.onclick = async() => {
+    admin_stats.onclick = () => {
         innerHtmlUpdate(2, 2);
     }
 }
@@ -129,8 +136,24 @@ const adminBack = () => {
         return;
     }
 
-    admin_back.onclick = async() => {
+    admin_back.onclick = () => {
         innerHtmlUpdate(2);
+        eventAll();
+    }
+}
+
+/**
+ * 사용자 등록 이벤트
+ */
+const userBack = () => {
+    const btn_userBack = document.querySelector('#btn_userBack');
+    
+    if(btn_userBack == null || typeof btn_userBack === "undefined") {
+        return;
+    }
+
+    btn_userBack.onclick = () => {
+        innerHtmlUpdate(3);
         eventAll();
     }
 }
@@ -166,6 +189,27 @@ const teamSelect = () => {
     })
 }
 
+/**
+ * 
+ * @returns 
+ */
+const btnOK = () => {
+    const btn_ok = document.querySelector('#btn_ok');
+    
+    if(btn_ok == null || typeof btn_ok === "undefined") {
+        return;
+    }
+
+    btn_ok.onclick = () => {
+        if(document.querySelector('#coinInput').value == "") {
+            alertBox("배팅을 해주세요!");
+            return;
+        }
+
+        innerHtmlUpdate(5);
+    }
+}
+
 /****************************
  * FireBase
  ****************************/
@@ -195,6 +239,7 @@ const insertDataFb = async (objNm, obj) => {
                 }
 
                 const USER = [...totoParam[objNm], obj];
+                totoParam[objNm] = USER;
 
                 await updateDoc(doc(db, "toto"), {
                     USER
@@ -208,6 +253,24 @@ const insertDataFb = async (objNm, obj) => {
 
                 await updateDoc(doc(db, "toto"), {
                     ADMIN
+                }).then(() => {
+                })
+                
+                break;
+            case "BAT":
+
+                for(let i = 0; i < totoParam[objNm].length; i++) {  // 중복제거
+                    if(totoParam[objNm][i].USERID === obj.USERID)  {
+                        totoParam[objNm].splice(i, 1);
+                        i--;
+                    }
+                }
+
+                const BAT = [...totoParam[objNm], obj];
+                totoParam[objNm] = BAT;
+
+                await updateDoc(doc(db, "toto"), {
+                    BAT
                 }).then(() => {
                 })
                 
@@ -241,9 +304,10 @@ const initialize = async () => {
  * @param {number} step 스텝 단계
  * @param {number} addVal 관리자
  */
-const innerHtmlUpdate = (step, addVal) => {
+const innerHtmlUpdate = async (step, addVal) => {
     const step1_container = document.querySelector('.step1-container');
     const step2_container = document.querySelector('.step2-container');
+    const user = getItem("USER");
     const clockBox = document.querySelector('.clock-box');
 
     switch(step) {
@@ -279,7 +343,7 @@ const innerHtmlUpdate = (step, addVal) => {
                                     </br>
                                     </br>
                                     </br>
-                                    <button class="bet-button" id="admin_back" style="width:25%;">뒤로</button>
+                                    <button class="bet-button" id="admin_back" style="width:100%;">뒤로</button>
                                 </div>`;
 
                 step2_container.innerHTML = adminHtml;
@@ -287,7 +351,7 @@ const innerHtmlUpdate = (step, addVal) => {
             } else if(admin.USERID === "admin" && addVal === 2) {
                 let userHtml = "";
 
-                totoFb.param.USER.forEach((item, idx) => {
+                totoFb.USER.forEach((item, idx) => {
                     const {USERID:userId, COIN:coin} = item;
                     if(userId == "admin") {
                         return;
@@ -301,7 +365,7 @@ const innerHtmlUpdate = (step, addVal) => {
                                     ${userHtml}
                                 </div>
                                 <div class="bottom-left-container">
-                                    <button class="bet-button" id="admin_back" style="width:25%;">뒤로</button>
+                                    <button class="bet-button" id="admin_back" style="width:100%;">뒤로</button>
                                 </div>`;
 
                 step2_container.innerHTML = adminHtml;
@@ -335,8 +399,37 @@ const innerHtmlUpdate = (step, addVal) => {
             step2_container.style.display = 'block';
             step1_container.style.display = 'none';
 
+
+            const coinInput = document.querySelector('#coinInput');
+            coinInput.addEventListener("keyup", (e) => {
+                if(Number(e.target.value) > Number(user.COIN)) {
+                    e.target.value = user.COIN;
+                }
+            })
+
             setTimeout(() => {
                 eventAll();
+                document.querySelector('.step2-container').className = "step2-container show";
+            }, 100);
+
+            break;
+        case 5:
+            step2_container.innerHTML = step5HTML();    // 준비중 화면
+            step2_container.style.display = 'block';
+            step1_container.style.display = 'none';
+
+            setTimeout(() => {
+                document.querySelector('.step2-container').className = "step2-container show";
+            }, 100);
+
+            break;
+        case 6:
+            step2_container.innerHTML = step6HTML();
+            step2_container.style.display = 'block';
+            step1_container.style.display = 'none';
+
+            setTimeout(() => {
+                btnOK();
                 document.querySelector('.step2-container').className = "step2-container show";
             }, 100);
 
@@ -393,13 +486,18 @@ const userStartYn = () => {
     setInterval( async () => {
         await getDataFb();
         
+        const user_start = document.querySelector('#user_start');
+
+        if(user_start == null || typeof user_start === "undefined") {
+            return;
+        }
+
         if((totoFb?.ADMIN[0].STARTFLAG ?? false) && totoFb.ADMIN[0].STARTFLAG == "Y") {
-            const user_start = document.querySelector('#user_start');
             user_start.disabled = false;
         } else {
-            const user_start = document.querySelector('#user_start');
             user_start.disabled = true;
         }
+
     }, 100);
 }
 
@@ -436,18 +534,129 @@ const step3HTML = () => {
  */
 const step4HTML = (teamIdx) => {
     const user = getItem("USER");
-    const html = `<div class="container-title">${teamIdx}팀</div>
+    const html = `<div class="container-title" id="teamIdx">${teamIdx}팀</div>
                 </br>
                 <div class="center-container" id="btn_container" style="display:flex;">
-                    <input class="input-box" placeholder="달란트를 적어주세요."></input>
-                    <button class="bet-button" style="margin-left:10%; padding: 6px; 20px; height: 10%;">확인</button>
+                    <input class="input-box" placeholder="달란트를 적어주세요." type="number" id="coinInput"></input>
+                    <button class="bet-button" id="btn_ok" style="margin-left:10%; padding: 6px; 20px; height: 10%;">확인</button>
                 </div>
                 <div class="bottom-left-container" style="margin-top:5%; margin-left: 3px;">
                     달란트: <span class="coin" id="coin">${user.COIN}</span>
                 </div>
-                <button class="bet-button" style="width: 100%; margin-top:50%;">뒤로</button>`;
+                <button class="bet-button" style="width: 100%; margin-top:50%;" id="btn_userBack">뒤로</button>`;
 
     return html;
+}
+
+/**
+ * 준비중 
+ * @returns 
+ */
+const step5HTML = () => {
+    
+    const html = `<div class="loading-container">
+                    <div class="loading"></div>
+                    <p id="loading-text">배팅중..</p>
+                </div>`;
+
+    return html;
+}
+
+/**
+ * 
+ */
+const step6HTML = async () => {
+    const user = getItem("USER");
+
+    await battingOk();
+
+    let allCoin = 0;
+    let parseNum = 0;
+    let team1Num = 0;
+    let team2Num = 0;
+    let team3Num = 0;
+
+    let team1Coin = 0;
+    let team2Coin = 0;
+    let team3Coin = 0;
+
+    // 배당률 : (1/(건코인/코인합))*건코인
+    totoFb.BAT.forEach((item, idx) => {
+        const {USERID:userId, TEAM:team, BATCOIN:batCoin} = item;
+        allCoin += Number(batCoin);
+        parseNum++;
+
+        switch(team) {
+            case "1팀":
+                team1Num++;
+                team1Coin += Number(batCoin);
+                break;
+            case "2팀":
+                team2Num++;
+                team2Coin += Number(batCoin);
+                break;
+            case "3팀":
+                team3Num++;
+                team3Coin += Number(batCoin);
+                break;
+            default:
+                break;
+        }
+    })
+
+    const html = `<div class="container-title">배팅을 완료하셨습니다.</div>
+                <div class="center-container" id="btn_container">
+                    <button class="bet-button">1팀</button>
+                    <div style="margin-left: 10%; text-align: left;">
+                        <a>배율 : ${(team1Coin/allCoin).toString().substring(0, 4)}</a>
+                        </br>
+                        <a>인원 : ${team1Num}명</a>
+                        </br>
+                        <a>총 달란트 : ${team1Coin}</a>
+                        </br>
+                    </div>
+                    <button class="bet-button">2팀</button>
+                    <div style="margin-left: 10%; text-align: left;">
+                        <a>배율 : ${(team2Coin/allCoin).toString().substring(0, 4)}</a>
+                        </br>
+                        <a>인원 : ${team2Num}명</a>
+                        </br>
+                        <a>총 달란트 : ${team2Coin}</a>
+                        </br>
+                    </div>
+                    <button class="bet-button">3팀</button>
+                    <div style="margin-left: 10%; text-align: left;">
+                        <a>배율 : ${(team3Coin/allCoin).toString().substring(0, 4)}</a>
+                        </br>
+                        <a>인원 : ${team3Num}명</a>
+                        </br>
+                        <a>총 달란트 : ${team3Coin}</a>
+                        </br>
+                    </div>
+                </div>
+                <div class="bottom-left-container" style="margin-top:10%;">
+                    달란트: <span class="coin" id="coin">${user.COIN}</span>
+                </div>`;
+
+    return html;
+}
+
+/**
+ * 
+ */
+const battingOk = async () => {
+    const user = getItem("USER");
+    const objNm = "BAT";
+    const coin = document.querySelector('#coinInput').value;
+    const team = document.querySelector('#teamIdx').innerText;
+    
+    const obj = {
+        USERID: user.USERID,
+        TEAM: team,
+        BATCOIN: coin
+    };
+
+    await insertDataFb(objNm, obj);
 }
 
 /**
