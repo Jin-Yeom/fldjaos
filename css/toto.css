@@ -64,9 +64,10 @@ body {
 /* app area */
 .step2-container {
     width: 80%;
-    height: 40%;
+    height: 60%;
     background-color: #f0f0f0; /* 흐린 회색 박스 */
     border-radius: 15px; /* 모서리 둥근 네모난 모양 */
+    margin-top: 10%;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
     opacity: 0;
@@ -101,6 +102,13 @@ body {
     text-align: center;
 }
 
+.step2-container .center-container-scroll {
+    margin-top: 10%;
+    text-align: center;
+    max-height: 60%;
+    overflow-y: auto;
+}
+
 .step2-container .bet-button {
     width: 80%;
     padding: 10px 20px;
@@ -110,6 +118,12 @@ body {
     color: #fff; /* 배팅 버튼 글자 색상 */
     border: none;
     border-radius: 5px;
+}
+
+.step2-container .bet-button:disabled {
+    background-color: #bdc3c7; /* 배경색상 */
+    color: #7f8c8d; /* 글자색상 */
+    border: 2px solid #bdc3c7; /* 테두리 색상 */
 }
 
 .step2-container .bottom-left-container {
