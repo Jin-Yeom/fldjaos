@@ -229,7 +229,9 @@ const btnHome = () => {
     }
 
     btn_home.onclick = () => {
-        innerHtmlUpdate(2);
+        location.hash = 'reload';
+        location.reload();
+        //innerHtmlUpdate(2);
     }
 }
 
@@ -432,6 +434,11 @@ const innerHtmlUpdate = async (step, addVal) => {
             step2_container.style.display = 'none';
 
             setTimeout(() => {
+                if (window.location.hash == '#reload') {
+                    const user = getItem('USER');
+                    document.querySelector('.input-box').value = user.USERID;
+                    innerHtmlUpdate(2);
+                }
                 document.querySelector('.step1-container').className = "step1-container show";
             }, 100);
 
