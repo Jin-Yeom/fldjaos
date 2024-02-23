@@ -702,7 +702,7 @@ const step5HTML = () => {
  */
 const step6HTML = () => {
     const user = getItem("USER");
-
+    
     let allCoin = 0;
     let parseNum = 0;
 
@@ -753,12 +753,12 @@ const step6HTML = () => {
     })
 
     if(!com.isEmpty(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")))) {
-        winCoin = Number(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).reduce((prev, current) => Number(prev.BATCOIN) + Number(current.BATCOIN)).BATCOIN);
+        winCoin = totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).reduce((prev, current) => Number(prev.BATCOIN) + Number(current.BATCOIN)) ?? 0;
     }
 
     myCoin = Number(totoFb.BAT.find(e => e.USERID == getItem('USER').USERID).BATCOIN);
 
-    const successCoin = Math.trunc((1/(winCoin/allCoin))*myCoin);
+    const successCoin = Math.trunc((1/(winCoin/allCoin))*myCoin) ?? 0;
     const winCheck = totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).find(e => e.USERID == user.USERID);
     let mySuccessCoin = 0;
     
@@ -773,7 +773,7 @@ const step6HTML = () => {
         };
 
         sessionStorage.removeItem('USER');
-        
+
         setItem('USER', obj);
 
         insertDataFb(objNm, obj);
@@ -854,7 +854,7 @@ const battingOk = async () => {
     };
 
     sessionStorage.removeItem('USER');
-
+    
     setItem('USER', obj);
 
     await insertDataFb(objNm, obj);
