@@ -757,7 +757,9 @@ const step6HTML = () => {
         if(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).length == 1) {
             winCoin =  Number(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀"))[0].BATCOIN);
         } else {
-            winCoin = totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).reduce((prev, current) => Number(prev.BATCOIN) + Number(current.BATCOIN)) ?? 0;
+            totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).forEach((item) => {
+                winCoin += Number(item.BATCOIN);
+            })
         }
     }
 
