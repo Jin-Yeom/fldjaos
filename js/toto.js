@@ -112,12 +112,12 @@ const regUser = () => {
         return;
     }
 
-    bnt_reg.onclick = async() => {
+    bnt_reg.onclick = async () => {
         const userId = document.querySelector('.input-box#userId').value;
         const objNm = "USER";
         const obj = {
             USERID : userId,
-            COIN : "10"
+            COIN : (totoFb.USER.find(e => e.USERID == userId) ?? false) ? totoFb.USER.find(e => e.USERID == userId).COIN : "10"
         };
 
         if(userId == "") {
@@ -773,7 +773,7 @@ const step6HTML = () => {
         };
 
         sessionStorage.removeItem('USER');
-
+        
         setItem('USER', obj);
 
         insertDataFb(objNm, obj);
