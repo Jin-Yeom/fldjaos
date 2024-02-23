@@ -75,7 +75,7 @@ body {
 }
 
 .step2-container.show {
-    opacity: 0.8;
+    opacity: 1;
 }
 
 .step2-container .container-title {

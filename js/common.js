@@ -1,3 +1,5 @@
+const com = {};
+
 var showPopup = function(pageNm) {
 	// 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
 
@@ -54,7 +56,7 @@ var checkVal = function(val) {
  * @param {배열} array 
  * @returns 
  */
-function shuffleArray(array) {
+com.shuffleArray = array => {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]];
@@ -70,4 +72,16 @@ function maxLengthCheck(object){
 	if (object.value.length > object.maxLength){
 			object.value = object.value.slice(0, object.maxLength);
 	}    
+}
+
+/**
+* 빈값 체크
+* @param {Object, String, Number, etc...} obj 
+*/
+com.isEmpty = obj => {
+	if(obj === null || typeof obj === "undefined" || obj == "") {
+		return true;
+	} else {
+		return false;
+	}
 }

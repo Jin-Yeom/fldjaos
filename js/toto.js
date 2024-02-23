@@ -30,6 +30,48 @@ let minutes = 10;
 let seconds = 0;
 let battingFlag = true;
 
+const radomName = [
+    '어둠에 물든 자',
+    '눈물의 꽃잎',
+    '쓸쓸한 달빛',
+    '꿈결 속의 미소',
+    '서러운 별빛',
+    '은밀한 심연',
+    '가려운 꽃향기',
+    '뒤엉킨 운명',
+    '은은한 색채',
+    '묘한 감정세계',
+    '수수한 그림자',
+    '손끝의 미스테리',
+    '꿈결 속의 달빛',
+    '초승달의 고요',
+    '어두운 소망',
+    '은은한 선율',
+    '숨겨진 어둠',
+    '비밀스러운 미소',
+    '푸른 밤하늘',
+    '속삭이는 바람',
+    '긴 밤의 고독',
+    '은밀한 환희',
+    '바람결의 미로',
+    '떨리는 감정',
+    '어둠 속의 비밀',
+    '한 줌의 유혹',
+    '달콤한 어둠',
+    '어둠 속의 소망',
+    '빛나는 그림자',
+    '미소의 그림자',
+    '은은한 감성',
+    '은밀한 순간',
+    '속삭이는 어둠',
+    '감미로운 고요',
+    '비밀스러운 눈빛',
+    '은은한 기운',
+    '숨은 미소',
+    '빛나는 어둠',
+    '은밀한 언약'
+]
+
 /****************************
  * Event
  ****************************/
@@ -265,7 +307,7 @@ const btnOK = () => {
     }
 
     btn_ok.onclick = () => {
-        if(document.querySelector('#coinInput').value == "") {
+        if(document.querySelector('#coinInput').value == "" || document.querySelector('#coinInput').value == "0") {
             alertBox("배팅을 해주세요!");
             return;
         }
@@ -403,7 +445,7 @@ const innerHtmlUpdate = async (step, addVal) => {
                 adminHtml = `<div class="container-title">우승팀 확정하기</div>
                             <div class="clock-box" style="display: none;"></div>
                             </br>
-                            <div class="center-container" id="admin_teamSelect">
+                            <div class="center-container-scroll" id="admin_teamSelect">
                                 <button class="bet-button">1팀</button>
                                 </br>
                                 </br>
@@ -413,6 +455,10 @@ const innerHtmlUpdate = async (step, addVal) => {
                                 </br>
                                 </br>
                                 <button class="bet-button">3팀</button>
+                                </br>
+                                </br>
+                                </br>
+                                <button class="bet-button">4팀</button>
                                 </br>
                                 </br>
                                 </br>
@@ -508,17 +554,6 @@ const innerHtmlUpdate = async (step, addVal) => {
             }, 100);
 
             break;
-        // case 7 :
-        //     step2_container.innerHTML = step6HTML();
-        //     step2_container.style.display = 'block';
-        //     step1_container.style.display = 'none';
-
-        //     setTimeout(() => {
-        //         eventAll();
-        //         document.querySelector('.step2-container').className = "step2-container show";
-        //     }, 100);
-
-        //     break;
         default:
             break;
     }
@@ -554,7 +589,7 @@ const step2HTML = () => {
                     <button class="bet-button" id="admin_stats">통계보기</button>
                 </div>`;
     } else {
-        html = `<div class="container-title">어둠에 물든 자</div>
+        html = `<div class="container-title">${com.shuffleArray(radomName)[0]}</div>
                     <div class="name" id="name">${user.USERID}</div>
                     <div class="center-container">
                         <button class="bet-button" id="user_start">시작하기</button>
@@ -604,7 +639,7 @@ const step3HTML = () => {
     const user = getItem("USER");
     const html = `<div class="container-title">우승팀을 골라주세요.</div>
                 </br>
-                <div class="center-container" id="btn_container">
+                <div class="center-container-scroll" id="btn_container">
                     <button class="bet-button">1팀</button>
                     </br>
                     </br>
@@ -614,6 +649,10 @@ const step3HTML = () => {
                     </br>
                     </br>
                     <button class="bet-button">3팀</button>
+                    </br>
+                    </br>
+                    </br>
+                    <button class="bet-button">4팀</button>
                     </br>
                     </br>
                     </br>
@@ -666,13 +705,16 @@ const step6HTML = () => {
 
     let allCoin = 0;
     let parseNum = 0;
+
     let team1Num = 0;
     let team2Num = 0;
     let team3Num = 0;
+    let team4Num = 0;
 
     let team1Coin = 0;
     let team2Coin = 0;
     let team3Coin = 0;
+    let team4Coin = 0;
 
     let winCoin = 0;
     let myCoin = 0;
@@ -701,12 +743,19 @@ const step6HTML = () => {
                 team3Num++;
                 team3Coin += Number(batCoin);
                 break;
+            case "4팀":
+                team4Num++;
+                team4Coin += Number(batCoin);
+                break;
             default:
                 break;
         }
     })
 
-    winCoin = Number(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).reduce((prev, current) => Number(prev.BATCOIN) + Number(current.BATCOIN)).BATCOIN);
+    if(!com.isEmpty(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")))) {
+        winCoin = Number(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).reduce((prev, current) => Number(prev.BATCOIN) + Number(current.BATCOIN)).BATCOIN);
+    }
+
     myCoin = Number(totoFb.BAT.find(e => e.USERID == getItem('USER').USERID).BATCOIN);
 
     const successCoin = Math.trunc((1/(winCoin/allCoin))*myCoin);
@@ -734,7 +783,7 @@ const step6HTML = () => {
 
 
     const html = `<div class="container-title">배팅을 완료하셨습니다.</div>
-                <div class="center-container" id="btn_container">
+                <div class="center-container-scroll" id="btn_container">
                     <button class="bet-button">1팀</button>
                     <div style="margin-left: 10%; text-align: left;">
                         <a>배율 : ${(team1Coin/allCoin).toString().substring(0, 4)}</a>
@@ -760,6 +809,15 @@ const step6HTML = () => {
                         <a>인원 : ${team3Num}명</a>
                         </br>
                         <a>총 달란트 : ${team3Coin}</a>
+                        </br>
+                    </div>
+                    <button class="bet-button">4팀</button>
+                    <div style="margin-left: 10%; text-align: left;">
+                        <a>배율 : ${(team4Coin/allCoin).toString().substring(0, 4)}</a>
+                        </br>
+                        <a>인원 : ${team4Num}명</a>
+                        </br>
+                        <a>총 달란트 : ${team4Coin}</a>
                         </br>
                     </div>
                 </div>
