@@ -117,7 +117,7 @@ const regUser = () => {
         const objNm = "USER";
         const obj = {
             USERID : userId,
-            COIN : (totoFb.USER.find(e => e.USERID == userId) ?? false) ? totoFb.USER.find(e => e.USERID == userId).COIN : "10"
+            COIN : (totoFb.USER?.find(e => e.USERID == userId) ?? false) ? totoFb.USER?.find(e => e.USERID == userId).COIN : "10"
         };
 
         if(userId == "") {
@@ -702,7 +702,7 @@ const step5HTML = () => {
  */
 const step6HTML = () => {
     const user = getItem("USER");
-    
+
     let allCoin = 0;
     let parseNum = 0;
 
