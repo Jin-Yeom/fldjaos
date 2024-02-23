@@ -28,6 +28,7 @@ totoFb.param = {};
 let timer;
 let minutes = 10;
 let seconds = 0;
+let battingFlag = true;
 
 /****************************
  * Event
@@ -50,11 +51,13 @@ const eventAll = () => {
     adminStart();
     adminStats();
     adminBack();
+    adminTeamSelect();
 
     userStart();
     teamSelect();
     userBack();
     btnOK();
+    btnHome();
 }
 
 /**
@@ -85,7 +88,6 @@ const regUser = () => {
         setItem("USER", obj);
 
         innerHtmlUpdate(2);
-        // getItem(userId);
     }
 }
 
@@ -104,7 +106,8 @@ const adminStart = () => {
 
         const objNm = "ADMIN";
         const obj = {
-            STARTFLAG : "Y"
+            STARTFLAG : "Y",
+            STARTBAT  : "N"
         };
     
         await insertDataFb(objNm, obj);
@@ -176,15 +179,76 @@ const userStart = () => {
 /**
  * 사용자 등록 이벤트
  */
+const btnHome = () => {
+    const btn_home = document.querySelector('#btn_home');
+    
+    if(btn_home == null || typeof btn_home === "undefined") {
+        return;
+    }
+
+    btn_home.onclick = () => {
+        innerHtmlUpdate(2);
+    }
+}
+
+/**
+ * 사용자 등록 이벤트
+ */
 const teamSelect = () => {
     const btn_container = document.querySelectorAll('#btn_container .bet-button');
     
     if(btn_container == null || typeof btn_container === "undefined") {
         return;
     }
+
     btn_container.forEach((item, idx) => {
         item.onclick = () => {
             innerHtmlUpdate(4, idx+1);
+        }
+    })
+}
+
+/**
+ * 사용자 등록 이벤트
+ */
+const adminTeamSelect = () => {
+    const admin_teamSelect = document.querySelectorAll('#admin_teamSelect .bet-button');
+    
+    if(admin_teamSelect == null || typeof admin_teamSelect === "undefined") {
+        return;
+    }
+
+    admin_teamSelect.forEach((item, idx) => {
+        item.onclick = async () => {
+            var result = confirm((idx+1) + "팀으로 우승을 확정하시겠습니까?");
+
+            if (!result) {
+                // 사용자가 취소를 눌렀을 때의 로직
+                alertBox("배팅이 취소되었습니다.");
+                return;
+            }
+
+            innerHtmlUpdate(2, 1);
+    
+            let objNm = "ADMIN";
+            let obj = {
+                STARTFLAG : "N",
+                STARTBAT  : "Y",
+                WINTEAM   : (idx+1)
+            };
+
+        
+            await insertDataFb(objNm, obj);
+
+            setTimeout(() => {
+                objNm = "BAT";
+                obj = {};
+            
+                insertDataFb(objNm, obj);
+            }, 3000);
+
+            battingFlag = true;
+            
         }
     })
 }
@@ -206,6 +270,7 @@ const btnOK = () => {
             return;
         }
 
+        battingOk();
         innerHtmlUpdate(5);
     }
 }
@@ -233,10 +298,16 @@ const insertDataFb = async (objNm, obj) => {
     if( Object.keys(totoParam)?.find(e => e == objNm) ?? false) {
         switch(objNm) {
             case "USER":
-
-                if(totoParam.USER.find(e => e.USERID == obj.USERID) ?? false) { // 중복체크
+                
+                if(obj.USERID == 'admin') {
                     return;
                 }
+
+                totoParam[objNm].forEach((item, idx) => {   // 중복으로 들어올 시에 코인 덮어쓰기
+                    if(item.USERID == obj.USERID) {
+                        totoParam[objNm].splice(idx, 1);
+                    }
+                })
 
                 const USER = [...totoParam[objNm], obj];
                 totoParam[objNm] = USER;
@@ -258,6 +329,9 @@ const insertDataFb = async (objNm, obj) => {
                 
                 break;
             case "BAT":
+                if(Object.keys(obj).length < 1) {
+                    totoParam[objNm] = [];
+                }
 
                 for(let i = 0; i < totoParam[objNm].length; i++) {  // 중복제거
                     if(totoParam[objNm][i].USERID === obj.USERID)  {
@@ -308,7 +382,6 @@ const innerHtmlUpdate = async (step, addVal) => {
     const step1_container = document.querySelector('.step1-container');
     const step2_container = document.querySelector('.step2-container');
     const user = getItem("USER");
-    const clockBox = document.querySelector('.clock-box');
 
     switch(step) {
         case 1:
@@ -327,24 +400,24 @@ const innerHtmlUpdate = async (step, addVal) => {
 
             if(admin.USERID === "admin" && addVal === 1) {
                 
-                adminHtml = `<div class="container-title">우승팀을 골라주세요.</div>
-                                <div class="clock-box" style="display: none;"></div>
+                adminHtml = `<div class="container-title">우승팀 확정하기</div>
+                            <div class="clock-box" style="display: none;"></div>
+                            </br>
+                            <div class="center-container" id="admin_teamSelect">
+                                <button class="bet-button">1팀</button>
                                 </br>
-                                <div class="center-container">
-                                    <button class="bet-button">1팀</button>
-                                    </br>
-                                    </br>
-                                    </br>
-                                    <button class="bet-button">2팀</button>
-                                    </br>
-                                    </br>
-                                    </br>
-                                    <button class="bet-button">3팀</button>
-                                    </br>
-                                    </br>
-                                    </br>
-                                    <button class="bet-button" id="admin_back" style="width:100%;">뒤로</button>
-                                </div>`;
+                                </br>
+                                </br>
+                                <button class="bet-button">2팀</button>
+                                </br>
+                                </br>
+                                </br>
+                                <button class="bet-button">3팀</button>
+                                </br>
+                                </br>
+                                </br>
+                            </div>
+                            <button class="bet-button" id="admin_back" style="width:100%;">뒤로</button>`;
 
                 step2_container.innerHTML = adminHtml;
                 // startTimer();
@@ -419,6 +492,7 @@ const innerHtmlUpdate = async (step, addVal) => {
             step1_container.style.display = 'none';
 
             setTimeout(() => {
+                battingEnd();
                 document.querySelector('.step2-container').className = "step2-container show";
             }, 100);
 
@@ -429,11 +503,22 @@ const innerHtmlUpdate = async (step, addVal) => {
             step1_container.style.display = 'none';
 
             setTimeout(() => {
-                btnOK();
+                eventAll();
                 document.querySelector('.step2-container').className = "step2-container show";
             }, 100);
 
             break;
+        // case 7 :
+        //     step2_container.innerHTML = step6HTML();
+        //     step2_container.style.display = 'block';
+        //     step1_container.style.display = 'none';
+
+        //     setTimeout(() => {
+        //         eventAll();
+        //         document.querySelector('.step2-container').className = "step2-container show";
+        //     }, 100);
+
+        //     break;
         default:
             break;
     }
@@ -501,6 +586,17 @@ const userStartYn = () => {
     }, 100);
 }
 
+const battingEnd = () => {
+    setInterval( async () => {
+        await getDataFb();
+
+        if((totoFb?.ADMIN[0].STARTBAT ?? false) && totoFb.ADMIN[0].STARTBAT == "Y" && battingFlag) {
+            battingFlag = false;
+            innerHtmlUpdate(6);
+        }
+    }, 100);
+}
+
 /**
  * 사용자가 배팅하기
  */
@@ -565,10 +661,8 @@ const step5HTML = () => {
 /**
  * 
  */
-const step6HTML = async () => {
+const step6HTML = () => {
     const user = getItem("USER");
-
-    await battingOk();
 
     let allCoin = 0;
     let parseNum = 0;
@@ -580,9 +674,17 @@ const step6HTML = async () => {
     let team2Coin = 0;
     let team3Coin = 0;
 
-    // 배당률 : (1/(건코인/코인합))*건코인
-    totoFb.BAT.forEach((item, idx) => {
+    let winCoin = 0;
+    let myCoin = 0;
+
+    // 배당률 : (1/(우승 팀 코인 합/모든 코인합))*내가 건코인
+    totoFb.BAT.forEach((item) => {
         const {USERID:userId, TEAM:team, BATCOIN:batCoin} = item;
+
+        if(Object.keys(item).length == 0) {
+            return;
+        }
+
         allCoin += Number(batCoin);
         parseNum++;
 
@@ -603,6 +705,33 @@ const step6HTML = async () => {
                 break;
         }
     })
+
+    winCoin = Number(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).reduce((prev, current) => Number(prev.BATCOIN) + Number(current.BATCOIN)).BATCOIN);
+    myCoin = Number(totoFb.BAT.find(e => e.USERID == getItem('USER').USERID).BATCOIN);
+
+    const successCoin = Math.trunc((1/(winCoin/allCoin))*myCoin);
+    const winCheck = totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).find(e => e.USERID == user.USERID);
+    let mySuccessCoin = 0;
+    
+    if(winCheck ?? false) {
+        mySuccessCoin = user.COIN + successCoin;
+
+        const objNm = "USER";
+
+        const obj = {
+            USERID: user.USERID,
+            COIN: mySuccessCoin
+        };
+
+        sessionStorage.removeItem('USER');
+
+        setItem('USER', obj);
+
+        insertDataFb(objNm, obj);
+    } else {
+        mySuccessCoin = user.COIN;
+    }
+
 
     const html = `<div class="container-title">배팅을 완료하셨습니다.</div>
                 <div class="center-container" id="btn_container">
@@ -634,10 +763,11 @@ const step6HTML = async () => {
                         </br>
                     </div>
                 </div>
-                <div class="bottom-left-container" style="margin-top:10%;">
-                    달란트: <span class="coin" id="coin">${user.COIN}</span>
+                <div class="bottom-left-container" style="margin-top:10%; display:flex">
+                    달란트: <span class="coin" id="coin">${mySuccessCoin}</span>
+                    <button class="bet-button" id="btn_home" style="width:30%; margin-left:45%; height:30px; line-height: 15px; margin-top: -2%;">홈으로</button>
                 </div>`;
-
+    
     return html;
 }
 
@@ -646,15 +776,28 @@ const step6HTML = async () => {
  */
 const battingOk = async () => {
     const user = getItem("USER");
-    const objNm = "BAT";
+    let objNm = "BAT";
     const coin = document.querySelector('#coinInput').value;
     const team = document.querySelector('#teamIdx').innerText;
     
-    const obj = {
+    let obj = {
         USERID: user.USERID,
         TEAM: team,
         BATCOIN: coin
     };
+
+    await insertDataFb(objNm, obj);
+
+    objNm = "USER";
+
+    obj = {
+        USERID: user.USERID,
+        COIN: (user.COIN-coin)
+    };
+
+    sessionStorage.removeItem('USER');
+
+    setItem('USER', obj);
 
     await insertDataFb(objNm, obj);
 }
@@ -675,41 +818,4 @@ const setItem = (key, obj) => {
  */
 const getItem = (key) => {
     return JSON.parse(sessionStorage.getItem(key));
-}
-
-/**
- * 
- */
-const updateTimer = () => {
-    const timerElement = document.querySelector('.clock-box');
-    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-    if (minutes === 0 && seconds === 0) {
-        clearInterval(timer);
-        alert("타이머 종료!");
-    } else {
-        if (seconds === 0) {
-            minutes--;
-            seconds = 59;
-        } else {
-            seconds--;
-        }
-    }
-}
-
-/**
- * 
- */
-const startTimer = () => {
-    clearInterval(timer); // 기존에 실행 중인 타이머가 있으면 초기화
-    const timerElement = document.querySelector('.clock-box');
-    timerElement.style.display = "block";
-    timer = setInterval(updateTimer, 1000);
-}
-
-/**
- * 
- */
-const stopTimer = () => {
-    clearInterval(timer);
 }
