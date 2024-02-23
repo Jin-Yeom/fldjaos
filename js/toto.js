@@ -270,7 +270,7 @@ const adminTeamSelect = () => {
                 return;
             }
 
-            innerHtmlUpdate(2, 1);
+            innerHtmlUpdate(2);
     
             let objNm = "ADMIN";
             let obj = {
