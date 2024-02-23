@@ -753,10 +753,15 @@ const step6HTML = () => {
     })
 
     if(!com.isEmpty(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")))) {
-        winCoin = totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).reduce((prev, current) => Number(prev.BATCOIN) + Number(current.BATCOIN)) ?? 0;
+        
+        if(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).length == 1) {
+            winCoin =  Number(totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀"))[0].BATCOIN);
+        } else {
+            winCoin = totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).reduce((prev, current) => Number(prev.BATCOIN) + Number(current.BATCOIN)) ?? 0;
+        }
     }
 
-    myCoin = Number(totoFb.BAT.find(e => e.USERID == getItem('USER').USERID).BATCOIN);
+    myCoin = Number(totoFb.BAT.find(e => e.USERID == getItem('USER')?.USERID)?.BATCOIN) ?? 0;
 
     const successCoin = Math.trunc((1/(winCoin/allCoin))*myCoin) ?? 0;
     const winCheck = totoFb.BAT.filter(e => e.TEAM == (totoFb.ADMIN[0].WINTEAM + "팀")).find(e => e.USERID == user.USERID);
