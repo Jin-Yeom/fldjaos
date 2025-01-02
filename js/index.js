@@ -101,7 +101,7 @@ gcm.getDataFb = async () => {
 gcm.insertDataFb = async () => {
     await updateDoc(doc(db, "app"), {
         CONTENT:arrayUnion("귀찮은데 대충 먹자..", "이곳은 불법사이트가 아닙니다.</br>안심하고 즐겨주세요."),
-        ICON : arrayUnion("../img/app_food.png", "../img/app_toto.jpg"),
+        ICON : arrayUnion("../img/app_food.png", "../img/app_toto.png"),
         ID:arrayUnion("food", "toto"),
         IMAGE:arrayUnion("../img/pop_food.jpg", "../img/pop_toto.jpg"),
         READY:arrayUnion(0, 1),

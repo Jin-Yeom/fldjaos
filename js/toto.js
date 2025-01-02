@@ -610,33 +610,33 @@ const step2HTML = () => {
 }
 
 const userStartYn = () => {
-    setInterval( async () => {
-        await getDataFb();
+    // setInterval( async () => {
+    //     await getDataFb();
         
-        const user_start = document.querySelector('#user_start');
+    //     const user_start = document.querySelector('#user_start');
 
-        if(user_start == null || typeof user_start === "undefined") {
-            return;
-        }
+    //     if(user_start == null || typeof user_start === "undefined") {
+    //         return;
+    //     }
 
-        if((totoFb?.ADMIN[0].STARTFLAG ?? false) && totoFb.ADMIN[0].STARTFLAG == "Y") {
-            user_start.disabled = false;
-        } else {
-            user_start.disabled = true;
-        }
+    //     if((totoFb?.ADMIN[0].STARTFLAG ?? false) && totoFb.ADMIN[0].STARTFLAG == "Y") {
+    //         user_start.disabled = false;
+    //     } else {
+    //         user_start.disabled = true;
+    //     }
 
-    }, 100);
+    // }, 100);
 }
 
 const battingEnd = () => {
-    setInterval( async () => {
-        await getDataFb();
+    // setInterval( async () => {
+    //     await getDataFb();
 
-        if((totoFb?.ADMIN[0].STARTBAT ?? false) && totoFb.ADMIN[0].STARTBAT == "Y" && battingFlag) {
-            battingFlag = false;
-            innerHtmlUpdate(6);
-        }
-    }, 100);
+    //     if((totoFb?.ADMIN[0].STARTBAT ?? false) && totoFb.ADMIN[0].STARTBAT == "Y" && battingFlag) {
+    //         battingFlag = false;
+    //         innerHtmlUpdate(6);
+    //     }
+    // }, 100);
 }
 
 /**
