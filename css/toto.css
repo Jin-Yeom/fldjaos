@@ -1,0 +1,368 @@
+body {
+    margin: 0;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(15, 15, 15, 0.1) 0%, rgba(15, 15, 15, 0.5) 100%), url("../img/body_toto.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.step1-container {
+    text-align: center;
+}
+
+.input-box {
+    width: 300px; /* 인풋창 너비 */
+    padding: 10px; /* 내부 여백 */
+    border: none; /* 테두리 없음 */
+    border-radius: 5px; /* 테두리 반경 */
+    background-color: #fff; /* 배경색상 */
+    margin-bottom: 10px; /* 하단 여백 */
+}
+
+.button {
+    padding: 10px 20px; /* 버튼 내부 여백 */
+    font-size: 16px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #989fa7; /* 테두리 색상 */
+    border-radius: 5px; /* 테두리 반경 */
+    background-color: #989fa7; /* 배경색상 */
+    color: #fff; /* 글자색상 */
+    transition: background-color 0.3s, color 0.3s; /* 전환 효과 */
+}
+
+.title {
+    position: absolute;
+    top: 10%;
+    font-size: 3em; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    color: rgba(255, 255, 255, 0.7); /* 투명도가 있는 하얀색 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    transform: skew(-15deg); /* 글자 기울임 설정 */
+}
+
+.step1-container {
+    opacity: 0; /* 처음에는 투명하게 설정 */
+    transform: translateY(150px); /* 아래에서 위로 30px 만큼 이동 */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* 애니메이션 속성 설정 */
+}
+  
+.step1-container.show {
+    opacity: 1; /* 나타날 때는 불투명하게 설정 */
+    transform: translateY(0); /* 이동하지 않음 */
+}
+
+/* app area */
+.step2-container {
+    width: 80%;
+    height: 60%;
+    background-color: #f0f0f0; /* 흐린 회색 박스 */
+    border-radius: 15px; /* 모서리 둥근 네모난 모양 */
+    margin-top: 10%;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.step2-container.show {
+    opacity: 1;
+}
+
+.step2-container .container-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    color: rgba(0, 0, 0, 0.7); /* 투명도가 있는 하얀색 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    transform: skew(-15deg); /* 글자 기울임 설정 */
+}
+
+.step2-container .name {
+    text-align: center;
+    font-size: 3rem; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    color: rgba(0, 0, 0, 0.7); /* 투명도가 있는 하얀색 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    margin-top: 15%;
+}
+
+.step2-container .center-container {
+    margin-top: 10%;
+    text-align: center;
+}
+
+.step2-container .center-container-scroll {
+    margin-top: 10%;
+    text-align: center;
+    max-height: 60%;
+    overflow-y: auto;
+}
+
+.step2-container .bet-button {
+    width: 80%;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #00c8ff; /* 배팅 버튼 배경 색상 */
+    color: #fff; /* 배팅 버튼 글자 색상 */
+    border: none;
+    border-radius: 5px;
+}
+
+.step2-container .bet-button:disabled {
+    background-color: #bdc3c7; /* 배경색상 */
+    color: #7f8c8d; /* 글자색상 */
+    border: 2px solid #bdc3c7; /* 테두리 색상 */
+}
+
+.step2-container .bottom-left-container {
+    margin-top: 15%;
+}
+
+.step2-container .bottom-left-container .coin {
+    font-size: 14px;
+}
+  
+/************** step2 애니메이션 **************/
+/*
+.class-step2 {
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.class-step2.show {
+    opacity: 1;
+}*/
+
+/************** alert box **************/
+/*
+#alertBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 270px;
+    height: 140px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#alertHeader {
+    background-color: orange;
+    color: white;
+    padding: 15px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+#closeButton {
+    float: right;
+    cursor: pointer;
+    font-size: 30px;
+    margin-top: -23px;
+    margin-right: -6px;
+}
+
+#alertContent {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+}
+
+#alertContent p{
+    margin-bottom: -0.6rem;
+}
+*/
+
+/************** Loading **************/
+@keyframes rotate-loading {
+    0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+}
+
+@-moz-keyframes rotate-loading {
+    0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+}
+
+@-webkit-keyframes rotate-loading {
+    0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+}
+
+@-o-keyframes rotate-loading {
+    0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+}
+
+@keyframes rotate-loading {
+    0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+}
+
+@-moz-keyframes rotate-loading {
+    0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+}
+
+@-webkit-keyframes rotate-loading {
+    0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+}
+
+@-o-keyframes rotate-loading {
+    0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+    100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+}
+
+@keyframes loading-text-opacity {
+    0%  {opacity: 0}
+    20% {opacity: 0}
+    50% {opacity: 1}
+    100%{opacity: 0}
+}
+
+@-moz-keyframes loading-text-opacity {
+    0%  {opacity: 0}
+    20% {opacity: 0}
+    50% {opacity: 1}
+    100%{opacity: 0}
+}
+
+@-webkit-keyframes loading-text-opacity {
+    0%  {opacity: 0}
+    20% {opacity: 0}
+    50% {opacity: 1}
+    100%{opacity: 0}
+}
+
+@-o-keyframes loading-text-opacity {
+    0%  {opacity: 0}
+    20% {opacity: 0}
+    50% {opacity: 1}
+    100%{opacity: 0}
+}
+.loading-container,
+.loading {
+    height: 200px;
+    position: relative;
+    width: 200px;
+    border-radius: 100%;
+}
+
+.loading-container { 
+  margin: 40px auto;
+  margin-top: 40%;
+  position: relative;
+  text-align: center;
+}
+
+.loading {
+    border: 3px solid transparent;
+    border-color: transparent #010206 transparent #010206;
+    -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
+    -moz-transform-origin: 50% 50%;
+    -o-animation: rotate-loading 1.5s linear 0s infinite normal;
+    -o-transform-origin: 50% 50%;
+    -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+    -webkit-transform-origin: 50% 50%;
+    animation: rotate-loading 1.5s linear 0s infinite normal;
+    transform-origin: 50% 50%;
+}
+
+.loading-container .loading {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+#loading-text {
+    -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
+    -o-animation: loading-text-opacity 2s linear 0s infinite normal;
+    -webkit-animation: loading-text-opacity 2s linear 0s infinite normal;
+    animation: loading-text-opacity 2s linear 0s infinite normal;
+    color: #010206;
+    font-family: "Helvetica Neue, "Helvetica", ""arial";
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 40%;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    top: 0;
+    width: 200px;
+}
+
+/************** alert box **************/
+#alertBox {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 270px; /* 원하는 크기로 지정 */
+    height: 140px; /* 원하는 크기로 지정 */
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+#alertHeader {
+    background-color: gray;
+    color: white;
+    padding: 15px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+#closeButton {
+    float: right;
+    cursor: pointer;
+    font-size: 30px;
+    margin-top: -23px;
+    margin-right: -6px;
+}
+
+#alertContent {
+    position: relative;
+    width: 93%;
+    height: calc(100% - 50px); /* 수정: 상단바 높이만큼 뺀 높이 지정 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+} 
