@@ -629,14 +629,14 @@ const userStartYn = () => {
 }
 
 const battingEnd = () => {
-    // setInterval( async () => {
-    //     await getDataFb();
+    setInterval( async () => {
+        await getDataFb();
 
-    //     if((totoFb?.ADMIN[0].STARTBAT ?? false) && totoFb.ADMIN[0].STARTBAT == "Y" && battingFlag) {
-    //         battingFlag = false;
-    //         innerHtmlUpdate(6);
-    //     }
-    // }, 100);
+        if((totoFb?.ADMIN[0].STARTBAT ?? false) && totoFb.ADMIN[0].STARTBAT == "Y" && battingFlag) {
+            battingFlag = false;
+            innerHtmlUpdate(6);
+        }
+    }, 100);
 }
 
 /**
