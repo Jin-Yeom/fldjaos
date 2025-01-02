@@ -101,12 +101,12 @@ gcm.getDataFb = async () => {
 gcm.insertDataFb = async () => {
     await updateDoc(doc(db, "app"), {
         CONTENT:arrayUnion("귀찮은데 대충 먹자..", "이곳은 불법사이트가 아닙니다.</br>안심하고 즐겨주세요."),
-        ICON : arrayUnion("../img/app_food.png", "../img/app_toto.png"),
+        ICON : arrayUnion("../img/app/app_food.png", "../img/app/app_toto.png"),
         ID:arrayUnion("food", "toto"),
-        IMAGE:arrayUnion("../img/pop_food.jpg", "../img/pop_toto.jpg"),
-        READY:arrayUnion(0, 1),
+        IMAGE:arrayUnion("../img/pop/pop_food.jpg", "../img/pop/pop_toto.png"),
+        READY:arrayUnion(1, 0),
         TITLE:arrayUnion("Lunch for us", "당신의 운명에 배팅을!"),
-        URL:arrayUnion("#food", "../html/toto.html"),
+        URL:arrayUnion("../html/food/food.html", "../html/toto/toto.html"),
     }).then(() => {
         // 후처리 로직
         // fireBase Data 재구성
@@ -212,3 +212,11 @@ gcm.createPopupHTML = () => {
 
     return html;
 }
+
+
+/***
+ * 해야할 것들
+ * 날씨 데이터 받아오기
+ * 메인화면 꾸미기
+ * 날씨 데이터에 따라 배경 바꾸기??
+ */
