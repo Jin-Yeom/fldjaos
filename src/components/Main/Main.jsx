@@ -1,96 +1,68 @@
-import {MainWrapper} from "./styled";
+import { MainWrapper } from "./styled";
 import { arrayUnion, collection, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
-import db from '../../Hooks/firebase';
+import db from "../../Hooks/firebase";
 
 const querySnapshot1 = await getDoc(doc(db, "app"));
 
 const Main = () => {
-
   /**
    * 시계 UI 생성, 시간을 불러온다.
    */
-  const ClockBox = () => {
+  const Clock = () => {
     const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
 
-    return <div className="clock-box">
-      <div id="clock">{hours}:{minutes}</div>
-    </div>;
-}
+    return (
+      <section className="clock-box" aria-label="Current Time">
+        <time id="clock" aria-live="polite">
+          {hours}:{minutes}
+        </time>
+      </section>
+    );
+  };
 
   /**
    * app box 생성
    */
-  const AppBox = () => {
-      const appFb = querySnapshot1.data();
-      let html = [];
-      let appArrFb = [];
-
-      for(let i = 0; i < appFb.ID.length; i++) {
-        const data = {
-            CONTENT : appFb.CONTENT[i],
-            ICON : appFb.ICON[i],
-            ID : appFb.ID[i],
-            IMAGE : appFb.IMAGE[i],
-            READY : appFb.READY[i],
-            TITLE : appFb.TITLE[i],
-            URL : appFb.URL[i]
-        };
-
-        appArrFb.push(data);
-      }
-      
-      appArrFb.forEach((item, idx) => {
-          const {ID:id, ICON:icon} = item;
-
-          html.push(<div key={idx} className="app-box" id={"app-"+id} ></div>);
-      })
-
-      return html;
+  const AppList = () => {
+    const appFb = querySnapshot1.data();
+    const appData = appFb.ID.map((_, i) => ({
+      CONTENT: appFb.CONTENT[i],
+      ICON: appFb.ICON[i],
+      ID: appFb.ID[i],
+      IMAGE: appFb.IMAGE[i],
+      READY: appFb.READY[i],
+      TITLE: appFb.TITLE[i],
+      URL: appFb.URL[i],
+    }));
+debugger;
+    return (
+      <div className="app-box-container" role="list">
+        {appData.map(({ ID, ICON }, idx) => (
+          <article key={idx} className="app-box" id={`app-${ID}`} role="listitem" aria-label={`App ${ID}`}>
+            <img src={ICON} alt={`${ID} icon`} />
+          </article>
+        ))}
+      </div>
+    );
   };
-
-  /**
-   * 매핑된 앱의 팝업 생성
-   */
-  // const createPopupHTML = () => {
-  //     let html = "";
-
-  //     appArrFb.forEach((item, idx) => {
-  //         const {ID:id, TITLE:title, IMAGE:image, CONTENT:content, READY:ready, URL:url} = item;
-
-  //         html += `<div class="popup" id=${id} style="display: none;">
-  //                     <span class="close-btn">×</span>
-  //                     <h2>${title}</h2>
-  //                     <div class="popContent" style="background-image: url(${image});"></div>
-  //                     <p>${content}</p>
-  //                     ${ready ? `<button class="btn-start" id="btn-start-${id}" onclick="location.href='${url}'">시작하기</button>` : 
-  //                     `<button class="btn-start" id="btn-start-${id}" disabled=true>준비중..</button>`}
-  //                 </div>`;
-  //     })
-
-
-  //     return html;
-  // }
 
   return (
     <MainWrapper>
-      <div className='main'>
-        <ClockBox></ClockBox>
-        <div className="clock-box"></div>
+      <main className="main" role="main">
+        <Clock />
         <div className="plmi-box">
-          <span id="plus" type="button"></span>
-          <span id="minus" type="button"></span>
+          <span id="plus" aria-label="Increase"></span>
+          <span id="minus" aria-label="Decrease"></span>
         </div>
-        <div className="container">
-          <div className="app-box-container">
-            <AppBox></AppBox>
-          </div>
-        </div>
-        <div className="popupContainer" style={{display:'none'}}></div>
-      </div>
+        <section className="container">
+          <AppList />
+        </section>
+        <div className="popupContainer" style={{ display: "none" }}></div>
+      </main>
     </MainWrapper>
   );
-}
+};
 
 export default Main;
