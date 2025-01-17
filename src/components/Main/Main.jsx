@@ -1,7 +1,7 @@
 import { MainWrapper } from "./styled";
-import { arrayUnion, collection, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
-import db from "../../Hooks/firebase";
-import { useState } from "react";
+import { getDoc, doc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
+import db from "../../firebase";
+import { useState, useEffect } from "react";
 
 const querySnapshot1 = await getDoc(doc(db, "app"));
 const appFb = querySnapshot1.data();
@@ -15,57 +15,107 @@ const appData = appFb.ID.map((_, i) => ({
   URL: appFb.URL[i],
 }));
 
-const Main = () => {
-  /**
-   * 시계 UI 생성, 시간을 불러온다.
-   */
-  const Clock = () => {
-    let now = new Date();
-    const [hours, setHours] = useState(now.getHours().toString().padStart(2, "0"));
-    const [minutes,setMinutes] = useState(now.getMinutes().toString().padStart(2, "0"));
+/**
+ * 시계 UI 생성
+ */
+const Clock = () => {
+  const [time, setTime] = useState({
+    hours: new Date().getHours().toString().padStart(2, "0"),
+    minutes: new Date().getMinutes().toString().padStart(2, "0"),
+  });
 
-    // 시간 갱신
-    setInterval(() => {
-      now = new Date();
-      setHours(now.getHours().toString().padStart(2, "0"));
-      setMinutes(now.getMinutes().toString().padStart(2, "0"));
-    },300);
-    
-    return (
-      <section className="clock-box" aria-label="Current Time">
-        <time id="clock" aria-live="polite">
-          {hours}:{minutes}
-        </time>
-      </section>
-    );
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      setTime({
+        hours: now.getHours().toString().padStart(2, "0"),
+        minutes: now.getMinutes().toString().padStart(2, "0"),
+      });
+    }, 500);
 
-  /**
-   * app box 생성
-   */
-  const AppList = () => {
-    return (
-      <div className="app-box-container" role="list">
-        {appData.map(({ ID, ICON }, idx) => (
-          <div key={idx} id={`app-${ID}`} className="app-box" style={ {backgroundImage:`url(${ICON})`} } alt={`${ID} icon`}></div>
-        ))}
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section className="clock-box" aria-label="Current Time">
+      <time id="clock" aria-live="polite">
+        {time.hours}:{time.minutes}
+      </time>
+    </section>
+  );
+};
+
+/**
+ * 앱 목록 컴포넌트
+ */
+const AppList = ({ onAppClick }) => {
+  return (
+    <section className="app-box-container" role="list">
+      {appData.map(({ ID, ICON }, idx) => (
+        <img
+          key={idx}
+          id={`app-${ID}`}
+          className="app-box"
+          src={ICON}
+          alt={`${ID} icon`}
+          onClick={() => onAppClick(ID)}
+        />
+      ))}
+    </section>
+  );
+};
+
+/**
+ * 팝업 컴포넌트
+ */
+const AppPopup = ({ appDetails, onClose }) => {
+  if (!appDetails) return null; // 팝업을 닫은 상태에서는 렌더링하지 않음
+
+  const { TITLE, CONTENT, IMAGE, READY, URL } = appDetails;
+
+  return (
+    <div className="popupContainer">
+      <div className="popup">
+        <span className="close-btn" onClick={onClose}>
+          ×
+        </span>
+        <h2>{TITLE}</h2>
+        <div
+          className="popContent"
+          style={{ backgroundImage: `url(${IMAGE})` }}
+        ></div>
+        <p>{CONTENT}</p>
+        {READY ? (
+          <button
+            className="btn-start"
+            onClick={() => (window.location.href = '#')}
+          >
+            시작하기
+          </button>
+        ) : (
+          <button className="btn-start" disabled>
+            준비중..
+          </button>
+        )}
       </div>
-    );
+    </div>
+  );
+};
+
+/**
+ * 메인 컴포넌트
+ */
+const Main = () => {
+  const [selectedApp, setSelectedApp] = useState(null); // 현재 선택된 앱 데이터 관리
+
+  const handleAppClick = (appId) => {
+    const appDetails = appData.find((app) => app.ID === appId);
+    setSelectedApp(appDetails); // 선택된 앱의 데이터를 상태에 저장
   };
 
-  const appPopup = () => {
-    
-    // return (
-    //   <div class="popup" id=${id} style="display: none;">
-    //     <span class="close-btn">×</span>
-    //     <h2>${title}</h2>
-    //     <div class="popContent" style="background-image: url(${image});"></div>
-    //     <p>${content}</p>
-    //     ${ready ? `<button class="btn-start" id="btn-start-${id}" onclick="location.href='${url}'">시작하기</button>` : 
-    //     `<button class="btn-start" id="btn-start-${id}" disabled=true>준비중..</button>`}
-    //   </div>
-    // );
-  }
+  const handleClosePopup = () => {
+    setSelectedApp(null); // 팝업 닫기
+  };
 
   return (
     <MainWrapper>
@@ -76,9 +126,11 @@ const Main = () => {
           <span id="minus" aria-label="Decrease"></span>
         </div>
         <section className="container">
-          <AppList />
+          <AppList onAppClick={handleAppClick} />
         </section>
-        <div className="popupContainer" style={{ display: "none" }}></div>
+        {selectedApp && (
+          <AppPopup appDetails={selectedApp} onClose={handleClosePopup} />
+        )}
       </main>
     </MainWrapper>
   );

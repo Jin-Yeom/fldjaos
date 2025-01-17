@@ -49,8 +49,8 @@ export const MainWrapper = styled.div`
       height: 40px;
       opacity: 0.6;
       background-image: url(${plusImg});
-      background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-      background-position: center; /* 이미지를 가운데 정렬합니다 */
+      background-size: cover; 
+      background-position: center; 
       background-repeat: no-repeat; 
   }
 
@@ -59,8 +59,8 @@ export const MainWrapper = styled.div`
       height: 40px;
       opacity: 0.6;
       background-image: url(${minusImg});
-      background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-      background-position: center; /* 이미지를 가운데 정렬합니다 */
+      background-size: cover; 
+      background-position: center; 
       background-repeat: no-repeat; 
   }
 
@@ -69,28 +69,28 @@ export const MainWrapper = styled.div`
       width: 80%;
       height: 40%;
       opacity: 0.8;
-      background-color: #f0f0f0; /* 흐린 회색 박스 */
-      border-radius: 15px; /* 모서리 둥근 네모난 모양 */
+      background-color: #f0f0f0; 
+      border-radius: 15px; 
       padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
   }
 
   .app-box-container {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4개의 열로 구성 */
-      grid-gap: 10px; /* 간격을 10px로 설정 */
+      grid-template-columns: repeat(4, 1fr); 
+      grid-gap: 10px; 
   }
 
   .app-box {
       width: 50px; /* 고정된 크기 */
       height: 50px; /* 고정된 크기 */
-      border-radius: 10px; /* 앱처럼 조그마한 네모난 앱 모양 */
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* 앱에 그림자 추가 */
-      background-color: #444; /* 흐린 회색 박스 */
-      background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-      background-position: center; /* 이미지를 가운데 정렬합니다 */
+      border-radius: 10px; 
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); 
+      background-color: #444; 
+      background-size: cover; 
+      background-position: center; 
       background-repeat: no-repeat; 
-      margin-bottom: 10px; /* 각 행 간의 간격 */
+      margin-bottom: 10px; 
       margin-left: -41%;
   }
 
@@ -119,9 +119,9 @@ export const MainWrapper = styled.div`
       height: 50%;
       border-radius: 8px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      background-color: #444; /* 흐린 회색 박스 */
-      background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-      background-position: center; /* 이미지를 가운데 정렬합니다 */
+      background-color: #444; 
+      background-size: cover; 
+      background-position: center; 
       background-repeat: no-repeat; 
   }
 
@@ -135,19 +135,19 @@ export const MainWrapper = styled.div`
       text-decoration: none;
       cursor: pointer;
       border-radius: 5px;
-      background-color: #3498db; /* 버튼 배경색 */
-      color: #fff; /* 버튼 글자색 */
-      border: 2px solid #3498db; /* 버튼 테두리 색상 */
-      transition: background-color 0.3s, color 0.3s; /* 전환 효과 */
+      background-color: #3498db; 
+      color: #fff; 
+      border: 2px solid #3498db; 
+      transition: background-color 0.3s, color 0.3s; 
       margin-top: 10%;
   }
 
   /* Disabled 상태의 버튼 스타일 */
   .popupContainer .popup button:disabled {
-      background-color: #bdc3c7; /* Disabled 배경색 */
-      color: #7f8c8d; /* Disabled 글자색 */
-      border: 2px solid #bdc3c7; /* Disabled 테두리 색상 */
-      cursor: not-allowed; /* Disabled 시 마우스 커서 변경 */
+      background-color: #bdc3c7; 
+      color: #7f8c8d; 
+      border: 2px solid #bdc3c7; 
+      cursor: not-allowed; 
   }
 
   .close-btn {
