@@ -1,7 +1,9 @@
 import { MainWrapper } from "./styled";
 import { getDoc, doc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
 import db from "../../firebase";
+// import Food from "../Food/Food";
 import { useState, useEffect } from "react";
+import { Link, Router } from "react-router-dom";
 
 const querySnapshot1 = await getDoc(doc(db, "app"));
 const appFb = querySnapshot1.data();
@@ -74,31 +76,33 @@ const AppPopup = ({ appDetails, onClose }) => {
   const { TITLE, CONTENT, IMAGE, READY, URL } = appDetails;
 
   return (
-    <div className="popupContainer">
-      <div className="popup">
-        <span className="close-btn" onClick={onClose}>
-          ×
-        </span>
-        <h2>{TITLE}</h2>
-        <div
-          className="popContent"
-          style={{ backgroundImage: `url(${IMAGE})` }}
-        ></div>
-        <p>{CONTENT}</p>
-        {READY ? (
-          <button
-            className="btn-start"
-            onClick={() => (window.location.href = '#')}
-          >
-            시작하기
-          </button>
-        ) : (
-          <button className="btn-start" disabled>
-            준비중..
-          </button>
-        )}
+    <Router>
+      <div className="popupContainer">
+        <div className="popup">
+          <span className="close-btn" onClick={onClose}>
+            ×
+          </span>
+          <h2>{TITLE}</h2>
+          <div
+            className="popContent"
+            style={{ backgroundImage: `url(${IMAGE})` }}
+          ></div>
+          <p>{CONTENT}</p>
+          {READY ? (
+              <Link
+                className="btn-start"
+                to='/Food'
+              >
+                시작하기
+              </Link>
+            ) : (
+              <button className="btn-start" disabled>
+                준비중..
+              </button>
+          )}
+        </div>
       </div>
-    </div>
+    </Router>
   );
 };
 
