@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-app.js";
 // import { GoogleAuthProvider, getAuth } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js";
-import { arrayUnion, collection, doc, getDoc, getFirestore, updateDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
+import { arrayUnion, collection, doc, getDoc, getFirestore, updateDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAq9_eXkpuWq5rDAS5oWi9vyI_MsgwO4pI",
@@ -82,6 +82,19 @@ const radomName = [
 document.addEventListener('DOMContentLoaded', () => {
     // 초기화
     initialize();
+});
+
+// Firestore 데이터 변경을 실시간으로 감지
+const unsubscribe = onSnapshot(doc(db, "toto"), (docSnapshot) => {
+    
+    if (docSnapshot.exists()) {
+        const totoFb = docSnapshot.data();
+
+        if (totoFb?.ADMIN?.[0]?.STARTBAT === "Y" && battingFlag) {
+            // battingFlag = false;
+            // innerHtmlUpdate(6);
+        }
+    }
 });
 
 /**
