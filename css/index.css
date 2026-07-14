@@ -224,3 +224,81 @@
         max-width: 90%; /* 화면이 넓어지면 500px 제한을 풀고 넓게 사용 */
     }
 }
+
+/* --- 사용자 페이지용 카지노 연출 스타일 --- */
+
+/*************** --- 카지노 슬롯머신 스타일 (깨짐 방지 및 이펙트) --- ***************/
+/* --- 화면 전체를 가리는 카지노 팝업 레이어 --- */
+.casino-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(44,30,16,0.98) 0%, rgba(16,11,7,1) 100%);
+    z-index: 9999; /* 최상단 배치 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    /* 처음에는 숨겨둠 */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* 팝업 활성화 */
+.casino-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 팝업 내부 중앙 정광판 박스 */
+.casino-box {
+    text-align: center;
+    background: #3c2a21;
+    border: 4px dashed #e5ba73;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(229, 186, 115, 0.2);
+    max-width: 400px;
+    width: 85%;
+}
+
+/* 텍스트 및 숫자 스타일 */
+.casino-title-text {
+    font-size: 1.4rem;
+    color: #e5ba73;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.casino-num-display {
+    font-size: 4.5rem;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #ffdd93;
+}
+
+/* [기존 애니메이션 효과 유지] */
+.casino-rolling {
+    animation: slotScroll 0.08s infinite linear;
+    display: inline-block;
+    filter: blur(1.5px);
+}
+@keyframes slotScroll {
+    0% { transform: translateY(-4px); }
+    50% { transform: translateY(4px); }
+    100% { transform: translateY(-4px); }
+}
+.slot-success {
+    animation: slotPop 0.4s ease-out;
+    color: #fff !important;
+    text-shadow: 0 0 20px #ffdf89, 0 0 40px #ffdf89;
+}
+@keyframes slotPop {
+    0% { transform: scale(1.4); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}

@@ -11,28 +11,42 @@
 
 <body class="medieval-theme">
 
+    <div id="casino-layer" class="casino-overlay">
+        <div class="casino-box">
+            <div class="casino-title-text">🔮 주문 각성 룰렛 🔮</div>
+            <div class="casino-num-display">
+                <span id="user-live-score">0</span>점
+            </div>
+            <div style="color: #c5a880; font-size: 0.9rem;">운명의 주사위가 굴러갑니다...</div>
+        </div>
+    </div>
+
     <div class="container">
         <header class="header">
             <h1 class="page-title">🏆 실시간 점수판</h1>
+            <button id="btn-broadcast" class="btn-broadcast">🔔 점수확인 (전체 알림)</button>
         </header>
 
         <main id="user-scoreboard" class="scoreboard-container">
             </main>
+        
+        <div style="margin-top: 30px; width: 100%;">
+            <button class="btn-broadcast" id="btn-roll-start" onclick="startCasinoRoulette()">
+                🎰 결과 확인하기 (주문 외우기)
+            </button>
+        </div>
     </div>
 
-    <audio id="sound-1" src="sound1.mp3" preload="auto"></audio>
-    <audio id="sound-2" src="sound2.mp3" preload="auto"></audio>
-    <audio id="sound-3" src="sound3.mp3" preload="auto"></audio>
-
+    <audio id="sound-1" src="../sound/sound_jinyeom1.m4a" preload="auto"></audio>
+    <audio id="sound-2" src="../sound/sound_jinyeom2.m4a" preload="auto"></audio>
+    <audio id="sound-3" src="../sound/sound_jinyeom3.m4a" preload="auto"></audio>
+    <audio id="sound-4" src="../sound/sound_jinyeom4.m4a" preload="auto"></audio>
+    <audio id="sound-5" src="../sound/sound_jinyeom5.m4a" preload="auto"></audio>
+    
     <script>
         // 페이지 로드 시 사용자 점수판 화면을 그립니다.
         window.addEventListener('DOMContentLoaded', () => {
             userscoreChange();
-            
-            // TODO: 파이어베이스 리스너 연동
-            // 관리자가 '점수확인' 버튼을 눌러 신호를 보내면 아래 함수들을 실행하게 하시면 됩니다.
-            // 1. playRandomSound();  (랜덤 음향 실행)
-            // 2. renderUserScoreboard(); (점수 새로고침)
         });
     </script>
 </body>

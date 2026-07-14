@@ -28,6 +28,7 @@ scoreFb.param = {};
 window.adminPage = adminPage;
 window.scoreChange = scoreChange;
 window.userscoreChange = userscoreChange;
+window.startCasinoRoulette = startCasinoRoulette;
 
 
 /****************************
@@ -288,6 +289,64 @@ if (btnBroadcast) {
     btnBroadcast.addEventListener('click', () => {
         // TODO: 파이어베이스 DB의 특정 트리거 키값을 갱신하여, 사용자 화면(user.html)에 새로고침 신호를 전달합니다.
         
-        alert("📢 사용자 화면에 새로고침 신호가 전송되었습니다!");
+
+        startCasinoRoulette();
     });
+}
+
+// 💡 새로 머지된 카지노 롤렛 제어 함수
+function startCasinoRoulette() {
+    const layerEl = document.getElementById('casino-layer');
+    const scoreEl = document.getElementById('user-live-score');
+    const buttonEl = document.getElementById('btn-roll-start');
+    
+    if (!layerEl || !scoreEl) return;
+
+    // 1. 결과 확인 버튼 비활성화
+    if (buttonEl) buttonEl.disabled = true;
+
+    // 2. 팝업 레이어로 화면 전체 가리기
+    layerEl.classList.add('active');
+    
+    // 3. 사운드 재생
+    const audio = document.getElementById('sound-' + (Math.floor(Math.random() * 5) + 1));
+    if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log("오디오 재생 실패:", e));
+    }
+
+    // 4. 슬롯머신 숫자 롤링 시작
+    scoreEl.classList.add('casino-rolling');
+    const rollTimer = setInterval(() => {
+        scoreEl.textContent = Math.floor(Math.random() * 90) + 10;
+    }, 50);
+
+    // 5. 오디오 완료 시 연출 시나리오
+    if (audio) {
+        audio.onended = function() {
+            // A. 굴러가던 숫자 멈추기
+            clearInterval(rollTimer);
+            scoreEl.classList.remove('casino-rolling');
+            scoreEl.classList.add('slot-success'); // 탁! 하는 임팩트 효과
+
+            // B. 0.8초간 멈춘 대박 점수를 감상하게 둔 뒤, 팝업을 서서히 지움
+            setTimeout(() => {
+                layerEl.classList.remove('active'); // CSS transition으로 서서히 사라짐
+                
+                // C. 팝업이 서서히(0.5초 동안) 사라지는 타이밍에 맞춰 완벽하게 새로고침!
+                setTimeout(() => {
+                    location.reload();
+                }, 500); 
+
+            }, 800);
+        };
+    }
+
+    // [안전장치] 사운드가 혹시 안 끝나더라도 5초 뒤에는 강제 강제 복귀 및 새로고침
+    setTimeout(() => {
+        if (rollTimer) {
+            clearInterval(rollTimer);
+            location.reload();
+        }
+    }, 5000);
 }
