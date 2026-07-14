@@ -1,185 +1,174 @@
-body {
+/* 기본 초기화 */
+* {
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+    font-family: 'Georgia', serif;
+}
+
+/* 전체 테마 배경 (어두운 나무와 돌 느낌) */
+.medieval-theme {
+    background-color: #1a120b;
+    color: #e5ba73; /* 금색 톤 */
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-center {
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url('../img/index_body.jpg');
-    background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-    background-position: center; /* 이미지를 가운데 정렬합니다 */
-    background-repeat: no-repeat; 
 }
 
-/* clock area */
-.clock-box {
-    position: absolute;
-    top: 15%;
-    width: 100%;
-    height: 30px;
-    text-align: center;
-}
-
-.clock-box #clock {
-    font-family: 'Arial', sans-serif;
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #818285;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* plus minus area */
-.plmi-box {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    position: absolute;
-    top: 21%;
-    width: 85%;
-    height: 40px;
-}
-
-.plmi-box #plus {
-    width: 40px;
-    height: 40px;
-    opacity: 0.6;
-    background-image: url('../img/index_plus.png');
-    background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-    background-position: center; /* 이미지를 가운데 정렬합니다 */
-    background-repeat: no-repeat; 
-}
-
-.plmi-box #minus {
-    width: 40px;
-    height: 40px;
-    opacity: 0.6;
-    background-image: url('../img/index_minus.png');
-    background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-    background-position: center; /* 이미지를 가운데 정렬합니다 */
-    background-repeat: no-repeat; 
-}
-
-/* app area */
 .container {
-    width: 80%;
-    height: 40%;
-    opacity: 0.8;
-    background-color: #f0f0f0; /* 흐린 회색 박스 */
-    border-radius: 15px; /* 모서리 둥근 네모난 모양 */
+    width: 100%;
+    max-width: 500px; /* 갤럭시 스마트폰 폭에 최적화 */
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
 }
 
-.app-box-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4개의 열로 구성 */
-    grid-gap: 10px; /* 간격을 10px로 설정 */
-}
-
-.app-box {
-    width: 50px; /* 고정된 크기 */
-    height: 50px; /* 고정된 크기 */
-    border-radius: 10px; /* 앱처럼 조그마한 네모난 앱 모양 */
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* 앱에 그림자 추가 */
-    background-color: #444; /* 흐린 회색 박스 */
-    background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-    background-position: center; /* 이미지를 가운데 정렬합니다 */
-    background-repeat: no-repeat; 
-    margin-bottom: 10px; /* 각 행 간의 간격 */
-    margin-left: -41%;
-}
-
-.popupContainer {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 80%;
-    height: 80%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
-}
-
-.popupContainer .popup {
-    width: auto;
-    height: 100%;
-}
-
-.popupContainer .popup .popContent {
+/* 1. 문 및 애니메이션 (index.html 전용) */
+.door-container {
     position: relative;
-    margin-left: 5%;
-    width: 90%;
-    height: 50%;
-    border-radius: 8px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    background-color: #444; /* 흐린 회색 박스 */
-    background-size: cover; /* 이미지를 컨테이너에 꽉 차게 채웁니다 */
-    background-position: center; /* 이미지를 가운데 정렬합니다 */
-    background-repeat: no-repeat; 
+    width: 260px;
+    height: 360px;
+    margin-bottom: 40px;
+    perspective: 1000px;
 }
 
-/* 버튼 스타일 */
-.popupContainer .popup button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
+.castle-door {
+    width: 100%;
+    height: 100%;
+    background: #3c2a21; /* 실제 나무 문 이미지(GIF)가 들어갈 곳 */
+    border: 5px solid #c5a880;
+    border-radius: 130px 130px 0 0; /* 아치형 문 */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+    transition: transform 1.5s ease-in-out, opacity 1s ease-in-out;
+}
+
+/* 문이 활짝 열리는 효과 */
+.door-open {
+    transform: scale(1.4) rotateY(85deg);
+    opacity: 0;
+}
+
+/* 문이 열릴 때 퍼지는 화사한 빛 */
+.light-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #fffdd0 0%, #ffdf89 60%, rgba(26,18,11,1) 100%);
+    z-index: 99;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.light-flash.active {
+    opacity: 1;
+}
+
+/* 2. 버튼 디자인 */
+.btn-medieval {
+    background: linear-gradient(135deg, #c5a880, #957850);
+    color: #1a120b;
+    border: 2px solid #e5ba73;
+    padding: 15px 40px;
+    font-size: 1.2rem;
     font-weight: bold;
+    cursor: pointer;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    transition: transform 0.1s;
+}
+
+.btn-medieval:active {
+    transform: scale(0.95);
+}
+
+/* 관리자 점수확인(방송) 버튼 */
+.btn-broadcast {
+    width: 100%;
+    background: #d61c4e; /* 눈에 띄는 빨간색 계열 */
+    color: #fff;
+    border: 2px solid #ff7979;
+    padding: 18px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(214, 28, 78, 0.4);
+}
+
+.btn-broadcast:active {
+    transform: scale(0.97);
+}
+
+/* 3. 스코어보드 카드 디자인 */
+.scoreboard-container {
+    width: 100%;
+}
+
+.team-card {
+    background: rgba(60, 42, 33, 0.7);
+    border: 2px solid #c5a880;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.team-title {
+    font-size: 1.4rem;
+    color: #fff;
     text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: #3498db; /* 버튼 배경색 */
-    color: #fff; /* 버튼 글자색 */
-    border: 2px solid #3498db; /* 버튼 테두리 색상 */
-    transition: background-color 0.3s, color 0.3s; /* 전환 효과 */
-    margin-top: 10%;
+    border-bottom: 2px solid #e5ba73;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
 }
 
-/* Disabled 상태의 버튼 스타일 */
-.popupContainer .popup button:disabled {
-    background-color: #bdc3c7; /* Disabled 배경색 */
-    color: #7f8c8d; /* Disabled 글자색 */
-    border: 2px solid #bdc3c7; /* Disabled 테두리 색상 */
-    cursor: not-allowed; /* Disabled 시 마우스 커서 변경 */
+.member-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+    border-bottom: 1px dashed rgba(229, 186, 115, 0.2);
 }
 
-.close-btn {
-    cursor: pointer;
-    font-family: 'Arial', sans-serif;
-    font-size: 2em;
+.member-row:last-child {
+    border-bottom: none;
+}
+
+.member-name {
+    font-size: 1.1rem;
+}
+
+.member-score {
+    font-size: 1.2rem;
     font-weight: bold;
-    color: #444;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    color: #ffdd93;
 }
 
-/* media */
-@media (min-width: 300px) {
-    .app-box {
-        margin-left: 10%;
-    }
+/* 4. 관리자 조작 버튼 (+/-) */
+.score-actions {
+    display: flex;
+    gap: 8px;
 }
 
-@media (min-width: 400px) {
-    .app-box {
-        margin-left: 20%;
-    }
+.btn-score {
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@media (min-width: 500px) {
-    .app-box {
-        margin-left: 30%;
-    }
-}
-
-@media (min-width: 600px){
-    .app-box {
-        margin-left: 31%;
-    }
-}
-
-@media (min-width: 700px) {
-    .app-box {
-        margin-left: 33%;
-    }
-}
+.btn-minus { background-color: #ff4757; color: white; }
+.btn-plus { background-color: #2ed573; color: white; }
