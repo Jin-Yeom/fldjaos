@@ -20,27 +20,7 @@ const database = getFirestore(app);
 const db = collection(database, "fldjaos");
 
 
-/****************************
- * Global Common Object
- ****************************/
-
-const gcm = {};
-
-/****************************
- * gcm 전역 변수
- ****************************/
-
-gcm.appFb;
-gcm.appArrFb = [];
-
-/****************************
- * Event
- ****************************/
-
-/**
- * onpageload
- */
-document.addEventListener('DOMContentLoaded', () => {
+r('DOMContentLoaded', () => {
     // 초기화
     initialize();
 });
@@ -130,93 +110,174 @@ gcm.insertDataFb = async () => {
  * Function
  ****************************/
 
-/**
- * Init Function
- */
-const initialize = async () => {
-    // fireBase Data get
-    await gcm.getDataFb();
-    await gcm.insertDataFb();
+// 1. 임시 데이터 저장 공간 (실제 개발 시 파이어베이스 DB 데이터가 여기에 들어갑니다)
+// 기본 4개 조 구성
+let currentScoreData = [
+    {
+        teamName: "🛡️ 1조 (아서왕)",
+        members: [
+            { name: "가웨인", score: 0 },
+            { name: "랜슬롯", score: 0 },
+            { name: "갤러해드", score: 0 }
+        ]
+    },
+    {
+        teamName: "🏹 2조 (로빈후드)",
+        members: [
+            { name: "로빈", score: 0 },
+            { name: "리틀존", score: 0 }
+        ]
+    },
+    {
+        teamName: "🧙‍♂️ 3조 (멀린)",
+        members: [
+            { name: "멀린", score: 0 },
+            { name: "모르가나", score: 0 }
+        ]
+    },
+    {
+        teamName: "🦁 4조 (리처드)",
+        members: [
+            { name: "리처드", score: 0 },
+            { name: "존왕", score: 0 }
+        ]
+    }
+];
 
-    // HTML append
-    const appBoxContainer = document.querySelector('.app-box-container');
-    const clockBox = document.querySelector('.clock-box');
-    const popupContainer = document.querySelector('.popupContainer');
+// 로컬스토리지에 저장하여 페이지가 넘어가도 점수가 유지되도록 임시 처리 (파이어베이스 연동 전 테스트용)
+if (!localStorage.getItem('scoreData')) {
+    localStorage.setItem('scoreData', JSON.stringify(currentScoreData));
+} else {
+    currentScoreData = JSON.parse(localStorage.getItem('scoreData'));
+}
 
-    clockBox.innerHTML = gcm.createClockHTML('00', '00');
-    appBoxContainer.innerHTML = gcm.createAppBoxHTML(16);
-    popupContainer.innerHTML = gcm.createPopupHTML();
-
-    // event
-    gcm.eventAll();
-
-    // 시계 업데이트
-    setInterval(gcm.updateClock, 100);
-};
-
-/**
- * HTML 템플릿, clock
- * @param {시간} hours 
- * @param {분} minutes 
- * @returns 
- */
-gcm.createClockHTML = (hours, minutes) => `<div id="clock">${hours}:${minutes}</div>`;
-
-/**
- * HTML 템플릿, app
- * @param {app 개수} count 
- * @returns 
- */
-gcm.createAppBoxHTML = count => {
-    let html = "";
-
-    gcm.appArrFb.forEach((item, idx) => {
-        const {ID:id, ICON:icon} = item;
-
-        html += `<div class="app-box" id="app-${id}" style="background-image: url(${icon});"></div>`;
-    })
-
-    return html;
-};
-
-/**
- * 시계 업데이트
- */
-gcm.updateClock = () => {
-    const clockElement = document.querySelector('#clock');
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    clockElement.innerText = `${hours}:${minutes}`;
-};
-
-/**
- * 매핑된 앱의 팝업 생성
- */
-gcm.createPopupHTML = () => {
-    let html = "";
-
-    gcm.appArrFb.forEach((item, idx) => {
-        const {ID:id, TITLE:title, IMAGE:image, CONTENT:content, READY:ready, URL:url} = item;
-
-        html += `<div class="popup" id=${id} style="display: none;">
-                    <span class="close-btn">×</span>
-                    <h2>${title}</h2>
-                    <div class="popContent" style="background-image: url(${image});"></div>
-                    <p>${content}</p>
-                    ${ready ? `<button class="btn-start" id="btn-start-${id}" onclick="location.href='${url}'">시작하기</button>` : 
-                    `<button class="btn-start" id="btn-start-${id}" disabled=true>준비중..</button>`}
-                </div>`;
-    })
-
-
-    return html;
+function saveData(data) {
+    localStorage.setItem('scoreData', JSON.stringify(data));
+    // TODO: 파이어베이스 DB에도 함께 쓰기(Write) 하시면 됩니다.
 }
 
 
-/***
- * 해야할 것들
- * 날씨 데이터 받아오기
- * 메인화면 꾸미기
- * 날씨 데이터에 따라 배경 바꾸기??
- */
+/* ==========================================================================
+   [1] index.html (시작 페이지) 로직
+   ========================================================================== */
+const btnStart = document.getElementById('btn-start');
+if (btnStart) {
+    btnStart.addEventListener('click', () => {
+        const door = document.getElementById('castle-door');
+        const flash = document.getElementById('light-flash');
+
+        // 1. 문이 펼쳐지듯 열리는 애니메이션 활성화
+        door.classList.add('door-open');
+
+        // 2. 잠시 후 화사한 빛 오버레이 등장
+        setTimeout(() => {
+            flash.classList.add('active');
+        }, 600);
+
+        // 3. 완전히 빛으로 덮였을 때 다음 페이지(user.html)로 이동
+        setTimeout(() => {
+            window.location.href = 'user.html';
+        }, 1500);
+    });
+}
+
+
+/* ==========================================================================
+   [2] user.html (사용자 점수 페이지) 로직
+   ========================================================================== */
+function renderUserScoreboard() {
+    const container = document.getElementById('user-scoreboard');
+    if (!container) return;
+
+    // 로컬스토리지(혹은 파이어베이스)에서 최신 데이터를 가져옵니다.
+    const data = JSON.parse(localStorage.getItem('scoreData')) || currentScoreData;
+    container.innerHTML = '';
+
+    data.forEach(team => {
+        const card = document.createElement('div');
+        card.classList.add('team-card');
+        
+        card.innerHTML = `<h2 class="team-title">${team.teamName}</h2>`;
+        
+        team.members.forEach(member => {
+            const row = document.createElement('div');
+            row.classList.add('member-row');
+            row.innerHTML = `
+                <span class="member-name">${member.name}</span>
+                <span class="member-score">${member.score}점</span>
+            `;
+            card.appendChild(row);
+        });
+        
+        container.appendChild(card);
+    });
+}
+
+// 띠리리리~ 랜덤 사운드 재생 함수 (사용자 화면에서 실행됨)
+function playRandomSound() {
+    const sounds = ['sound-1', 'sound-2', 'sound-3'];
+    const randomId = sounds[Math.floor(Math.random() * sounds.length)];
+    const audio = document.getElementById(randomId);
+    if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log("재생 대기: 사용자 상호작용 필요", e));
+    }
+}
+
+
+/* ==========================================================================
+   [3] admin.html (관리자 점수조작 페이지) 로직
+   ========================================================================== */
+function renderAdminScoreboard() {
+    const container = document.getElementById('admin-scoreboard');
+    if (!container) return;
+
+    const data = JSON.parse(localStorage.getItem('scoreData')) || currentScoreData;
+    container.innerHTML = '';
+
+    data.forEach((team, teamIdx) => {
+        const card = document.createElement('div');
+        card.classList.add('team-card');
+        
+        card.innerHTML = `<h2 class="team-title">${team.teamName}</h2>`;
+        
+        team.members.forEach((member, memIdx) => {
+            const row = document.createElement('div');
+            row.classList.add('member-row');
+            
+            row.innerHTML = `
+                <span class="member-name">${member.name} (${member.score}점)</span>
+                <div class="score-actions">
+                    <button class="btn-score btn-minus" onclick="adjustScore(${teamIdx}, ${memIdx}, -1)">-</button>
+                    <button class="btn-score btn-plus" onclick="adjustScore(${teamIdx}, ${memIdx}, 1)">+</button>
+                </div>
+            `;
+            card.appendChild(row);
+        });
+        
+        container.appendChild(card);
+    });
+}
+
+// 점수 증감 처리 함수
+function adjustScore(teamIdx, memIdx, amount) {
+    const data = JSON.parse(localStorage.getItem('scoreData')) || currentScoreData;
+    
+    data[teamIdx].members[memIdx].score += amount;
+    if (data[teamIdx].members[memIdx].score < 0) {
+        data[teamIdx].members[memIdx].score = 0; // 마이너스 점수 방지
+    }
+
+    saveData(data);
+    renderAdminScoreboard(); // 관리자 화면 업데이트
+}
+
+// 관리자 '점수확인 (전체 알림)' 버튼 이벤트 트리거
+const btnBroadcast = document.getElementById('btn-broadcast');
+if (btnBroadcast) {
+    btnBroadcast.addEventListener('click', () => {
+        // TODO: 파이어베이스 DB의 특정 트리거 키값을 갱신하여, 사용자 화면(user.html)에 새로고침 신호를 전달합니다.
+        
+        alert("📢 사용자 화면에 새로고침 신호가 전송되었습니다!");
+    });
+}
