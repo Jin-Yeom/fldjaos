@@ -176,7 +176,7 @@ if (btnStart) {
 
         // 3. 완전히 빛으로 덮였을 때 다음 페이지(user.html)로 이동
         setTimeout(() => {
-            window.location.href = 'user.html';
+            window.location.href = '../html/user.html';
         }, 1500);
     });
 }
