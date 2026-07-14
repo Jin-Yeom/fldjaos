@@ -8,11 +8,32 @@
     <script defer src="../js/index.js" type="module"></script>
     <link href="../css/index.css" rel="stylesheet" />
 </head>
-<body class="medieval-theme flex-center">
-    <div class="door-container">
-        <div id="castle-door" class="castle-door"></div>
+
+<body class="medieval-theme">
+
+    <div class="container">
+        <header class="header">
+            <h1 class="page-title">🏆 실시간 점수판</h1>
+        </header>
+
+        <main id="user-scoreboard" class="scoreboard-container">
+            </main>
     </div>
-    <button id="btn-start" class="btn-medieval">시작하기</button>
-    <div id="light-flash" class="light-flash"></div>
+
+    <audio id="sound-1" src="sound1.mp3" preload="auto"></audio>
+    <audio id="sound-2" src="sound2.mp3" preload="auto"></audio>
+    <audio id="sound-3" src="sound3.mp3" preload="auto"></audio>
+
+    <script>
+        // 페이지 로드 시 사용자 점수판 화면을 그립니다.
+        window.addEventListener('DOMContentLoaded', () => {
+            renderUserScoreboard();
+            
+            // TODO: 파이어베이스 리스너 연동
+            // 관리자가 '점수확인' 버튼을 눌러 신호를 보내면 아래 함수들을 실행하게 하시면 됩니다.
+            // 1. playRandomSound();  (랜덤 음향 실행)
+            // 2. renderUserScoreboard(); (점수 새로고침)
+        });
+    </script>
 </body>
 </html>
