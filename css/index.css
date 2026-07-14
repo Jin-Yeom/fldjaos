@@ -108,67 +108,119 @@
 
 /* 3. 스코어보드 카드 디자인 */
 .scoreboard-container {
+    display: flex;          /* 가로 배치를 위한 Flexbox 활성화 */
+    flex-direction: row;    /* 기본 정렬 방향을 가로(왼쪽 -> 오른쪽)로 설정 */
+    flex-wrap: wrap;        /* 화면이 좁아지면 다음 줄로 자연스럽게 넘어가도록 설정 */
+    gap: 20px;              /* 카드와 카드 사이의 여백 (원하는 대로 조절 가능) */
+    justify-content: center; /* 카드들을 화면 중앙으로 정렬 */
     width: 100%;
 }
 
 .team-card {
+    flex: 1 1 calc(25% - 20px); /* 4개 조가 한 줄에 꽉 차게 설정 (25% - 여백) */
+    min-width: 250px;           /* 화면이 너무 작아져도 카드가 망가지지 않는 최소 너비 */
     background: rgba(60, 42, 33, 0.7);
     border: 2px solid #c5a880;
     border-radius: 12px;
-    margin-bottom: 20px;
     padding: 15px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
 }
 
+/* --- 팀 타이틀 좌우 분할 정렬 (모바일 대응) --- */
 .team-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #fff;
-    text-align: center;
+    
+    display: flex;
+    justify-content: space-between; /* 💡 이름/점수는 왼쪽 끝, 버튼은 오른쪽 끝으로 밀어냄 */
+    align-items: center;     /* 세로축 정중앙 정렬 */
+    gap: 10px;               /* 이름과 버튼 사이 최소 안전거리 */
+    
     border-bottom: 2px solid #e5ba73;
     padding-bottom: 8px;
     margin-bottom: 12px;
+    width: 100%;             /* 카드의 전체 폭을 차지하도록 설정 */
 }
 
-.member-row {
+/* 팀 이름과 점수가 붙어 있도록 묶어주는 임시 클래스 대응 (필요시) */
+.team-title-text-group {
     display: flex;
-    justify-content: space-between;
+    gap: 6px;
     align-items: center;
-    padding: 10px 5px;
-    border-bottom: 1px dashed rgba(229, 186, 115, 0.2);
+    flex: 1;                 /* 남은 공간을 채워서 버튼을 오른쪽으로 밀어냄 */
+    white-space: nowrap;     /* 줄바꿈 방지 */
 }
 
-.member-row:last-child {
-    border-bottom: none;
+/* 팀 타이틀 안의 텍스트가 너무 퍼지지 않게 묶음 */
+.team-name-text, .team-score-wrapper {
+    white-space: nowrap;  /* 글자 줄바꿈 방지 */
 }
 
-.member-name {
-    font-size: 1.1rem;
-}
-
-.member-score {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ffdd93;
-}
-
-/* 4. 관리자 조작 버튼 (+/-) */
+/* 버튼들을 감싸는 박스 */
 .score-actions {
     display: flex;
-    gap: 8px;
-}
-
-.btn-score {
-    width: 44px;
-    height: 44px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
+    flex-direction: row;     /* 💡 가로로 나란히 배치 */
+    justify-content: flex-end; /* 💡 무조건 오른쪽 끝으로 밀어붙임 */
     align-items: center;
-    justify-content: center;
+    gap: 6px;                /* 두 버튼 사이의 간격 */
+    flex-shrink: 0;          /* 💡 절대 찌그러지지 않게 고정 */
+    margin-left: auto;       /* 💡 왼쪽 공간을 다 밀어내어 확실하게 우측 끝으로 이동 */
 }
 
+/* 2. 버튼 자체 스타일: 크기 고정 및 내부 정렬 완벽화 */
+.btn-score {
+    width: 36px !important;  /* 모바일에서 한 손 조작하기 가장 좋은 크기 */
+    height: 36px !important; /* 가로 세로 정가격을 강제 고정 */
+    
+    font-size: 1.4rem !important; /* + , - 기호 크기 */
+    font-weight: bold;
+    line-height: 1;          /* 💡 줄간격 때문에 글자가 아래로 밀리는 현상 방지 */
+    
+    display: inline-flex !important;
+    align-items: center;     /* 💡 상하 정중앙 정렬 */
+    justify-content: center; /* 💡 좌우 정중앙 정렬 */
+    
+    flex-shrink: 0 !important; /* 💡 버튼 모양이 타원형으로 찌그러지는 것 절대 방지 */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 0 !important;   /* 💡 내부 패딩 때문에 기호가 탈출하는 것 방지 */
+}
+
+/* 색상 코드는 그대로 유지 */
 .btn-minus { background-color: #ff4757; color: white; }
 .btn-plus { background-color: #2ed573; color: white; }
+
+/* 3. 멤버 행(Row) 수정: 이름이 길어져도 버튼 영역을 침범하지 못하게 보호 */
+.member-row {
+    display: flex;
+    justify-content: space-between; /* 이름은 왼쪽 끝, 버튼은 오른쪽 끝 */
+    align-items: center;
+    padding: 8px 4px;
+    border-bottom: 1px dashed rgba(229, 186, 115, 0.2);
+    gap: 10px; /* 이름과 버튼 사이 최소 안전거리 */
+}
+
+/* 이름이 너무 길면 화면을 뚫고 나가지 않고 ...으로 생략되게 처리 */
+.member-name {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1; /* 💡 남는 공간을 이름이 다 차지하도록 밀어줌 */
+}
+
+/* --- 스코어보드 가로 배치를 위한 레이아웃 확장 --- */
+
+/* HTML의 .container 요소에 .wide-container 클래스를 함께 붙여주면 해결됩니다. */
+.container.wide-container {
+    max-width: 1200px; /* 4개 조가 가로로 충분히 배치되도록 폭을 넓힘 */
+    width: 95%;
+}
+
+/* 화면 크기가 PC나 태블릿처럼 넓을 때 자동으로 가로 배치가 되게 하려면 아래 미디어 쿼리를 사용하세요 */
+@media (min-width: 768px) {
+    .container {
+        max-width: 90%; /* 화면이 넓어지면 500px 제한을 풀고 넓게 사용 */
+    }
+}
