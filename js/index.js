@@ -195,14 +195,15 @@ async function userscoreChange() {
         
         card.innerHTML = `
             <h2 class="team-title" data-team="${item.teamNm}">
-            <div class="team-title-text-group">
+            <div class="team-title-text-group" style="justify-content: center;">
                 <span class="team-name-text">${item.teamNm}</span>
-                <span class="team-score-wrapper">(<span class="team-score-val">${item.teamSc}</span>점)</span>
+                <span class="team-score-wrapper"><span class="team-score-val" style="padding-left: 15px;">${item.teamSc}</span></span>
             </div>
         </h2>
         `;
         
         userParam.forEach(item2 => {
+            
             // 사용자가 팀 이름과 다른경우 리턴
             if(item.teamNm != item2.team) {
                 return;
@@ -210,10 +211,21 @@ async function userscoreChange() {
 
             const row = document.createElement('div');
             row.classList.add('member-row');
-            
+
+            // 💡 사용자 페이지는 버튼이 없으므로, 줄 전체의 텍스트를 정중앙으로 보냅니다.
+            row.style.display = 'flex';
+            row.style.justifyContent = 'center'; 
+            row.style.width = '100%';
+
             row.innerHTML = `
-                <span class="member-name">${item2.name} (<span class="member-score-val">${item2.score}</span>점)</span>
+                <span class="member-name" style="text-align: center; width: 100%;">
+                    ${item2.name} 
+                    <span class="member-score-val" style="padding-left: 15px; font-weight: bold;">
+                        ${item2.score}
+                    </span>
+                </span>
             `;
+
             card.appendChild(row);
         });
         

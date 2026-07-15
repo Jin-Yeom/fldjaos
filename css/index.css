@@ -146,13 +146,36 @@
 }
 
 /* 3. 스코어보드 카드 디자인 */
+/* 3. 스코어보드 컨테이너 (높이 80% 고정 및 내부 스크롤 적용) */
 .scoreboard-container {
-    display: flex;          /* 가로 배치를 위한 Flexbox 활성화 */
-    flex-direction: row;    /* 기본 정렬 방향을 가로(왼쪽 -> 오른쪽)로 설정 */
-    flex-wrap: wrap;        /* 화면이 좁아지면 다음 줄로 자연스럽게 넘어가도록 설정 */
-    gap: 20px;              /* 카드와 카드 사이의 여백 (원하는 대로 조절 가능) */
-    justify-content: center; /* 카드들을 화면 중앙으로 정렬 */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
     width: 100%;
+    
+    /* 💡 화면 세로 높이(viewport height)의 80%를 고정 높이로 설정 */
+    height: 73vh; 
+    
+    /* 💡 내용이 고정 높이(80%)를 넘어가면 카드 영역 내부에서만 부드럽게 스크롤 */
+    overflow-y: auto; 
+    
+    /* 스크롤 시 내부 패딩이 찌그러지지 않도록 아래쪽 여백 확보 */
+    padding: 10px 10px 30px 10px; 
+}
+
+/* 💡 (선택 사항) 스크롤바가 너무 투박하지 않게 해리포터 감성으로 얇고 어둡게 디자인 */
+.scoreboard-container::-webkit-scrollbar {
+    width: 6px;
+}
+.scoreboard-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+.scoreboard-container::-webkit-scrollbar-thumb {
+    background: #ffd700; /* 황금빛 스크롤바 */
+    border-radius: 10px;
 }
 
 .team-card {
@@ -167,7 +190,7 @@
 
 /* --- 팀 타이틀 좌우 분할 정렬 (모바일 대응) --- */
 .team-title {
-    font-size: 1.2rem;
+    font-size: 3rem;
     color: #fff;
     
     display: flex;
@@ -242,7 +265,7 @@
 
 /* 이름이 너무 길면 화면을 뚫고 나가지 않고 ...으로 생략되게 처리 */
 .member-name {
-    font-size: 1rem;
+    font-size: 2.5rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
