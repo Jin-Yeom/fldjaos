@@ -190,7 +190,7 @@
 
 /* --- 팀 타이틀 좌우 분할 정렬 (모바일 대응) --- */
 .team-title {
-    font-size: 3rem;
+    font-size: 2.7rem;
     color: #fff;
     
     display: flex;
@@ -265,7 +265,7 @@
 
 /* 이름이 너무 길면 화면을 뚫고 나가지 않고 ...으로 생략되게 처리 */
 .member-name {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

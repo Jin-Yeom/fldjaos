@@ -266,8 +266,8 @@ async function adminPage() {
         card.innerHTML = `
             <h2 class="team-title" data-team="${item.teamNm}">
             <div class="team-title-text-group">
-                <span class="team-name-text">${item.teamNm}</span>
-                <span class="team-score-wrapper">(<span class="team-score-val">${item.teamSc}</span>점)</span>
+                <span class="team-name-text" style="font-size:1.5rem;">${item.teamNm}</span>
+                <span class="team-score-wrapper"> <span class="team-score-val" style="font-size:1.5rem;">${item.teamSc}</span></span>
             </div>
             <div class="score-actions">
                 <button class="btn-score btn-plus" onclick="scoreChange('team', '${item.teamNm}', 'PL')">+</button>
@@ -286,7 +286,7 @@ async function adminPage() {
             row.classList.add('member-row');
             
             row.innerHTML = `
-                <span class="member-name">${item2.name} (<span class="member-score-val">${item2.score}</span>점)</span>
+                <span class="member-name" style="font-size:1.2rem;">${item2.name} <span class="member-score-val">${item2.score}</span></span>
                 <div class="score-actions">
                     <button class="btn-score btn-plus" onclick="scoreChange(this, '${item2.name}', 'PL')">+</button>
                     <button class="btn-score btn-minus" onclick="scoreChange(this, '${item2.name}', 'MI')">-</button>
