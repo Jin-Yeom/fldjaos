@@ -150,21 +150,26 @@ async function scoreChange(buttonEl, name="", flag) {
 const btnStart = document.getElementById('btn-start');
 if (btnStart) {
     btnStart.addEventListener('click', () => {
-        const door = document.getElementById('castle-door');
-        const flash = document.getElementById('light-flash');
+        const popup = document.getElementById('video-popup');
+        const video = document.getElementById('intro-video');
+        
+        if (!popup || !video) return;
 
-        // 1. 문이 펼쳐지듯 열리는 애니메이션 활성화
-        door.classList.add('door-open');
+        // 1. 비디오 팝업 레이어 부드럽게 등장 시키기
+        popup.classList.add('active');
 
-        // 2. 잠시 후 화사한 빛 오버레이 등장
-        setTimeout(() => {
-            flash.classList.add('active');
-        }, 600);
+        // 2. 비디오 시작 지점으로 되돌린 후 재생
+        video.currentTime = 0;
+        
+        // 모바일 크롬/사파리에서 소리가 켜져 있으면 자동 재생을 막기 때문에, 
+        // 안전하게 음소거(muted) 상태로 시작하되, 필요 시 볼륨을 켤 수 있습니다.
+        video.muted = false; 
+        video.play().catch(e => console.log("비디오 자동 재생 거부됨:", e));
 
-        // 3. 완전히 빛으로 덮였을 때 다음 페이지(user.html)로 이동
-        setTimeout(() => {
+        // 3. 💡 [핵심] 비디오 재생이 완벽하게 끝났을 때(onended) 일어날 일
+        video.onended = function() {
             window.location.href = '../html/user.html';
-        }, 1500);
+        };
     });
 }
 

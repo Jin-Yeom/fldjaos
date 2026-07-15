@@ -14,6 +14,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url("../img/herry.jpg"); /* 배경 이미지 */
+    background-position: center;
+    background-size: 100% auto; 
+    
 }
 
 .flex-center {
@@ -38,11 +42,46 @@
 .castle-door {
     width: 100%;
     height: 100%;
-    background: #3c2a21; /* 실제 나무 문 이미지(GIF)가 들어갈 곳 */
-    border: 5px solid #c5a880;
-    border-radius: 130px 130px 0 0; /* 아치형 문 */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+    
+    /* 1. 세로 나무 판자(Plank) 느낌을 주는 정교한 그라데이션 조합 */
+    background: 
+        linear-gradient(90deg, 
+            rgba(0,0,0,0.5) 0%, 
+            transparent 5%, transparent 95%, 
+            rgba(0,0,0,0.5) 100%
+        ),
+        repeating-linear-gradient(90deg,
+            #2d1e18 0px, #2d1e18 40px, /* 나무 판자 색상 */
+            #1c130e 41px, #1c130e 43px  /* 판자 사이의 틈새 음영 */
+        );
+        
+    /* 2. 앤틱한 청동/금색 테두리 */
+    border-radius: 130px 130px 0 0; /* 아치형 유지 */
+    
+    /* 3. 문에 깊이감을 주는 안팎의 그림자 효과 */
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.9), 
+        inset 0 0 20px rgba(0, 0, 0, 0.8),
+        0 0 15px rgba(255, 215, 0, 0.1);
+        
+    position: relative;
+    overflow: hidden;
     transition: transform 1.5s ease-in-out, opacity 1s ease-in-out;
+}
+
+/* 💡 가상 선택자 1: 아치형 문 위쪽의 거대한 철제 경첩(Hinge) 장식 */
+.castle-door::before {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    width: 80%;
+    height: 6px;
+    background: linear-gradient(180deg, #444, #111);
+    
+    border-bottom: 1px solid #000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    z-index: 2;
 }
 
 /* 문이 활짝 열리는 효과 */
@@ -301,4 +340,48 @@
     0% { transform: scale(1.4); }
     70% { transform: scale(0.9); }
     100% { transform: scale(1); }
+}
+
+/* --- 시네마틱 비디오 팝업 레이어 --- */
+.video-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95); /* 배경을 완전 어둡게 차단 */
+    z-index: 10000; /* 모든 요소보다 위에 배치 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* 처음에는 보이지 않게 숨김 */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 팝업이 활성화될 때 부드럽게 등장 */
+.video-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 비디오가 모바일 가로/세로 비율에 맞춰 어색하지 않게 반응형으로 배치되도록 감싸는 틀 */
+.video-wrapper {
+    width: 90%;
+    max-width: 1340px; /* 너무 커지지 않게 제한 */
+    aspect-ratio: 16 / 9; /* 비디오 종횡비에 맞게 조절 (기본 16:9 기준) */
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.2), 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+/* 비디오 알맹이 */
+#intro-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 영역을 빈틈없이 꽉 채우도록 설정 */
+    display: block;
 }
